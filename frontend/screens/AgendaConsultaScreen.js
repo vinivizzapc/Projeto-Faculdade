@@ -1,38 +1,30 @@
-import React, {Component} from 'react';
-import {  StyleSheet, Text, View, StatusBar } from 'react-native';
-import { Header, Left, Right, Icon } from 'native-base';
-import { FontAwesome5  } from '@expo/vector-icons';
+import React from 'react';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { Icon } from 'native-base';
 import css from '../style/css';
+import { NavigationContainer } from '@react-navigation/native';
 
-class AgendaConsultaScreen extends Component {
+function AgendaConsultaScreen ({ navigation }){
 
-  static navigationOptions = {
-    drawerIcon : ({tintColor}) => (
-        <FontAwesome5 name="calendar-alt" style={{fontSize:24, color:tintColor}} />
-    )
-}
-
-render() {
-return (
-  <View style={styles.container}>
+  return (
+    <View style={styles.container}>
       <StatusBar backgroundColor="#303f9f"/>
-      <View style={css.containerHeader}>
+        <View style={css.containerHeader}>
         <View style={css.IconPosicao}>
-          <Icon name="menu" onPress={()=>this.props.navigation.openDrawer()}/>
+          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
-      </View> 
+        </View> 
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-          <Text>AgendaConsultaScreen</Text>
+        <Text>AgendaConsultaScreen</Text>
       </View>
-  </View>
+    </View>
   );
-}
 }
 
 export default AgendaConsultaScreen;
 
 const styles = StyleSheet.create({
-container: {
-  flex: 1
-},
+  container: {
+    flex: 1
+  },
 });

@@ -4,7 +4,7 @@ import { Icon } from 'native-base';
 import css from '../style/css';
 import { NavigationContainer } from '@react-navigation/native';
 
-function FavoritosScreen ({ navigation }){
+function MinhasConsultasScreen ({ navigation }){
 
   return (
     <View style={styles.container}>
@@ -15,13 +15,13 @@ function FavoritosScreen ({ navigation }){
         </View>
         </View> 
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-        <Text>FavoritosScreen</Text>
+        <Text>MinhasConsultasScreens</Text>
       </View>
     </View>
   );
 }
 
-export default FavoritosScreen;
+export default MinhasConsultasScreen;
 
 const styles = StyleSheet.create({
   container: {

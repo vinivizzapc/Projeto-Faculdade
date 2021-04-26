@@ -14,13 +14,6 @@ import { Input, Text } from 'react-native-elements';
 
 import css from '../style/css';
 
-//   static navigationOptions = {
-//     drawerIcon : ({tintColor}) => (
-//         <MaterialCommunityIcons name="clipboard-pulse-outline" style={{fontSize:24, color:tintColor}} />
-//     )
-// }
-
-
 export default function LoginScreen () {
 
   

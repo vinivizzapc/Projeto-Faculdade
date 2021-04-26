@@ -1,31 +1,24 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
-import { Header, Left, Right, Icon } from 'native-base';
-import { Feather } from '@expo/vector-icons';
+import { Icon } from 'native-base';
 import css from '../style/css';
-class HomeScreen extends Component {
+import { NavigationContainer } from '@react-navigation/native';
 
-    static navigationOptions = {
-        drawerIcon : ({tintColor}) => (
-            <Icon name="home" style={{fontSize:24, color:tintColor}} />
-        )
-    }
+function HomeScreen({ navigation }){
 
-  render() {
   return (
     <View style={styles.container}>
-        <StatusBar backgroundColor="#303f9f"/>
-      <View style={css.containerHeader}>
+      <StatusBar backgroundColor="#303f9f"/>
+        <View style={css.containerHeader}>
         <View style={css.IconPosicao}>
-            <Icon name="menu" onPress={()=>this.props.navigation.openDrawer()}/>
-          </View>
-        </View> 
-        <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-            <Text>HomeScreens</Text>
+          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
+        </View> 
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+        <Text>HomeScreens</Text>
+      </View>
     </View>
-    );
-  }
+  );
 }
 
 export default HomeScreen;
