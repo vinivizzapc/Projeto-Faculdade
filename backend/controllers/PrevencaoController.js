@@ -1,5 +1,4 @@
 const connection = require('../connection');
-const CepCoords = require("coordenadas-do-cep");
 
 module.exports = {
     async Selecionar(req, res, next) {
