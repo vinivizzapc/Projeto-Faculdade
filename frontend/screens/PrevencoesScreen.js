@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
-import { Icon } from 'native-base';
+import { Icon, Footer } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
 
@@ -15,7 +15,7 @@ function PrevencoesScreen({ navigation }){
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#303f9f"/>
+      <StatusBar backgroundColor="#008B8B"/>
         <View style={css.containerHeader}>
         <View style={css.IconPosicao}>
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
@@ -31,9 +31,13 @@ function PrevencoesScreen({ navigation }){
           </Text>
         ))}
         </View>
+        <Footer style={{backgroundColor:"#008B8B"}}/>
     </View>
+    
   );
+  
 }
+
 
 export default PrevencoesScreen;
 
@@ -42,3 +46,4 @@ const styles = StyleSheet.create({
     flex: 1
   },
 });
+

@@ -12,6 +12,7 @@ import CadastroScreen from './screens/CadastroScreen';
 import FavoritosScreen from './screens/FavoritosScreen';
 import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Icon } from 'native-base';
+import DrawerContent from './components/DrawerContent';0
 // import { PrevencoesScreen } from './screens/PrevencoesScreen';
 
 
@@ -21,9 +22,8 @@ import { Icon } from 'native-base';
 export default function App() {
   return (
     <NavigationContainer>
-     
 
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator drawerContent={props=><DrawerContent {...props}/>} initialRouteName="Home">
 
         <Drawer.Screen options={{ title: 'Home',  drawerIcon: ({focused, size}) => (<Ionicons name="home" size={24} color="black" />
           ),}} name="Home" component={HomeScreen} />
@@ -53,3 +53,8 @@ export default function App() {
 }
 
 console.disableYellowBox = true;
+
+console.log = console.warn = console.error = () => {};
+
+// Look ma, no error!
+console.error('Something bad happened.');
