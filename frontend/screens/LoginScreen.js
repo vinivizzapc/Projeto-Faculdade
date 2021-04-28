@@ -6,24 +6,39 @@ import { View,
   TouchableOpacity, 
   StyleSheet, 
   Animated,
-  Keyboard
+  Keyboard,
+  StatusBar,
+  Button,
 } from 'react-native';
-import {CadastroScreen} from './CadastroScreen';
 
 import { Input, Text } from 'react-native-elements';
 
 import css from '../style/css';
+import CadastroScreen from './CadastroScreen'
 
-export default function LoginScreen () {
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import api from '../services/api';
+
+
+export default function LoginScreen ({navigation}) {
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   
-  const [email, setEmail] = useState(null);
-  const [senha, setSenha] = useState(null);
-  const logar = () => {
-    // console.log("logou")
-    // console.log(email)
-    // console.log(senha)
+  async function logar() {
+
+    const credenciais = {
+      email: email,
+      senha: senha
+    }
+    const response = await api.post('/usuario', credenciais)
+    
+    const jsonValue = JSON.stringify(response.data)
+    AsyncStorage.setItem('usuario', jsonValue)
   }
+
+ 
 
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 95}));
   const [opacity] = useState(new Animated.Value(0));
@@ -79,6 +94,7 @@ export default function LoginScreen () {
 
   return (
     <KeyboardAvoidingView style={styles.background}>
+     <StatusBar backgroundColor="#27282D"/>
       <View style={styles.containerLogo}>
         <Animated.Image style={{
           width: logo.x,
@@ -101,20 +117,20 @@ export default function LoginScreen () {
       >
 
         <TextInput style={styles.input} placeholder="E-mail" 
-        onChangeText={value => setEmail(value)}
+        onChangeText={email => setEmail(email)} value={email} 
         keyboardType="email-address"
         />
 
          <TextInput style={styles.input} placeholder="Senha"
-        onChangeText={value => setSenha(value)}
+        onChangeText={senha => setSenha(senha)} value={senha}
         secureTextEntry={true}
         />
-        <TouchableOpacity style={styles.btnSubmit} title="Logar" onPress={() => logar(alert('Logou-se'))}>
+        <TouchableOpacity style={styles.btnSubmit} title="Logar" onPress={logar}>
           <Text style={styles.submitText}>Acessar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnRegister}>
-          <Text style={styles.registerText}>Não tem cadastro? <Text style={styles.btnRedirecionar}>Cadastre-se</Text></Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.btnRegister}>
+          <Text style={styles.registerText}>Não tem cadastro? <Text style={styles.btnRedirecionar} >Cadastre-se</Text></Text>
         </TouchableOpacity>
 
       </Animated.View>

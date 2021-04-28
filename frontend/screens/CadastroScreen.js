@@ -1,36 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {Component, useState} from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, StatusBar, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 
-export default function CadastroScreen (){
+export default function CadastroScreen ({navigation}){
 
+  const [usuario, setUsuario] = useState('');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
   const cadastro = () => {
-    // alert(senha);
-    // alert(email);
-    // alert(nome);
-    
+    console.log("Cadastrou")    
    
     //Fazer chamada no back-end para cadastro. 
   }
 
+  
   return(
     <View style={styles.container}>
+     <StatusBar backgroundColor="#27282D"/>
     {<Image style={{marginBottom:60}} source={require('../assets/img/logo.png')} /> }
 
-    <TextInput placeholder="Digite seu Nome" style={styles.textPut} onChangeText={text=>setNome(text)} />
-    <TextInput placeholder="Digite seu E-mail" style={styles.textPut} onChangeText={text=>setEmail(text)} />
-    <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={styles.textPut} onChangeText={text=>setSenha(text)} />
+    <TextInput placeholder="Digite seu Nome" style={styles.textPut} onChangeText={value=>setNome(value)} />
+    <TextInput placeholder="Digite seu E-mail" style={styles.textPut} onChangeText={value=>setEmail(value)} />
+    <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={styles.textPut} onChangeText={value=>setSenha(value)} />
 
-    <TouchableOpacity style={styles.btnCadastro} onPress={()=>cadastro(alert('Cadastrado com sucesso!'))}>
+    <TouchableOpacity style={styles.btnCadastro} onPress={()=>cadastro()}>
       <Text style={{color:'white', textAlign:'center'}}>CADASTRAR</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.btnLogin}>
+    <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.btnLogin}>
           <Text style={styles.LoginText}>Já tem um cadastro? <Text style={styles.btnRedirecionar}>Entrar</Text></Text>
     </TouchableOpacity>
 

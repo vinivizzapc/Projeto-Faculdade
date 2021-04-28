@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, View, YellowBox, SafeAreaView, Image, ScrollView} from 'react-native';
 import { createDrawerNavigator, DrawerItems } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,18 +12,49 @@ import CadastroScreen from './screens/CadastroScreen';
 import FavoritosScreen from './screens/FavoritosScreen';
 import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Icon } from 'native-base';
-import DrawerContent from './components/DrawerContent';0
+import DrawerContent from './components/DrawerContent';
+import { createStackNavigator } from '@react-navigation/stack';
+import StackScreen from './screens/StackScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { PrevencoesScreen } from './screens/PrevencoesScreen';
 
 
   const Drawer = createDrawerNavigator();
+  const Stack = createStackNavigator();
   
 
+function MyStack(){
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  )
+}
+
+
 export default function App() {
+
+  const [usuario, setUsuario] = useState(null)
+
+  useEffect(() => {
+    setTimeout(
+      async function buscar(){
+        const valor = await AsyncStorage.getItem('usuario');
+        setUsuario(valor);
+      }, 2000) 
+  }, []);
+
+
+
+
+
   return (
     <NavigationContainer>
 
-      <Drawer.Navigator drawerContent={props=><DrawerContent {...props}/>} initialRouteName="Home">
+  
+      {/* {
+        usuario != null ? (
+          <Drawer.Navigator drawerContent={props=><DrawerContent {...props}/>} initialRouteName="Home">
 
         <Drawer.Screen options={{ title: 'Home',  drawerIcon: ({focused, size}) => (<Ionicons name="home" size={24} color="black" />
           ),}} name="Home" component={HomeScreen} />
@@ -42,19 +73,20 @@ export default function App() {
 
         <Drawer.Screen options={{ title: 'Favoritos',  drawerIcon: ({focused, size}) => (<Ionicons name="star" size={24} color="black" />
           ),}} name="Favoritos" component={FavoritosScreen} />
-
-        <Drawer.Screen name="Cadastrar-se" component={CadastroScreen} />
-
-        <Drawer.Screen name="Login" component={LoginScreen} />
-              
+                      
       </Drawer.Navigator>
+        )
+        : 
+        <StackScreen/>
+      } */}
+
     </NavigationContainer>
   );
 }
 
 console.disableYellowBox = true;
 
-console.log = console.warn = console.error = () => {};
+// console.log = console.warn = console.error = () => {};
 
-// Look ma, no error!
-console.error('Something bad happened.');
+// // Look ma, no error!
+// console.error('Something bad happened.');
