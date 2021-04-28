@@ -16,8 +16,14 @@ import {
     TouchableRipple,
     Switch
 } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 function DrawerContent(props) {
+
+  function signOut(){
+    AsyncStorage.removeItem('usuario');
+  }
 
     return (
         <View style={{flex:1}}>
@@ -33,24 +39,34 @@ function DrawerContent(props) {
                 </View>   
             </View>
             <View style={styles.itemList}>
-            <DrawerItemList {...props}/>
+            <Drawer.Section>
+        <Drawer.Screen options={{ title: 'Home',  drawerIcon: ({focused, size}) => (<Ionicons name="home" size={24} color="black" />
+          ),}} name="Home" component={HomeScreen} />
+
+        <Drawer.Screen options={{ title: 'Prevenções',  drawerIcon: ({focused, size}) => (<FontAwesome5 name="shield-virus" size={24} color="black" />
+          ),}} name="Prevenções" component={PrevencoesScreen} />
+
+        <Drawer.Screen options={{ title: 'Localizar',  drawerIcon: ({focused, size}) => (<Feather name="map-pin" size={24} color="black" />
+          ),}} name="Localizar" component={MapsScreen} />
+
+        <Drawer.Screen options={{ title: 'Minhas Consultas',  drawerIcon: ({focused, size}) => (<MaterialCommunityIcons name="clipboard-pulse-outline" size={24} color="black" />
+          ),}} name="Minhas Consultas" component={MinhasConsultasScreen} />
+
+        <Drawer.Screen options={{ title: 'Agendar Consultas',  drawerIcon: ({focused, size}) => (<FontAwesome5 name="calendar-alt" size={24} color="black" />
+          ),}} name="Agendar Consultas" component={AgendaConsultaScreen} />
+
+        <Drawer.Screen options={{ title: 'Favoritos',  drawerIcon: ({focused, size}) => (<Ionicons name="star" size={24} color="black" />
+          ),}} name="Favoritos" component={FavoritosScreen} />
+            </Drawer.Section>          
             </View>
-        </View>            
-        </DrawerContentScrollView>
-        <Drawer.Section style={styles.bottomDrawerSection}>
-                <DrawerItem 
-                    icon={({color, size}) => (
-                        <Icon 
-                        name="exit-to-app" 
-                        color={color}
-                        size={size}
-                        />
-                    )}
-                    label="Sign Out"
-                    onPress={() => {signOut()}}
-                />
-        </Drawer.Section>
-        </View>
+            </View>            
+              </DrawerContentScrollView>
+              <Drawer.Section style={styles.bottomDrawerSection}>
+                      <DrawerItem 
+                          icon={({color, size}) => (
+                              <Icon name="exit-to-app" color={color} size={size}/>)} label="Sign Out" onPress={signOut} />
+              </Drawer.Section>
+            </View>
     );
 }
 
@@ -61,7 +77,7 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     userInfoSection: {
-      paddingLeft: 20,
+      paddingLeft: 15 ,
     },
     title: {
       fontSize: 16,

@@ -14,7 +14,7 @@ routes.post('/prevencoes', PrevencaoController.Inserir);
 routes.put('/prevencoes/:id', PrevencaoController.Update);
 routes.delete('/prevencoes/:id', PrevencaoController.Delete);
 
-routes.get('/usuario', UsuarioController.Login);
+routes.post('/usuario', UsuarioController.Login);
 routes.get('/usuarios', UsuarioController.Selecionar);
 routes.post('/usuarios', UsuarioController.Inserir);
 routes.put('/usuarios/:id', UsuarioController.Update);

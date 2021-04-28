@@ -8,7 +8,7 @@ function MapsScreen ({ navigation }){
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#008B8B"/>
+      <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
         <View style={css.containerHeader}>
         <View style={css.IconPosicao}>
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>

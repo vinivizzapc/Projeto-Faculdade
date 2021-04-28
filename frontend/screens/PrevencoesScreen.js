@@ -22,7 +22,7 @@ function PrevencoesScreen({ navigation }){
         </View>
         </View> 
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-      <TouchableOpacity style={styles.btnSubmit} title="Logar" onPress={listagem}>
+      <TouchableOpacity style={styles.btnSubmit} title="listar" onPress={listagem}>
         <Text style={styles.submitText}>Acessar</Text>
       </TouchableOpacity>
         {prevencoes.map(prevencao =>(
