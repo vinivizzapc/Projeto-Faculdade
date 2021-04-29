@@ -2,10 +2,9 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import CadastroScreen from './CadastroScreen';
-import LoginScreen from './LoginScreen';
-import App from '../App';
-import DrawerContent from '../components/DrawerContent';
+import CadastroScreen from '../screens/CadastroScreen';
+import LoginScreen from '../screens/LoginScreen';
+import DrawerContent from './DrawerContent';
 
 const RootStack = createStackNavigator();
 

@@ -10,16 +10,9 @@ import { View,
   StatusBar,
   Button,
 } from 'react-native';
-
 import { Input, Text } from 'react-native-elements';
-
-import css from '../style/css';
-import CadastroScreen from './CadastroScreen'
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import api from '../services/api';
-
 
 export default function LoginScreen ({navigation}) {
 
@@ -33,12 +26,10 @@ export default function LoginScreen ({navigation}) {
       senha: senha
     }
     const response = await api.post('/usuario', credenciais)
-    
+    console.log(response.data)
     const jsonValue = JSON.stringify(response.data)
     AsyncStorage.setItem('usuario', jsonValue)
   }
-
- 
 
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 95}));
   const [opacity] = useState(new Animated.Value(0));
@@ -62,7 +53,6 @@ export default function LoginScreen ({navigation}) {
 
   }, []);
 
-
   function keyboardDidShow(){
 
     Animated.parallel([
@@ -75,7 +65,6 @@ export default function LoginScreen ({navigation}) {
         duration: 1,
       }),
     ]).start();
-
 }
 
   function keyboardDidHide(){

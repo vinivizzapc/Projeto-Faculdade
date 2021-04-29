@@ -1,45 +1,20 @@
-import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import { DrawerActions } from '@react-navigation/native';
-import { StyleSheet, View, YellowBox, SafeAreaView, Image, ScrollView} from 'react-native';
-import { Container, Content, StatusBar, Footer, Button, Header } from 'native-base';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { StyleSheet } from 'react-native';
 import React from 'react';
-import Animated from 'react-native-reanimated';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {
-    useTheme,
-    Avatar,
-    Title,
-    Drawer,
-    Caption,
-    Paragraph,
-    Text,
-    TouchableRipple,
-    Switch
-} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import HomeScreen from '../screens/HomeScreen';
+import PrevencoesScreen from '../screens/PrevencoesScreen';
+import MapsScreen from '../screens/MapsScreen';
+import MinhasConsultasScreen from '../screens/MinhasConsultasScreen';
+import AgendaConsultaScreen from '../screens/AgendaConsultaScreen';
+import FavoritosScreen from '../screens/FavoritosScreen';
+import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import CustomDrawerContent from './CustomDrawerContent';
 
+const Drawer = createDrawerNavigator();
 
-function DrawerContent(props) {
-
-  function signOut(){
-    AsyncStorage.removeItem('usuario');
-  }
-
-    return (
-        <View style={{flex:1}}>
-            <DrawerContentScrollView {...props}>
-            <View style={styles.drawerContent}>
-                <View style={styles.userInfoSection}>
-                    <View style={{flexDirection:'row', marginTop: 15}}>
-                        <Avatar.Image source={{uri:'https://scontent.fgru11-1.fna.fbcdn.net/v/t1.18169-9/11836710_850418251732564_7796996506950551796_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_eui2=AeEsBkz-SClh2Kjij7DVAZLAJXHUwEx1UvwlcdTATHVS_HYIuXcjm1dNLt3czmXoGq0I48f09zJPjJtDIZRtdjUk&_nc_ohc=msbZ8AdLzPgAX-Vw7qr&_nc_ht=scontent.fgru11-1.fna&oh=780c602955408093d5146d06061d1db6&oe=60AC17BD'}} size={50}/>
-                    <View style={{marginLeft:15, flexDirection:'column'}}>
-                        <Title style={styles.title}>Pradip Debnath</Title>
-                        <Caption style={styles.caption}>@itzpradip</Caption>
-                    </View> 
-                </View>   
-            </View>
-            <View style={styles.itemList}>
-            <Drawer.Section>
+function DrawerContent() {
+  return (
+    <Drawer.Navigator drawerContent={props=><CustomDrawerContent {...props}/>} initialRouteName="Home">
         <Drawer.Screen options={{ title: 'Home',  drawerIcon: ({focused, size}) => (<Ionicons name="home" size={24} color="black" />
           ),}} name="Home" component={HomeScreen} />
 
@@ -57,17 +32,8 @@ function DrawerContent(props) {
 
         <Drawer.Screen options={{ title: 'Favoritos',  drawerIcon: ({focused, size}) => (<Ionicons name="star" size={24} color="black" />
           ),}} name="Favoritos" component={FavoritosScreen} />
-            </Drawer.Section>          
-            </View>
-            </View>            
-              </DrawerContentScrollView>
-              <Drawer.Section style={styles.bottomDrawerSection}>
-                      <DrawerItem 
-                          icon={({color, size}) => (
-                              <Icon name="exit-to-app" color={color} size={size}/>)} label="Sign Out" onPress={signOut} />
-              </Drawer.Section>
-            </View>
-    );
+      </Drawer.Navigator>
+  );
 }
 
 export default DrawerContent;
