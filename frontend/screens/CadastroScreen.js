@@ -1,31 +1,35 @@
 import React, {Component, useState} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, StatusBar, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-
+import api from '../services/api';
 
 export default function CadastroScreen ({navigation}){
-
-  const [usuario, setUsuario] = useState('');
+  
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const cadastro = () => {
-    console.log("Cadastrou")    
-   
-    //Fazer chamada no back-end para cadastro. 
+    async function cadastro() {
+      const usuario = {
+        nome:nome,
+        email:email,
+        senha:senha,
+        status:0
+      }
+      console.log(nome, email, senha);
+      await api.post('/usuarios', usuario)
+      //Fazer chamada no back-end para cadastro. 
   }
-
   
   return(
     <View style={styles.container}>
      <StatusBar backgroundColor="#27282D"/>
     {<Image style={{marginBottom:60}} source={require('../assets/img/logo.png')} /> }
 
-    <TextInput placeholder="Digite seu Nome" style={styles.textPut} onChangeText={value=>setNome(value)} />
-    <TextInput placeholder="Digite seu E-mail" style={styles.textPut} onChangeText={value=>setEmail(value)} />
-    <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={styles.textPut} onChangeText={value=>setSenha(value)} />
+    <TextInput placeholder="Digite seu Nome" style={styles.textPut} value={nome} onChangeText={setNome} />
+    <TextInput placeholder="Digite seu E-mail" style={styles.textPut} value={email} onChangeText={setEmail} />
+    <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={styles.textPut} value={senha} onChangeText={setSenha} />
 
-    <TouchableOpacity style={styles.btnCadastro} onPress={()=>cadastro()}>
+    <TouchableOpacity style={styles.btnCadastro} onPress={cadastro}>
       <Text style={{color:'white', textAlign:'center'}}>CADASTRAR</Text>
     </TouchableOpacity>
 
