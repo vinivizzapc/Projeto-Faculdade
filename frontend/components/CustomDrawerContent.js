@@ -3,22 +3,19 @@ import { StyleSheet, View, YellowBox, SafeAreaView, Image, ScrollView} from 'rea
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from './Context';
 import {
-    useTheme,
     Avatar,
     Title,
     Drawer,
-    Caption,
-    Paragraph,
-    Text,
-    TouchableRipple,
-    Switch
+    Caption
 } from 'react-native-paper';
 
+
+
 function DrawerContent(props) {
-    function signOut(){
-        AsyncStorage.removeItem('usuario');
-    }
+
+    const {signOut} = React.useContext(AuthContext);
 
     return (
         <View style={{flex:1}}>

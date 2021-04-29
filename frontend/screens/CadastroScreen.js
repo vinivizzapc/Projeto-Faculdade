@@ -1,25 +1,38 @@
 import React, {Component, useState} from 'react';
 import { StyleSheet, Text, View, Image, TextInput, StatusBar, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import api from '../services/api';
+import {AuthContext} from '../components/Context';
 
 export default function CadastroScreen ({navigation}){
+
+  const {signUp} = React.useContext(AuthContext);
   
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-    async function cadastro() {
+  async function cadastro() {
+    if(nome != '' && email != '' && senha != ''){
       const usuario = {
         nome:nome,
         email:email,
         senha:senha,
         status:0
       }
-      console.log(nome, email, senha);
-      await api.post('/usuarios', usuario)
+      const response = await api.post('/usuarios', usuario)
+
+      if(response.data != null){
+        signUp()
+      }else{
+        alert('Erro ao cadastrar o usuário')
       //Fazer chamada no back-end para cadastro. 
+      }
+
+    }else{
+      alert('Preencha todos os campos')
   }
-  
+}
+   
   return(
     <View style={styles.container}>
      <StatusBar backgroundColor="#27282D"/>
@@ -29,7 +42,7 @@ export default function CadastroScreen ({navigation}){
     <TextInput placeholder="Digite seu E-mail" style={styles.textPut} value={email} onChangeText={setEmail} />
     <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={styles.textPut} value={senha} onChangeText={setSenha} />
 
-    <TouchableOpacity style={styles.btnCadastro} onPress={cadastro}>
+    <TouchableOpacity style={styles.btnCadastro} onPress={() => cadastro()}>
       <Text style={{color:'white', textAlign:'center'}}>CADASTRAR</Text>
     </TouchableOpacity>
 

@@ -11,6 +11,7 @@ module.exports = {
             }
 
             return res.json(rows);
+            
         });
     },
 
@@ -28,7 +29,9 @@ module.exports = {
                 senha: senha, 
                 status: status
             }
+            console.log('ok');
             return res.status(201).json(usuario);
+            
         });
         
     },

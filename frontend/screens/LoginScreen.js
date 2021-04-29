@@ -13,11 +13,14 @@ import { View,
 import { Input, Text } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
+import {AuthContext} from '../components/Context';
 
 export default function LoginScreen ({navigation}) {
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+
+  const {signIn} = React.useContext(AuthContext);
   
   async function logar() {
 
@@ -26,9 +29,15 @@ export default function LoginScreen ({navigation}) {
       senha: senha
     }
     const response = await api.post('/usuario', credenciais)
-    console.log(response.data)
-    const jsonValue = JSON.stringify(response.data)
-    AsyncStorage.setItem('usuario', jsonValue)
+    console.log(response);
+    
+    if (response.data.length != 0) {
+      signIn()
+    }else {
+      alert('Usuário/Senha inválidos')
+    }
+    // const jsonValue = JSON.stringify(response.data)
+    // AsyncStorage.setItem('usuario', jsonValue)
   }
 
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 95}));
@@ -57,11 +66,11 @@ export default function LoginScreen ({navigation}) {
 
     Animated.parallel([
       Animated.timing(logo.x, {
-        toValue: 90,
+        toValue: 130,
         duration: 1,
       }),
       Animated.timing(logo.y, {
-        toValue: 105,
+        toValue: 155,
         duration: 1,
       }),
     ]).start();
@@ -114,7 +123,7 @@ export default function LoginScreen ({navigation}) {
         onChangeText={senha => setSenha(senha)} value={senha}
         secureTextEntry={true}
         />
-        <TouchableOpacity style={styles.btnSubmit} title="Logar" onPress={logar}>
+        <TouchableOpacity style={styles.btnSubmit} title="Logar" onPress={() => logar()}>
           <Text style={styles.submitText}>Acessar</Text>
         </TouchableOpacity>
 
