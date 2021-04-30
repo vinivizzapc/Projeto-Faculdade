@@ -9,6 +9,7 @@ import { View,
   Keyboard,
   StatusBar,
   Button,
+  Alert,
 } from 'react-native';
 import { Input, Text } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,7 +35,9 @@ export default function LoginScreen ({navigation}) {
     if (response.data.length != 0) {
       signIn()
     }else {
-      alert('Usuário/Senha inválidos')
+      Alert.alert('OOPS!', 'Usuário/Senha inválidos', [
+        {text: 'Entendido'}
+      ]);
     }
     // const jsonValue = JSON.stringify(response.data)
     // AsyncStorage.setItem('usuario', jsonValue)

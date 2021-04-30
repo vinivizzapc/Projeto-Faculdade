@@ -11,7 +11,7 @@ function PrevencoesScreen({ navigation }){
     async function listagem(){
       const response = await api.get('/prevencoes')
       setPrevencoes(response.data)
-      console.log(response.data);
+      console.log(prevencoes);
     }
     listagem()
   }, []);
@@ -29,13 +29,14 @@ function PrevencoesScreen({ navigation }){
             <ScrollView>
               <FlatList 
                 data={prevencoes}
-                renderItem={({prevencao}) => (
+                keyExtractor={item => item.idPrevencao}
+                renderItem={({ item }) => (
                   <View style={styles.item}>
                     <Text>
-                      {prevencao.tipo}
+                      {item.tipo}
                     </Text>
                     <Text>
-                      {prevencao.texto}
+                      {item.texto}
                     </Text>
                   </View>
                 )}
@@ -55,8 +56,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 40,
-    paddingHorizontal: 20
   },
 
   item: {

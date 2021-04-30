@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import { StyleSheet, Text, View, Image, TextInput, StatusBar, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, StatusBar, TouchableOpacity, KeyboardAvoidingView, Alert} from 'react-native';
 import api from '../services/api';
 import {AuthContext} from '../components/Context';
 
@@ -24,12 +24,16 @@ export default function CadastroScreen ({navigation}){
       if(response.data != null){
         signUp()
       }else{
-        alert('Erro ao cadastrar o usuário')
+        Alert.alert('OOPS!', 'Erro ao Cadastrar o Usuário', [
+          {text: 'Entendido'}
+        ]);
       //Fazer chamada no back-end para cadastro. 
       }
 
     }else{
-      alert('Preencha todos os campos')
+      Alert.alert('OOPS!', 'Preencha todos os campos!', [
+        {text: 'Entendido'}
+      ]);
   }
 }
    
