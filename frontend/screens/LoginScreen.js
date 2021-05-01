@@ -1,14 +1,11 @@
-import React, {Component, useState} from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, TextInput, StatusBar, KeyboardAvoidingView, TouchableOpacity, Alert} from 'react-native';
-import { Icon, Footer } from 'native-base';
-import css from '../style/css';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
-import {AuthContext} from '../components/Context';
+import { AuthContext } from '../components/Context';
 
 export default function LoginScreen ({navigation}) {
 
@@ -23,13 +20,12 @@ export default function LoginScreen ({navigation}) {
       email: email,
       senha: senha
     }
+
     const response = await api.post('/usuario', credenciais)
 
     if (response.data.length != 0) {  
-      // const jsonValue = JSON.stringify(response.data)
-      // AsyncStorage.setItem('usuario', jsonValue)
-      // const sessao = AsyncStorage()
-      // console.log(AsyncStorage)
+      const usuario = response.data;
+      await AsyncStorage.setItem('user', JSON.stringify(usuario));
       signIn()
     }else {
       Alert.alert('OOPS!', 'Usuário/Senha inválidos', [
@@ -42,16 +38,6 @@ export default function LoginScreen ({navigation}) {
   return (
     <KeyboardAvoidingView style={styles.container}>
     <View style={styles.container}>
-      {/* <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
-        <View style={css.containerHeader}>
-        <View style={css.IconPosicao}>
-          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
-        </View>
-        </View> 
-      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-        <Text>MapsScreens</Text>
-      </View>
-      <Footer style={{backgroundColor:"#008B8B"}}/> */}
       <View style={styles.header}>
         <Text style={styles.text_header}>Login Now!</Text>
       </View>
@@ -88,10 +74,7 @@ export default function LoginScreen ({navigation}) {
               <TouchableOpacity  onPress={() => navigation.navigate('Cadastro')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 15 }]} >
                 <Text style={[styles.textSign, { color: '#009387'}]}>Sign Up</Text>
               </TouchableOpacity>
-
           </View>
-    
-     
       </View>
     </View>
     </KeyboardAvoidingView>

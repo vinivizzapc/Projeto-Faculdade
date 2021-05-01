@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Icon, Footer } from 'native-base';
 import css from '../style/css';
-import { NavigationContainer } from '@react-navigation/native';
 
 function HomeScreen({ navigation }){
 
@@ -11,7 +10,7 @@ function HomeScreen({ navigation }){
       <StatusBar backgroundColor="#008B8B"/>
         <View style={css.containerHeader}>
         <View style={css.IconPosicao}>
-          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
+          <Icon name="menu" onPress={() => navigation.openDrawer()}/>
         </View>
         </View> 
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>

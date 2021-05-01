@@ -9,8 +9,8 @@ module.exports = {
             if (err) {
                 throw err;
             }
-
-            return res.json(rows);
+            const usuario = rows.shift();
+            return res.json(usuario);
             
         });
     },
