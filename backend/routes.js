@@ -26,4 +26,9 @@ routes.put('/locais/:id', LocalizacaoController.Update);
 routes.delete('/locais/:id', LocalizacaoController.Delete);
 routes.get('/locais/:id', LocalizacaoController.SelecionarLocal);
 
+routes.get('/locais/agenda/:id', AgendaController.Selecionar);
+routes.post('/locais/agenda', AgendaController.Inserir);
+routes.put('/locais/agenda/:id', AgendaController.Update);
+routes.delete('/locais/agenda/:id', AgendaController.Delete);
+
 module.exports = routes;
