@@ -1,21 +1,20 @@
 import React, {Component, useState} from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, StatusBar, TouchableOpacity, Alert} from 'react-native';
-import { Icon, Footer } from 'native-base';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert} from 'react-native';
 import css from '../style/css';
-import { NavigationContainer } from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import {AuthContext} from '../components/Context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CadastroScreen ({navigation}){
-
-  const { } = React.useContext(AuthContext);
   
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+
+  const {signUp} = React.useContext(AuthContext); 
 
   async function cadastro() {
     if(nome != '' && email != '' && senha != ''){
@@ -29,7 +28,7 @@ export default function CadastroScreen ({navigation}){
 
       if(response.data != null){
         const jsonValue = JSON.stringify(response.data)
-        AsyncStorage.setItem('usuario', jsonValue)
+        await AsyncStorage.setItem('user', jsonValue)
         signUp()
       }else{
         Alert.alert('OOPS!', 'Erro ao Cadastrar o Usuário', [
