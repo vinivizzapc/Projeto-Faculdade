@@ -6,11 +6,18 @@ import css from '../style/css';
 import api from '../services/api';
 import MapView, { Marker } from 'react-native-maps';
 
-export default function MapsScreen() {
+export default function MapsScreen({navigation}) {
   return (
     <View style={styles.container}>
+    <StatusBar backgroundColor="#008B8B"/>
+        <View style={css.containerHeader}>
+        <View style={css.IconPosicao}>
+          <Icon name="menu" onPress={() => navigation.openDrawer()}/>
+        </View>
+        </View> 
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+
       <MapView
-        customMapStyle={customStyle}
         style={styles.mapStyle}
         initialRegion={{
           latitude: 37.78825,
@@ -21,16 +28,17 @@ export default function MapsScreen() {
       >
         <Marker 
           coordinate={{
-            latitude: 37.78825,
+            latitude: 37.78925,
             longitude: -122.4324,
           }}
           title="Local de Entrega"
           description="Ruas das Palmeiras, 25"
           icon={{ 
-            uri: "https://img.icons8.com/plasticine/1x/truck.png" 
+            uri: "https://img.icons8.com/plasticine/1x/hospital.png" 
           }}
         />
       </MapView>
+      </View>
     </View>
   );
 }
@@ -38,9 +46,6 @@ export default function MapsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   mapStyle: {
     width: Dimensions.get('window').width,

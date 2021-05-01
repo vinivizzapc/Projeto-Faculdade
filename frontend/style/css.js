@@ -6,7 +6,9 @@ const css = StyleSheet.create({
 },
 containerHeader: {
     backgroundColor: '#008B8B',
-    height: 55
+    height: 55,
+    borderBottomEndRadius: 8,
+    borderBottomStartRadius: 8,
   },
   IconPosicao:{
     marginTop: 10,
@@ -14,6 +16,10 @@ containerHeader: {
   },
   contColor:{
     backgroundColor:"#008B8B",
+  },
+  containerFooter:{
+    backgroundColor:"#008B8B",
+    borderTopEndRadius: 40
   }
 })
 

@@ -16,7 +16,7 @@ function HomeScreen({ navigation }){
       <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
         <Text>HomeScreens</Text>
       </View>
-      <Footer style={{backgroundColor:"#008B8B"}}/>
+      <Footer style={css.containerFooter}/>
     </View>
   );
 }
