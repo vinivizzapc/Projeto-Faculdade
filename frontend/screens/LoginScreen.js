@@ -1,17 +1,11 @@
-import React, {Component, useState, useEffect} from 'react';
-import { View, 
-  KeyboardAvoidingView, 
-  Image, 
-  TextInput, 
-  TouchableOpacity, 
-  StyleSheet, 
-  Animated,
-  Keyboard,
-  StatusBar,
-  Button,
-  Alert,
-} from 'react-native';
-import { Input, Text } from 'react-native-elements';
+import React, {Component, useState} from 'react';
+import { StyleSheet, Text, View, Image, Dimensions, TextInput, StatusBar, KeyboardAvoidingView, TouchableOpacity, Alert} from 'react-native';
+import { Icon, Footer } from 'native-base';
+import css from '../style/css';
+import { NavigationContainer } from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Feather } from '@expo/vector-icons'; 
+import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
 import {AuthContext} from '../components/Context';
@@ -30,167 +24,143 @@ export default function LoginScreen ({navigation}) {
       senha: senha
     }
     const response = await api.post('/usuario', credenciais)
-    console.log(response);
-    
-    if (response.data.length != 0) {
+
+    if (response.data.length != 0) {  
+      // const jsonValue = JSON.stringify(response.data)
+      // AsyncStorage.setItem('usuario', jsonValue)
+      // const sessao = AsyncStorage()
+      // console.log(AsyncStorage)
       signIn()
     }else {
       Alert.alert('OOPS!', 'Usuário/Senha inválidos', [
         {text: 'Entendido'}
       ]);
     }
-    // const jsonValue = JSON.stringify(response.data)
-    // AsyncStorage.setItem('usuario', jsonValue)
-  }
 
-  const [offset] = useState(new Animated.ValueXY({x: 0, y: 95}));
-  const [opacity] = useState(new Animated.Value(0));
-  const [logo] = useState(new Animated.ValueXY({x: 130, y:155}));
-
-  useEffect(() => {
-    KeyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
-    KeyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
-
-    Animated.parallel([
-      Animated.spring(offset.y, {
-        toValue: 0,
-        speed: 4, 
-        bounciness: 20
-      }),
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 200,
-      })
-    ]).start(); 
-
-  }, []);
-
-  function keyboardDidShow(){
-
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 130,
-        duration: 1,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 155,
-        duration: 1,
-      }),
-    ]).start();
-}
-
-  function keyboardDidHide(){
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 130,
-        duration: 1,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 155,
-        duration: 1,
-        
-      }),
-    ]).start();
   }
 
   return (
-    <KeyboardAvoidingView style={styles.background}>
-     <StatusBar backgroundColor="#27282D"/>
-      <View style={styles.containerLogo}>
-        <Animated.Image style={{
-          width: logo.x,
-          height: logo.y,
-          }}
-        source={require('../assets/img/logo.png')}
-        />
+    <KeyboardAvoidingView style={styles.container}>
+    <View style={styles.container}>
+      {/* <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
+        <View style={css.containerHeader}>
+        <View style={css.IconPosicao}>
+          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
+        </View>
+        </View> 
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+        <Text>MapsScreens</Text>
       </View>
+      <Footer style={{backgroundColor:"#008B8B"}}/> */}
+      <View style={styles.header}>
+        <Text style={styles.text_header}>Login Now!</Text>
+      </View>
+      <View style={styles.footer}>
 
-      <Animated.View 
-      style={[
-        styles.container,
-        { 
-          opacity: opacity,
-          transform: [
-            { translateY: offset.y }
-          ]
-        }
-        ]}
-      >
+        <Text style={[styles.text_footer,{marginTop:25}]}>Email</Text>
+          <View style={styles.action}>
+            <Feather 
+              name="mail"
+              color="#05375a"
+              size={20}
+              paddingLeft={15}
+            />
+              <TextInput placeholder="Your Email" style={styles.TextInput} value={email} onChangeText={setEmail} autoCapitalize="none"/>
+          </View>
 
-        <TextInput style={styles.input} placeholder="E-mail" 
-        onChangeText={email => setEmail(email)} value={email} 
-        keyboardType="email-address"
-        />
 
-         <TextInput style={styles.input} placeholder="Senha"
-        onChangeText={senha => setSenha(senha)} value={senha}
-        secureTextEntry={true}
-        />
-        <TouchableOpacity style={styles.btnSubmit} title="Logar" onPress={() => logar()}>
-          <Text style={styles.submitText}>Acessar</Text>
-        </TouchableOpacity>
+        <Text style={[styles.text_footer,{marginTop:25}]}>Password</Text>
+          <View style={styles.action}>  
+              <FontAwesome 
+                name="lock"
+                color="#05375a"
+                size={20}
+                paddingLeft={15}
+              />
+          <TextInput placeholder="Your Password" style={styles.TextInput} value={senha} onChangeText={setSenha} autoCapitalize="none" secureTextEntry={true}/>
+          </View>
+            <View style={styles.button}>
+              <TouchableOpacity style={styles.signIn} title="Logar" onPress={() => logar()}>
+                <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
+                  <Text style={[styles.textSign, {color:'#fff'}]}>Sign In</Text>
+                  </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={() => navigation.navigate('Cadastro')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 15 }]} >
+                <Text style={[styles.textSign, { color: '#009387'}]}>Sign Up</Text>
+              </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Cadastro')} style={styles.btnRegister}>
-          <Text style={styles.registerText}>Não tem cadastro? <Text style={styles.btnRedirecionar} >Cadastre-se</Text></Text>
-        </TouchableOpacity>
-
-      </Animated.View>
+          </View>
+    
+     
+      </View>
+    </View>
     </KeyboardAvoidingView>
-
   );
 }
 
-
 const styles = StyleSheet.create({
-  background:{
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#27282D',
+  container: {
+    flex: 1, 
+    backgroundColor: '#009387'
   },
-  containerLogo:{
-    flex: 1,
-    justifyContent: 'center',
+  header: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      paddingHorizontal: 20,
+      paddingBottom: 50
   },
-  container:{
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '90%',
+  footer: {
+      flex: 3,
+      backgroundColor: '#fff',
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      paddingHorizontal: 20,
+      paddingVertical: 30
   },
-  input:{
-    backgroundColor: '#FFF',
-    width: '90%',
-    marginBottom: 15,
-    color: '#222',
-    fontSize: 17,
-    borderRadius: 7,
-    padding: 10,
-    borderColor: 'black',
-    borderWidth: 1,
+  text_header: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: 30
   },
-  btnSubmit:{
-    backgroundColor: '#35AAFF',
-    width: '90%', 
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 7,
+  text_footer: {
+      color: '#05375a',
+      fontSize: 18,
   },
-  submitText:{
-    color: '#FFF',
-    fontSize: 18,
+  action: {
+      flexDirection: 'row',
+      marginTop: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#f2f2f2',
+      paddingBottom: 5
   },
-  btnRegister:{
-    marginTop:10,
+  actionError: {
+      flexDirection: 'row',
+      marginTop: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#FF0000',
+      paddingBottom: 5
   },
-  registerText:{
-    color: 'white',
+  TextInput: {
+      flex: 1,
+      marginLeft: 10,
   },
-  btnRedirecionar:{
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
-    color: 'white'
+  errorMsg: {
+      color: '#FF0000',
+      fontSize: 14,
+  },
+  button: {
+      alignItems: 'center',
+      marginTop: 60,
+  },
+  signIn: {
+      width: '100%',
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10
+  },
+  textSign: {
+      fontSize: 18,
+      fontWeight: 'bold'
   },
 });
-

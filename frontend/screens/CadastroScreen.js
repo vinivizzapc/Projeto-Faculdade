@@ -1,11 +1,17 @@
 import React, {Component, useState} from 'react';
-import { StyleSheet, Text, View, Image, TextInput, StatusBar, TouchableOpacity, KeyboardAvoidingView, Alert} from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TextInput, KeyboardAvoidingView, StatusBar, TouchableOpacity, Alert} from 'react-native';
+import { Icon, Footer } from 'native-base';
+import css from '../style/css';
+import { NavigationContainer } from '@react-navigation/native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Feather } from '@expo/vector-icons'; 
+import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import {AuthContext} from '../components/Context';
 
 export default function CadastroScreen ({navigation}){
 
-  const {signUp} = React.useContext(AuthContext);
+  const { } = React.useContext(AuthContext);
   
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
@@ -22,6 +28,8 @@ export default function CadastroScreen ({navigation}){
       const response = await api.post('/usuarios', usuario)
 
       if(response.data != null){
+        const jsonValue = JSON.stringify(response.data)
+        AsyncStorage.setItem('usuario', jsonValue)
         signUp()
       }else{
         Alert.alert('OOPS!', 'Erro ao Cadastrar o Usuário', [
@@ -36,60 +44,140 @@ export default function CadastroScreen ({navigation}){
       ]);
   }
 }
-   
-  return(
+
+  return (
+    <KeyboardAvoidingView style={styles.container}>
     <View style={styles.container}>
-     <StatusBar backgroundColor="#27282D"/>
-    {<Image style={{marginBottom:60}} source={require('../assets/img/logo.png')} /> }
+      {/* <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
+        <View style={css.containerHeader}>
+        <View style={css.IconPosicao}>
+          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
+        </View>
+        </View> 
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+        <Text>MapsScreens</Text>
+      </View>
+      <Footer style={{backgroundColor:"#008B8B"}}/> */}
+      <View style={styles.header}>
+        <Text style={styles.text_header}>Register Now!</Text>
+      </View>
+      <View style={styles.footer}>
 
-    <TextInput placeholder="Digite seu Nome" style={styles.textPut} value={nome} onChangeText={setNome} />
-    <TextInput placeholder="Digite seu E-mail" style={styles.textPut} value={email} onChangeText={setEmail} />
-    <TextInput secureTextEntry={true} placeholder="Digite sua Senha" style={styles.textPut} value={senha} onChangeText={setSenha} />
+      <Text style={styles.text_footer}>Name</Text>
+          <View style={styles.action}>
+          <FontAwesome 
+            name="user-o"
+            color="#05375a"
+            size={20}
+            paddingLeft={15}
+          />
+          
+        <TextInput placeholder="Your Name" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
 
-    <TouchableOpacity style={styles.btnCadastro} onPress={() => cadastro()}>
-      <Text style={{color:'white', textAlign:'center'}}>CADASTRAR</Text>
-    </TouchableOpacity>
+        <Text style={[styles.text_footer,{marginTop:25}]}>Email</Text>
+          <View style={styles.action}>
+            <Feather 
+              name="mail"
+              color="#05375a"
+              size={20}
+              paddingLeft={15}
+            />
+              <TextInput placeholder="Your Email" style={styles.TextInput} value={email} onChangeText={setEmail} autoCapitalize="none"/>
+          </View>
 
-    <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.btnLogin}>
-          <Text style={styles.LoginText}>Já tem um cadastro? <Text style={styles.btnRedirecionar}>Entrar</Text></Text>
-    </TouchableOpacity>
 
+        <Text style={[styles.text_footer,{marginTop:25}]}>Password</Text>
+          <View style={styles.action}>  
+              <FontAwesome 
+                name="lock"
+                color="#05375a"
+                size={20}
+                paddingLeft={15}
+              />
+          <TextInput placeholder="Your Password" style={styles.TextInput} value={senha} secureTextEntry={true} onChangeText={setSenha} autoCapitalize="none"/>
+          </View>
+            <View style={styles.button}>
+              <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
+                <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
+                  <Text style={[styles.textSign, {color:'#fff'}]}>Sign Up</Text>
+                  </LinearGradient>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={() => navigation.navigate('Login')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 15 }]} >
+                <Text style={[styles.textSign, { color: '#009387'}]}>Sign In</Text>
+              </TouchableOpacity>
+
+          </View>
+    
+     
+      </View>
     </View>
+    </KeyboardAvoidingView>
   );
 }
 
-
 const styles = StyleSheet.create({
-  container:{
-    flex: 1,
-    backgroundColor: '#27282D',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
- },
- textPut: {
-   width: '100%',
-   height: 40,
-   backgroundColor: 'white',
-   borderRadius: 7,
-   paddingLeft: 10,
-   marginBottom: 10,
- },
-  btnCadastro: {
-  width: '100%',
-  height: 40,
-  backgroundColor: '#7b42f5',
-  borderRadius: 20,
-  justifyContent: 'center',
-},
-  btnLogin:{
-    marginTop:10,
+  container: {
+    flex: 1, 
+    backgroundColor: '#009387'
   },
-  LoginText:{
-    color: 'white',
+  header: {
+      flex: 1,
+      justifyContent: 'flex-end',
+      paddingHorizontal: 20,
+      paddingBottom: 50
   },
-  btnRedirecionar:{
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
-  }
+  footer: {
+      flex: 3,
+      backgroundColor: '#fff',
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+      paddingHorizontal: 20,
+      paddingVertical: 30
+  },
+  text_header: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: 30
+  },
+  text_footer: {
+      color: '#05375a',
+      fontSize: 18,
+  },
+  action: {
+      flexDirection: 'row',
+      marginTop: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#f2f2f2',
+      paddingBottom: 5
+  },
+  actionError: {
+      flexDirection: 'row',
+      marginTop: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#FF0000',
+      paddingBottom: 5
+  },
+  TextInput: {
+      flex: 1,
+      marginLeft: 10,
+  },
+  errorMsg: {
+      color: '#FF0000',
+      fontSize: 14,
+  },
+  button: {
+      alignItems: 'center',
+      marginTop: 35,
+  },
+  signIn: {
+      width: '100%',
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10
+  },
+  textSign: {
+      fontSize: 18,
+      fontWeight: 'bold'
+  },
 });
