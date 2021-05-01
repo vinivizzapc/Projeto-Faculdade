@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, SafeAreaViewBase, FlatList, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, SafeAreaViewBase, FlatList, ScrollView, SafeAreaView, Image, Animated } from 'react-native';
 import { Icon, Footer, Separator, Right } from 'native-base';
-import {Avatar} from 'react-native-paper';
 import css from '../style/css';
 import api from '../services/api';
 
 function PrevencoesScreen({ navigation }){
-
   const [prevencoes, setPrevencoes] = useState([]);
+
   useEffect(() => {
     async function listagem(){
       const response = await api.get('/prevencoes')
       setPrevencoes(response.data)
+      console.log(prevencoes);
     }
     listagem()
   }, []);
@@ -19,49 +19,49 @@ function PrevencoesScreen({ navigation }){
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#008B8B"/>
-        <View style={css.containerHeader}>
-          <View style={css.IconPosicao}>
-            <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
-          </View>
-        </View> 
-
-      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-          <SafeAreaView>
-            <ScrollView>
-
+      <View style={css.containerHeader}>
+        <View style={css.IconPosicao}>
+          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
+        </View>
+      </View> 
+      <View style={styles.header}>
+        <SafeAreaView>
+          <ScrollView>
             <View>
               <FlatList 
                 data={prevencoes}
-                keyExtractor={item => item.idPrevencao}
+                keyExtractor={item => item.idPrevencao.toString()}
                 renderItem={({ item }) => (
                   <View style={styles.item} >
                     <Separator style={styles.itemDivisao}>
                       <View style={styles.divisaoItem}>
-                        <Text style={styles.divisao}>{item.tipo}</Text>
+                            <Text style={styles.divisao}>{item.tipo}</Text>
                       </View>
                     </Separator>
-                    <View style={{ flex:1, flexDirection:'row', backgroundColor:'#90caf9', borderRadius: 10, borderWidth: 1, borderColor: '#fff',  height:100, alignItems:'center'}}>
-                      <View style={{justifyContent:'center', paddingLeft:5}}>
-                        <Avatar.Image style={{}} source={{uri:'https://scontent.fgru11-1.fna.fbcdn.net/v/t1.18169-9/11836710_850418251732564_7796996506950551796_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_eui2=AeEsBkz-SClh2Kjij7DVAZLAJXHUwEx1UvwlcdTATHVS_HYIuXcjm1dNLt3czmXoGq0I48f09zJPjJtDIZRtdjUk&_nc_ohc=msbZ8AdLzPgAX-Vw7qr&_nc_ht=scontent.fgru11-1.fna&oh=780c602955408093d5146d06061d1db6&oe=60AC17BD'}} size={70}/>
+                    <View style={styles.prevencao}>
+                      <View style={{justifyContent:'center'}}>
+                        <Image style={{height:85, width:85, borderWidth: 2, borderRadius: 15, borderColor:'#e53935'}} source={require('../assets/img/logo.png')}/>
                       </View>
-                      <View style={{paddingLeft:80}}>
-                        <Text style={{color:'#26a69a'}}>
+                      <View style={{ backgroundColor:'#4fc3f7', marginLeft:10, height:100, width:280, borderRadius: 10, borderWidth: 1, borderColor:'#fff', alignItems:'center', paddingTop:35  }}>
+                        <Text style={{color:'#004d40'}}>
                           {item.texto}
+                        </Text>
+                        <Text style={{fontSize:12, paddingLeft:220, paddingTop:20, color:'#004d40'}}>
+                          Pedro
                         </Text>
                       </View>
                     </View>
                   </View>
                 )}
               /> 
-            </View>      
+              </View>      
             </ScrollView>
           </SafeAreaView>
         </View>
-        <Footer style={{backgroundColor:"#008B8B"}}/>
+        <Footer style={{backgroundColor:"#0097a7"}}/>
     </View>
   );
 }
-
 
 export default PrevencoesScreen;
 
@@ -88,13 +88,26 @@ const styles = StyleSheet.create({
   },
   itemDivisao:{
     padding: 4,
-    borderBottomColor: "black",
-    borderWidth: 1.5,
+    borderBottomColor:'#e0e0e0',
+    borderRightColor:'#e0e0e0',
+    borderRightWidth:3,
+    borderBottomWidth:3,
     marginBottom:7,
-    borderRadius: 3, 
-     
-    
-  }
-  
-  });
-
+    borderRadius: 5, 
+  },
+  header:{
+    flex:1, 
+    alignItems:'center', 
+    justifyContent:'center'
+  },
+  prevencao:{
+    flex:1, 
+    flexDirection:'row', 
+    backgroundColor:'#fff', 
+    borderRadius: 10, 
+    borderWidth: 1, 
+    borderColor: '#fff',  
+    height:100, 
+    alignItems:'center'
+  }  
+});

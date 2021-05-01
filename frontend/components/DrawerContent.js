@@ -7,7 +7,8 @@ import MapsScreen from '../screens/MapsScreen';
 import MinhasConsultasScreen from '../screens/MinhasConsultasScreen';
 import AgendaConsultaScreen from '../screens/AgendaConsultaScreen';
 import FavoritosScreen from '../screens/FavoritosScreen';
-import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import ListUsuarioScreen from '../screens/ListUsuarioScreen';
+import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import CustomDrawerContent from './CustomDrawerContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -41,7 +42,7 @@ function DrawerContent() {
         )
         :
         <>
-          <Drawer.Screen options={{ title: 'Favoritos',  drawerIcon: ({focused, size}) => (<Ionicons name="star" size={24} color="black" />),}} name="Favoritos" component={FavoritosScreen} />
+          <Drawer.Screen options={{ title: 'Usuarios',  drawerIcon: ({focused, size}) => (<FontAwesome name="users" size={24} color="black" />),}} name="Usuarios" component={ListUsuarioScreen} />
         </>
       }
       </Drawer.Navigator>
