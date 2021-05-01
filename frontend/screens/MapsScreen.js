@@ -31,7 +31,7 @@ export default function MapsScreen({navigation}) {
             latitude: 37.78925,
             longitude: -122.4324,
           }}
-          title="Local de Entrega"
+          title="Hospital"
           description="Ruas das Palmeiras, 25"
           icon={{ 
             uri: "https://img.icons8.com/plasticine/1x/hospital.png" 
