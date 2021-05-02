@@ -16,12 +16,10 @@ function ListUsuarioScreen({ navigation }){
       setUsuarios(response.data)
     }
     listagem();
-  }, []);
+  }, [usuarios]);
 
   async function excluir(id) {
     await api.delete(`/usuarios/${id}`);
-    const response = await api.get('/usuarios');
-    setUsuarios(response.data);
   }
 
   function excluirUsuario(idusuario) {
