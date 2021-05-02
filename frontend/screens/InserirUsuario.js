@@ -47,15 +47,22 @@ function InserirUsuario({ navigation }){
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.container}>
         <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
-        <View style={css.containerHeader}>
-          <View style={css.IconPosicao}>
-            <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
-          </View>
-        </View> 
           <View style={styles.header}>
+            <View style={{paddingBottom: 20}}>
+              <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
+            </View>
             <Text style={styles.text_header}>Cadastrar Usuario</Text>
           </View>
           <View style={styles.footer}>
+          <Text style={[styles.text_footer,{marginTop:15}]}>Tipo de usuário</Text>
+              <Picker
+                selectedValue={status}
+                style={{ height: 50, width: '100%', marginBottom: 10, color:'black'}}
+                onValueChange={itemValue => setStatus(itemValue)}
+              > 
+                <Picker.Item label="Comum" value="0" />
+                <Picker.Item label="Administrador" value="1" />
+              </Picker>
             <Text style={styles.text_footer}>Nome</Text>
             <View style={styles.action}>
               <FontAwesome 
@@ -65,7 +72,7 @@ function InserirUsuario({ navigation }){
                 paddingLeft={15}
               />
               <TextInput placeholder="Seu Name" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
-              <Text style={[styles.text_footer,{marginTop:25}]}>Email</Text>
+              <Text style={[styles.text_footer,{marginTop:15}]}>Email</Text>
               <View style={styles.action}>
                 <Feather 
                   name="mail"
@@ -75,36 +82,29 @@ function InserirUsuario({ navigation }){
                 />
                 <TextInput placeholder="Seu Email" style={styles.TextInput} value={email} onChangeText={setEmail} autoCapitalize="none"/>
               </View>
-              <Text style={[styles.text_footer,{marginTop:25}]}>Senha</Text>
+              <Text style={[styles.text_footer,{marginTop:15}]}>Senha</Text>
               <View style={styles.action}>  
                 <FontAwesome 
                   name="lock"
                   color="#05375a"
                   size={20}
-                  paddingLeft={15}
+                  paddingLeft={30}
+                  paddingTop={50}
                 />
                 <TextInput placeholder="Sua senha" style={styles.TextInput} value={senha} secureTextEntry={true} onChangeText={setSenha} autoCapitalize="none"/>
               </View>
-              <Picker
-                selectedValue={status}
-                style={{ height: 50, width: 150 }}
-                onValueChange={itemValue => setStatus(itemValue)}
-              >
-                <Picker.Item label="Comum" value="0" />
-                <Picker.Item label="Administrador" value="1" />
-              </Picker>
+             
               <View style={styles.button}>
                 <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
-                  <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
+                  <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
                     <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar</Text>
                   </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity  onPress={() => navigation.navigate('Usuarios')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 15 }]} >
-                  <Text style={[styles.textSign, { color: '#009387'}]}>Cancelar</Text>
+                <TouchableOpacity  onPress={() => navigation.navigate('Usuarios')} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
+                  <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
                 </TouchableOpacity>
               </View>
             </View>
-        <Footer style={{backgroundColor:"#008B8B"}}/>
       </View>
     </KeyboardAvoidingView>
   );
@@ -115,16 +115,16 @@ export default InserirUsuario;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    backgroundColor: '#009387'
+    backgroundColor: '#008B8B'
   },
   header: {
       flex: 1,
       justifyContent: 'flex-end',
       paddingHorizontal: 20,
-      paddingBottom: 40
+      paddingBottom: 10,
   },
   footer: {
-      flex: 3,
+      flex: 5,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   button: {
       alignItems: 'center',
-      marginTop: 35,
+      marginTop: 40,
   },
   signIn: {
       width: '100%',
