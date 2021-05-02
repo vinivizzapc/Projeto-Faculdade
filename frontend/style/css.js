@@ -6,9 +6,9 @@ const css = StyleSheet.create({
 },
 containerHeader: {
     backgroundColor: '#008B8B',
-    height: 55,
-    borderBottomEndRadius: 8,
-    borderBottomStartRadius: 8,
+    height: 45,
+    flexDirection: 'row',
+    justifyContent:'space-between'
   },
   IconPosicao:{
     marginTop: 10,

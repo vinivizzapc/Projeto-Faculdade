@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import PrevencoesScreen from '../screens/PrevencoesScreen';
@@ -11,11 +11,14 @@ import ListUsuarioScreen from '../screens/ListUsuarioScreen';
 import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import CustomDrawerContent from './CustomDrawerContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InserirUsuario from '../screens/InserirUsuario';
+import StackAdm from '../components/StackAdm';
 
 const Drawer = createDrawerNavigator();
 
 function DrawerContent() {
   const [status , setStatus] = useState(0);
+  const [bigStone , setBigStone] = useState(0);
 
   useEffect(() => {
     async function CheckUser(){
@@ -43,6 +46,7 @@ function DrawerContent() {
         :
         <>
           <Drawer.Screen options={{ title: 'Usuarios',  drawerIcon: ({focused, size}) => (<FontAwesome name="users" size={24} color="black" />),}} name="Usuarios" component={ListUsuarioScreen} />
+          <Drawer.Screen name="InserirUsu" component={StackAdm} />
         </>
       }
       </Drawer.Navigator>

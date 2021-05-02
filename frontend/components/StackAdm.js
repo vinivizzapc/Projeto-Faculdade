@@ -10,13 +10,12 @@ import ListUsuarioScreen from '../screens/ListUsuarioScreen';
 
 const RootStack = createStackNavigator();
 
-const StackScreen = ({navigation}) => (
+const StackAdm = ({navigation}) => (
     <RootStack.Navigator headerMode='none'>
-        <RootStack.Screen name="Cadastro" component={CadastroScreen}/>
-        <RootStack.Screen name="Login" component={LoginScreen}/>
-        <RootStack.Screen name="DrawerContent" component={DrawerContent}/>
+        <RootStack.Screen name="InserirUsuario" component={InserirUsuario}/>
+        <RootStack.Screen name="ListUsuarioScreen" component={ListUsuarioScreen}/>
     </RootStack.Navigator>
 
 );
 
-export default StackScreen;
+export default StackAdm;
