@@ -11,7 +11,7 @@ import {
 } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function DrawerContent(props) {
+function DrawerAdm(filteredProps) {
   const {signOut} = React.useContext(AuthContext);
 
   async function deslogar() {
@@ -33,7 +33,7 @@ function DrawerContent(props) {
 
   return (
       <View style={{flex:1}}>
-        <DrawerContentScrollView {...props}>
+        <DrawerContentScrollView {...filteredProps}>
           <View style={styles.drawerContent}>
             <View style={styles.userInfoSection}>
               <View style={{flexDirection:'row', marginTop: 15}}>
@@ -45,28 +45,28 @@ function DrawerContent(props) {
               </View>   
             </View>
             <View style={styles.itemList}>
-              <DrawerItemList {...props}/>
+              <DrawerItemList {...filteredProps}/>
             </View>
         </View>            
       </DrawerContentScrollView>
       <Drawer.Section style={styles.bottomDrawerSection}>
-          <DrawerItem 
-              icon={({color, size}) => (
-                  <Icon 
-                  name="exit-to-app" 
-                  color={color}
-                  size={size}
-                  />
-              )}
-              label="Sign Out"
-              onPress={() => {deslogar()}}
-          />
+            <DrawerItem 
+                icon={({color, size}) => (
+                    <Icon 
+                    name="exit-to-app" 
+                    color={color}
+                    size={size}
+                    />
+                )}
+                label="Sign Out"
+                onPress={() => {deslogar()}}
+            />
       </Drawer.Section>
     </View>
   );
 }
 
-export default DrawerContent;
+export default DrawerAdm;
 
 const styles = StyleSheet.create({
     drawerContent: {

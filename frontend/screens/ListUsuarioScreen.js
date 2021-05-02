@@ -46,7 +46,7 @@ function ListUsuarioScreen({ navigation }){
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
         <View style={{marginRight:10}}>
-          <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirUsu')}/>
+          <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirUsuario')}/>
         </View>
       </View> 
       <View>
