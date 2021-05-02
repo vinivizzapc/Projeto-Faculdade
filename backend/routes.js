@@ -3,7 +3,7 @@ const { Router } = require('express');
 const PrevencaoController = require('./controllers/PrevencaoController');
 const UsuarioController = require('./controllers/UsuarioController');
 const LocalizacaoController = require('./controllers/LocalizacaoController');
-const ConsultaController = require('./controllers/ConsultaController');
+const ConsultaController = require('./controllers/ConsultaConstroller');
 const AgendaController = require('./controllers/AgendaController');
 
 const routes = Router();
@@ -30,5 +30,9 @@ routes.get('/locais/agenda/:id', AgendaController.Selecionar);
 routes.post('/locais/agenda', AgendaController.Inserir);
 routes.put('/locais/agenda/:id', AgendaController.Update);
 routes.delete('/locais/agenda/:id', AgendaController.Delete);
+
+routes.get('/usuarios/consultas/:id', ConsultaController.Selecionar);
+routes.post('/usuarios/consultas', ConsultaController.Inserir);
+routes.put('/usuarios/consultas/:id', ConsultaController.Update);
 
 module.exports = routes;

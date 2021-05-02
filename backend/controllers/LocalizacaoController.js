@@ -4,7 +4,7 @@ const CepCoords = require("coordenadas-do-cep");
 module.exports = {
     async Selecionar(req, res, next) {
         //desenvolver select com as localizações proximas
-
+        var sql = `SELECT * FROM locais`
         await connection.query(sql, (err, rows) => {
             if (err) {
                 throw err;
