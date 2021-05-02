@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/img/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#00bcd4"
+      "backgroundColor": "#01A7CD"
 
     },
     "updates": {

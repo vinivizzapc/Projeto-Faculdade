@@ -1,6 +1,5 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import { StyleSheet, View, TouchableOpacity, Image, StatusBar, Icon } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import PrevencoesScreen from '../screens/PrevencoesScreen';
@@ -9,10 +8,16 @@ import MinhasConsultasScreen from '../screens/MinhasConsultasScreen';
 import AgendaConsultaScreen from '../screens/AgendaConsultaScreen';
 import FavoritosScreen from '../screens/FavoritosScreen';
 import ListUsuarioScreen from '../screens/ListUsuarioScreen';
+import ListLocais from '../screens/ListLocaisScreen';
+import ListPrevencoes from '../screens/ListPrecencoesScreen';
+import ListAgendas from '../screens/ListAgendaScreen';
 import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import CustomDrawerContent from './CustomDrawerContent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InserirUsuario from '../screens/InserirUsuario';
+import InserirLocais from '../screens/InserirLocais';
+import InserirPrevencoes from '../screens/InserirPrevencoes';
+import InserirAgendas from '../screens/InserirAgenda';
 import { createStackNavigator } from '@react-navigation/stack';
 import DrawerAdm from '../components/DrawerAdm';
 
@@ -36,6 +41,72 @@ const inserirUsu = ({navigation}) => {
       <Stack.Screen
         name="InserirUsuario"
         component={InserirUsuario}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const Locais = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="Locais"
+        component={ListLocais}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const inserirLocais = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="InserirLocais"
+        component={InserirLocais}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const Prevencoes = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="Prevencoes"
+        component={ListPrevencoes}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const inserirPrevencoes = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="InserirPrevencoes"
+        component={InserirPrevencoes}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const Agendas = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="Agendas"
+        component={ListAgendas}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const inserirAgendas = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="InserirAgendas"
+        component={InserirAgendas}
       />
     </Stack.Navigator>
   );
@@ -75,21 +146,22 @@ function DrawerContent() {
           routeNames: props.state.routeNames.filter(
             (routeName) => {
               routeName !== 'InserirUsuario'
-              && routeName !== 'HiddenPage2';
+              && routeName !== 'InserirLocais'
+              && routeName !== 'InserirPrevencoes'
+              && routeName !== 'InserirAgendas'
             },
           ),
           routes: props.state.routes.filter(
             (route) =>
               route.name !== 'InserirUsuario'
-              && route.name !== 'HiddenPage2',
+              && route.name !== 'InserirLocais'
+              && route.name !== 'InserirPrevencoes'
+              && route.name !== 'InserirAgendas'
           ),
         },
       };
       return (
         <DrawerAdm {...filteredProps}/>
-        // <DrawerContentScrollView {...filteredProps}>
-        //   <DrawerItemList {...filteredProps} />
-        // </DrawerContentScrollView>
       );
     }}>
     <Drawer.Screen
@@ -98,9 +170,39 @@ function DrawerContent() {
       component={Usuarios}
     />
     <Drawer.Screen
+      name="Locais"
+      options={{drawerLabel: 'Locais'}}
+      component={Locais}
+    />
+    <Drawer.Screen
+      name="Prevencoes"
+      options={{drawerLabel: 'Prevenções'}}
+      component={Prevencoes}
+    />
+    <Drawer.Screen
+      name="agendas"
+      options={{drawerLabel: 'Agendas'}}
+      component={Agendas}
+    />
+    <Drawer.Screen
       name="InserirUsuario"
       options={{drawerLabel: 'Inserir Usuario'}}
       component={inserirUsu}
+    />
+    <Drawer.Screen
+      name="InserirLocais"
+      options={{drawerLabel: 'Inserir Locais'}}
+      component={inserirLocais}
+    />
+    <Drawer.Screen
+      name="InserirPrevencoes"
+      options={{drawerLabel: 'Inserir Prevencoes'}}
+      component={inserirPrevencoes}
+    />
+    <Drawer.Screen
+      name="InserirAgendas"
+      options={{drawerLabel: 'Inserir Agendas'}}
+      component={inserirAgendas}
     />
   </Drawer.Navigator>
   );

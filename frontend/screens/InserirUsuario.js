@@ -1,21 +1,18 @@
-import React, {Component, useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
-import { Icon, Footer } from 'native-base';
+import { Icon, Footer, Picker } from 'native-base';
 import css from '../style/css';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
-import {AuthContext} from '../components/Context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 function InserirUsuario({ navigation }){
-
   
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [status, setStatus] = useState(0);
 
   async function cadastro() {
     if(nome != '' && email != '' && senha != ''){
@@ -23,94 +20,92 @@ function InserirUsuario({ navigation }){
         nome:nome,
         email:email,
         senha:senha,
-        status:0
+        status:status
       }
+
       const response = await api.post('/usuarios', usuario)
 
       if(response.data != null){
-        setNome('')
-        setSenha('')
-        setEmail('')
-        navigation.navigate('Usuarios')
+        setNome('');
+        setSenha('');
+        setEmail('');
+        setStatus(0);
+        navigation.navigate('Usuarios');
       }else{
         Alert.alert('OOPS!', 'Erro ao Cadastrar o Usuário', [
           {text: 'Entendido'}
         ]);
-      //Fazer chamada no back-end para cadastro. 
       }
-
     }else{
       Alert.alert('OOPS!', 'Preencha todos os campos!', [
         {text: 'Entendido'}
       ]);
+    }
   }
-}
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-    <View style={styles.container}>
-      {/* <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
+      <View style={styles.container}>
+        <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
         <View style={css.containerHeader}>
-        <View style={css.IconPosicao}>
-          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
-        </View>
-        </View> 
-      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-        <Text>MapsScreens</Text>
-      </View>
-      <Footer style={{backgroundColor:"#008B8B"}}/> */}
-      <View style={styles.header}>
-        <Text style={styles.text_header}>Registro de Usuários</Text>
-      </View>
-      <View style={styles.footer}>
-
-      <Text style={styles.text_footer}>Name</Text>
-          <View style={styles.action}>
-          <FontAwesome 
-            name="user-o"
-            color="#05375a"
-            size={20}
-            paddingLeft={15}
-          />
-          
-        <TextInput placeholder="Your Name" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
-
-        <Text style={[styles.text_footer,{marginTop:25}]}>Email</Text>
-          <View style={styles.action}>
-            <Feather 
-              name="mail"
-              color="#05375a"
-              size={20}
-              paddingLeft={15}
-            />
-              <TextInput placeholder="Your Email" style={styles.TextInput} value={email} onChangeText={setEmail} autoCapitalize="none"/>
+          <View style={css.IconPosicao}>
+            <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
           </View>
-
-
-        <Text style={[styles.text_footer,{marginTop:25}]}>Password</Text>
-          <View style={styles.action}>  
+        </View> 
+          <View style={styles.header}>
+            <Text style={styles.text_header}>Cadastrar Usuario</Text>
+          </View>
+          <View style={styles.footer}>
+            <Text style={styles.text_footer}>Nome</Text>
+            <View style={styles.action}>
               <FontAwesome 
-                name="lock"
+                name="user-o"
                 color="#05375a"
                 size={20}
                 paddingLeft={15}
               />
-          <TextInput placeholder="Your Password" style={styles.TextInput} value={senha} secureTextEntry={true} onChangeText={setSenha} autoCapitalize="none"/>
-          </View>
-            <View style={styles.button}>
-              <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
-                <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
-                  <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar</Text>
+              <TextInput placeholder="Seu Name" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
+              <Text style={[styles.text_footer,{marginTop:25}]}>Email</Text>
+              <View style={styles.action}>
+                <Feather 
+                  name="mail"
+                  color="#05375a"
+                  size={20}
+                  paddingLeft={15}
+                />
+                <TextInput placeholder="Seu Email" style={styles.TextInput} value={email} onChangeText={setEmail} autoCapitalize="none"/>
+              </View>
+              <Text style={[styles.text_footer,{marginTop:25}]}>Senha</Text>
+              <View style={styles.action}>  
+                <FontAwesome 
+                  name="lock"
+                  color="#05375a"
+                  size={20}
+                  paddingLeft={15}
+                />
+                <TextInput placeholder="Sua senha" style={styles.TextInput} value={senha} secureTextEntry={true} onChangeText={setSenha} autoCapitalize="none"/>
+              </View>
+              <Picker
+                selectedValue={status}
+                style={{ height: 50, width: 150 }}
+                onValueChange={itemValue => setStatus(itemValue)}
+              >
+                <Picker.Item label="Comum" value="0" />
+                <Picker.Item label="Administrador" value="1" />
+              </Picker>
+              <View style={styles.button}>
+                <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
+                  <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
+                    <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar</Text>
                   </LinearGradient>
-              </TouchableOpacity>
-              <TouchableOpacity  onPress={() => navigation.navigate('Usuarios')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 15 }]} >
-                <Text style={[styles.textSign, { color: '#009387'}]}>Cancelar</Text>
-              </TouchableOpacity>
-          </View>
-    
-     
+                </TouchableOpacity>
+                <TouchableOpacity  onPress={() => navigation.navigate('Usuarios')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 15 }]} >
+                  <Text style={[styles.textSign, { color: '#009387'}]}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+        <Footer style={{backgroundColor:"#008B8B"}}/>
       </View>
-    </View>
     </KeyboardAvoidingView>
   );
 }

@@ -29,11 +29,9 @@ module.exports = {
                 senha: senha, 
                 status: status
             }
-            console.log('ok');
+
             return res.status(201).json(usuario);
-            
         });
-        
     },
 
     async Update(req, res, next){
