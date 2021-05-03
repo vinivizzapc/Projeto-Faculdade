@@ -3,7 +3,7 @@ const { Router } = require('express');
 const PrevencaoController = require('./controllers/PrevencaoController');
 const UsuarioController = require('./controllers/UsuarioController');
 const LocalizacaoController = require('./controllers/LocalizacaoController');
-const ConsultaController = require('./controllers/ConsultaConstroller');
+const ConsultaController = require('./controllers/ConsultasController');
 const AgendaController = require('./controllers/AgendaController');
 
 const routes = Router();
