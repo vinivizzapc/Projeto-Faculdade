@@ -9,7 +9,7 @@ import AgendaConsultaScreen from '../screens/AgendaConsultaScreen';
 import FavoritosScreen from '../screens/FavoritosScreen';
 import ListUsuarioScreen from '../screens/ListUsuarioScreen';
 import ListLocais from '../screens/ListLocaisScreen';
-import ListPrevencoes from '../screens/ListPrecencoesScreen';
+import ListPrevencoes from '../screens/ListPrevencoesScreen';
 import ListAgendas from '../screens/ListAgendaScreen';
 import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import CustomDrawerContent from './CustomDrawerContent';

@@ -11,10 +11,9 @@ function PrevencoesScreen({ navigation }){
     async function listagem(){
       const response = await api.get('/prevencoes')
       setPrevencoes(response.data)
-      console.log(prevencoes);
     }
     listagem()
-  }, []);
+  }, [prevencoes]);
 
   return (
     <View style={styles.container}>
