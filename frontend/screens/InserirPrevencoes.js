@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
-import { Icon, Footer, Picker } from 'native-base';
-import css from '../style/css';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { Feather, AntDesign } from '@expo/vector-icons'; 
+import { Icon, Picker } from 'native-base';
+import { AntDesign } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,30 +10,33 @@ function InserirPrevencoes({ navigation }){
   
   const [tipo, setTipo] = useState('higiene');
   const [texto, setTexto] = useState('');
-  const [idUsuario, setIdUsuario] = useState(0);
+  const [usuario, setUsuario] = useState({});
 
+  useEffect(() => {
+    async function getUser(){
+      const user = await AsyncStorage.getItem('user');
+      const jsonValue = JSON.parse(user);
+      setUsuario(jsonValue);
+    }
+    getUser();
+  }, [usuario]);
 
   async function cadastro() {
-    const usuario = await AsyncStorage.getItem('user')
-      const jsonValue = JSON.parse(usuario);
-      setIdUsuario(jsonValue.idusuario);
+    
 
     if(tipo != '' && texto != ''){
       const prevencao = {
         tipo:tipo,
         texto:texto,
-        idUsuario:idUsuario
+        idUsuario:usuario.idusuario
       }
 
-
       const response = await api.post('/prevencoes', prevencao)
-
-
 
       if(response.data != null){
         setTipo('higiene');
         setTexto('');
-        setIdUsuario(0);
+        setUsuario({});
         navigation.navigate('Prevencoes');
       }else{
         Alert.alert('OOPS!', 'Erro ao Cadastrar a Prevenção', [
@@ -57,7 +58,7 @@ function InserirPrevencoes({ navigation }){
             <View style={{paddingBottom: 20}}>
               <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
             </View>
-            <Text style={styles.text_header}>Cadastrar Usuario</Text>
+            <Text style={styles.text_header}>Cadastrar Prevenção</Text>
           </View>
           <View style={styles.footer}>
           <Text style={[styles.text_footer,{marginTop:1}]}>Tipo de prevenção</Text>

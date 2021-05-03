@@ -26,10 +26,11 @@ routes.put('/locais/:id', LocalizacaoController.Update);
 routes.delete('/locais/:id', LocalizacaoController.Delete);
 routes.get('/locais/:id', LocalizacaoController.SelecionarLocal);
 
-routes.get('/locais/agenda/:id', AgendaController.Selecionar);
-routes.post('/locais/agenda', AgendaController.Inserir);
-routes.put('/locais/agenda/:id', AgendaController.Update);
-routes.delete('/locais/agenda/:id', AgendaController.Delete);
+routes.get('/loc/agenda/:id', AgendaController.Selecionar);
+routes.get('/loc/agendas', AgendaController.SelecionarAgendas);
+routes.post('/loc/agenda', AgendaController.Inserir);
+routes.put('/loc/agenda/:id', AgendaController.Update);
+routes.delete('/loc/agenda/:id', AgendaController.Delete);
 
 routes.get('/usuarios/consultas/:id', ConsultaController.Selecionar);
 routes.post('/usuarios/consultas', ConsultaController.Inserir);

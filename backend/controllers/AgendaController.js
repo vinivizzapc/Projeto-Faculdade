@@ -1,6 +1,17 @@
 const connection = require('../connection');
 
 module.exports = {
+    async SelecionarAgendas(req, res, next){
+        var sql = `select * from agenda`;
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
     async Selecionar(req, res, next){
         const {id} = req.params;
         var sql = `select * from agenda, locais where agenda.idlocais = locais.idlocais and agenda.idlocais = ${id}`;

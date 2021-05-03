@@ -6,28 +6,28 @@ import css from '../style/css';
 import api from '../services/api';
 import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 
-function ListUsuarioScreen({ navigation }){
+function ListAgendasScreen({ navigation }){
 
-  const [usuarios, setUsuarios] = useState([]);
+  const [agendas, setAgendas] = useState([]);
 
   useEffect(() => {
     async function listagem(){
-      const response = await api.get('/usuarios');
-      setUsuarios(response.data)
+      const response = await api.get('/loc/agendas');
+      setAgendas(response.data)
     }
     listagem();
-  }, [usuarios]);
+  }, [agendas]);
 
   async function excluir(id) {
-    await api.delete(`/usuarios/${id}`);
+    await api.delete(`/loc/agenda/${id}`);
   }
 
-  function excluirUsuario(idusuario) {
-    Alert.alert('Excluir Usuário', 'Deseja excluir o usuário?', [
+  function excluirAgenda(id) {
+    Alert.alert('Excluir Horario', 'Deseja excluir o Horario?', [
       {
         text: 'Sim',
         onPress() {
-          excluir(idusuario)
+          excluir(id)
         }
       },
       {
@@ -44,10 +44,21 @@ function ListUsuarioScreen({ navigation }){
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
         <View style={{marginRight:10}}>
-          <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirUsuario')}/>
+          <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirAgendas')}/>
         </View>
       </View> 
         <View>
+          {
+            agendas.status == 1 ? (
+              <Text>
+                Em aberto
+              </Text>
+            ) 
+            :
+            <Text>
+              Encerrado
+            </Text>
+          }
           
         </View>
         <Footer style={{backgroundColor:"#008B8B"}}/>
@@ -55,7 +66,7 @@ function ListUsuarioScreen({ navigation }){
   );
 }
 
-export default ListUsuarioScreen;
+export default ListAgendasScreen;
 
 const styles = StyleSheet.create({
   container: {
