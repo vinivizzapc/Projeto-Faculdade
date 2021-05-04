@@ -32,8 +32,8 @@ routes.post('/loc/agenda', AgendaController.Inserir);
 routes.put('/loc/agenda/:id', AgendaController.Update);
 routes.delete('/loc/agenda/:id', AgendaController.Delete);
 
-routes.get('/usuarios/consultas/:id', ConsultaController.Selecionar);
-routes.post('/usuarios/consultas', ConsultaController.Inserir);
-routes.put('/usuarios/consultas/:id', ConsultaController.Update);
+routes.get('/usu/consultas/:id', ConsultaController.Selecionar);
+routes.post('/usu/consultas', ConsultaController.Inserir);
+routes.put('/usu/consultas/:id', ConsultaController.Update);
 
 module.exports = routes;

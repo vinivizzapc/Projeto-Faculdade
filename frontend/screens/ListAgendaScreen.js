@@ -48,17 +48,47 @@ function ListAgendasScreen({ navigation }){
         </View>
       </View> 
         <View>
-          {
-            agendas.status == 1 ? (
-              <Text>
-                Em aberto
-              </Text>
-            ) 
-            :
-            <Text>
-              Encerrado
-            </Text>
-          }
+          <SafeAreaView>
+            <ScrollView>
+              <View>
+                <FlatList 
+                  nEndReachedThreshold={0.1}
+                  data={agendas}
+                  keyExtractor={item => item.idagenda.toString()}
+                  renderItem={({ item }) => (
+                    <View style={styles.item} >
+                      <View style={{ flex:1, justifyContent:'space-between', flexDirection:'row', backgroundColor:'white', borderWidth: 0.2, borderColor: 'grey',  height:85, alignItems:'center'}}>
+                        <View style={{paddingLeft:20}}>
+                        {
+                          agendas.status == 0 ? (
+                            <Text>
+                              Encerrado
+                            </Text>
+                          ) 
+                          :
+                            <Text>
+                              Em aberto
+                            </Text>
+                        }
+                        </View>
+                        <View style={{paddingLeft:20, marginLeft:90}}>
+                          <TouchableOpacity  onPress={() => excluirUsuario(item.idagenda)}>
+                            <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
+                          </TouchableOpacity>
+                        </View>
+                        <View style={{paddingLeft:20}}>
+                          <TouchableOpacity  onPress={() => excluirUsuario(item.idagenda)}>
+                            <FontAwesome5 name="trash" size={24} style={{color: 'red'}} />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  )}
+                /> 
+              </View>      
+            </ScrollView>
+          </SafeAreaView>
+          
           
         </View>
         <Footer style={{backgroundColor:"#008B8B"}}/>
