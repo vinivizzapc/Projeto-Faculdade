@@ -1,44 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
-import { Icon, Picker } from 'native-base';
-import { AntDesign } from '@expo/vector-icons'; 
+import { Icon, Footer, Picker } from 'native-base';
+import css from '../style/css';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function InserirPrevencoes({ navigation }){
+function InserirUsuario({ navigation }){
   
-  const [tipo, setTipo] = useState('higiene');
-  const [texto, setTexto] = useState('');
-  const [usuario, setUsuario] = useState({});
-
-  useEffect(() => {
-    async function getUser(){
-      const user = await AsyncStorage.getItem('user');
-      const jsonValue = JSON.parse(user);
-      setUsuario(jsonValue);
-    }
-    getUser();
-  }, [usuario]);
+  const [nome, setNome] = useState('');
+  const [cep, setCep] = useState('');
+  const [tipo, setTipo] = useState('');
+  const [descricao, setDescricao] = useState('');
 
   async function cadastro() {
-
-    if(tipo != '' && texto != ''){
-      const prevencao = {
+    if(nome != '' && cep != '' && tipo != ''  && descricao != '' ){
+      const locais = {
+        nome:nome,
+        cep:cep,
         tipo:tipo,
-        texto:texto,
-        idUsuario:usuario.idusuario
+        descricao:descricao
       }
 
-      const response = await api.post('/prevencoes', prevencao)
+      const response = await api.post('/locais', locais)
 
       if(response.data != null){
-        setTipo('higiene');
-        setTexto('');
-        setUsuario({});
-        navigation.navigate('Prevencoes');
+        setNome('');
+        setCep('');
+        setTipo('');
+        setDescricao('');
+        navigation.navigate('Locais');
       }else{
-        Alert.alert('OOPS!', 'Erro ao Cadastrar a Prevenção', [
+        Alert.alert('OOPS!', 'Erro ao Cadastrar o Local', [
           {text: 'Entendido'}
         ]);
       }
@@ -57,14 +51,74 @@ function InserirPrevencoes({ navigation }){
             <View style={{paddingBottom: 20}}>
               <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
             </View>
-            <Text style={styles.text_header}>Cadastrar Local</Text>
+            <Text style={styles.text_header}>Cadastro de Local</Text>
           </View>
+          <View style={styles.footer}>
+         
+            <Text style={styles.text_footer}>Nome do local</Text>
+            <View style={styles.action}>
+              <FontAwesome 
+                name="user-o"
+                color="#05375a"
+                size={20}
+                paddingLeft={15}
+              />
+              <TextInput placeholder="Nome do local" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
+              
+              <Text style={[styles.text_footer,{marginTop:15}]}>CEP</Text>
+              <View style={styles.action}>
+                <Feather 
+                  name="mail"
+                  color="#05375a"
+                  size={20}
+                  paddingLeft={15}
+                />
+                <TextInput placeholder="CEP do local" style={styles.TextInput} keyboardType='numeric' maxLength={9} value={cep} onChangeText={setCep} autoCapitalize="none"/>
+              </View>
+
+              <Text style={[styles.text_footer,{marginTop:15}]}>Descrição</Text>
+              <View style={styles.action}>  
+                <FontAwesome 
+                  name="lock"
+                  color="#05375a"
+                  size={20}
+                  paddingLeft={30}
+                  paddingTop={50}
+                />
+                <TextInput placeholder="Descrição do local" style={styles.TextInput} value={descricao} onChangeText={setDescricao} autoCapitalize="none"/>
+              </View>
+
+
+              <Text style={[styles.text_footer,{marginTop:15}]}>Tipo de local</Text>
+              <Picker
+                selectedValue={tipo}
+                style={{ height: 50, width: '100%', marginBottom: 10, color:'black'}}
+                onValueChange={itemValue => setTipo(itemValue)}
+              > 
+                <Picker.Item label="Hospital" value="Hospital" />
+                <Picker.Item label="Posto de vacinação" value="Posto de vacinação" />
+                <Picker.Item label="Local para exame" value="Local para exame" />
+              </Picker>
+
+
+             
+              <View style={styles.button}>
+                <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
+                  <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
+                    <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+                <TouchableOpacity  onPress={() => navigation.navigate('Locais')} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
+                  <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
-export default InserirPrevencoes;
+export default InserirUsuario;
 
 const styles = StyleSheet.create({
   container: {
@@ -83,7 +137,7 @@ const styles = StyleSheet.create({
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,
-      paddingVertical: 10
+      paddingVertical: 30
   },
   text_header: {
       color: '#fff',

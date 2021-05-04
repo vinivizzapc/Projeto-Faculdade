@@ -15,15 +15,15 @@ module.exports = {
     },
 
     async Inserir(req, res, next) {
-        const { nome, cep, tipo, descricao, favorito } = req.body;
+        const { nome, cep, tipo, descricao } = req.body;
 
         const info = await CepCoords.getByCep(cep);
         let endereco = info.logradouro;
         let latitude = info.lat;
         let longitude = info.lon;
 
-        let sql = `INSERT INTO locais(idLocais, nome, cep, endereco, latitude, longitude, tipo, descricao, favorito) 
-            VALUES(null, '${nome}', '${cep}', '${endereco}', ${latitude}, ${longitude}, '${tipo}', '${descricao}', ${favorito})`;
+        let sql = `INSERT INTO locais(idLocais, nome, cep, endereco, latitude, longitude, tipo, descricao) 
+            VALUES(null, '${nome}', '${cep}', '${endereco}', ${latitude}, ${longitude}, '${tipo}', '${descricao}')`;
         
         await connection.query(sql, (err, result) => {
             if (err) {
@@ -39,7 +39,6 @@ module.exports = {
                 longitude: longitude,
                 tipo: tipo,
                 descricao: descricao,
-                favorito: favorito
             }
 
             return res.status(201).json(local);
