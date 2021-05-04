@@ -5,6 +5,7 @@ const UsuarioController = require('./controllers/UsuarioController');
 const LocalizacaoController = require('./controllers/LocalizacaoController');
 const ConsultaController = require('./controllers/ConsultasController');
 const AgendaController = require('./controllers/AgendaController');
+const FavoritosController = require('./controllers/FavoritosController');
 
 const routes = Router();
 
@@ -35,5 +36,9 @@ routes.delete('/loc/agenda/:id', AgendaController.Delete);
 routes.get('/usu/consultas/:id', ConsultaController.Selecionar);
 routes.post('/usu/consultas', ConsultaController.Inserir);
 routes.put('/usu/consultas/:id', ConsultaController.Update);
+
+routes.get('/favoritos/:id', FavoritosController.Selecionar);
+routes.post('/favoritos', FavoritosController.Inserir);
+routes.delete('/favoritos/:id', FavoritosController.Delete);
 
 module.exports = routes;
