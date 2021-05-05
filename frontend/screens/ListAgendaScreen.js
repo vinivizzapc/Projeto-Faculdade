@@ -47,7 +47,7 @@ function ListAgendasScreen({ navigation }){
           <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirAgendas')}/>
         </View>
       </View> 
-        <View>
+        <View style={{flex: 1}}>
           <SafeAreaView>
             <ScrollView>
               <View>

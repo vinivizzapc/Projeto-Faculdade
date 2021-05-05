@@ -50,7 +50,7 @@ function ListPrevencoesScreen({ navigation }){
       <View>
           <SafeAreaView>
             <ScrollView>
-              <View>
+              <View style={{flex: 1}}>
                 <FlatList 
                   nEndReachedThreshold={0.1}
                   data={prevencoes}
