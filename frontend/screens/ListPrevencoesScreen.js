@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Alert, FlatList, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Alert, FlatList, ScrollView, SafeAreaView, Image } from 'react-native';
 import { Icon, Footer, Separator, Right, ListItem } from 'native-base';
 import {Avatar} from 'react-native-paper';
 import css from '../style/css';
@@ -47,40 +47,57 @@ function ListPrevencoesScreen({ navigation }){
           <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirPrevencoes')}/>
         </View>
       </View> 
-      <View>
+
+
+      <View style={{flex:1}}>
           <SafeAreaView>
             <ScrollView>
-              <View style={{flex: 1}}>
+              <View>
                 <FlatList 
                   nEndReachedThreshold={0.1}
                   data={prevencoes}
                   keyExtractor={item => item.idPrevencao.toString()}
                   renderItem={({ item }) => (
-                    <View style={styles.item} >
-                      <View style={{ flex:1, justifyContent:'space-between', flexDirection:'row', backgroundColor:'white', borderWidth: 0.2, borderColor: 'grey',  height:85, alignItems:'center'}}>
-                        <View style={{paddingLeft:15}}>
-                          <Avatar.Image style={{}} source={{uri:'https://scontent.fgru11-1.fna.fbcdn.net/v/t1.18169-9/11836710_850418251732564_7796996506950551796_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_eui2=AeEsBkz-SClh2Kjij7DVAZLAJXHUwEx1UvwlcdTATHVS_HYIuXcjm1dNLt3czmXoGq0I48f09zJPjJtDIZRtdjUk&_nc_ohc=msbZ8AdLzPgAX-Vw7qr&_nc_ht=scontent.fgru11-1.fna&oh=780c602955408093d5146d06061d1db6&oe=60AC17BD'}} size={50}/>
+
+                    
+                    <View style={{padding:10}}>
+
+                        <Separator style={styles.itemDivisao}>
+                          <View style={styles.divisaoItem}>
+                                <Text style={styles.divisao}>{item.tipo}</Text>
+                          </View>
+                        </Separator>
+
+                      <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>
+                        
+
+                        <View style={{margin:11}}>
+                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={require('../assets/img/logo.png')}/>
                         </View>
-                        <View style={{paddingLeft:20}}>
+
+                        <View style={{flex:1,justifyContent:'center'}}>
                           <Text style={{color: 'black', fontSize:18}}>
-                            {item.nome}
+                            pedro
                           </Text>
                           <Text style={{color: 'grey', fontSize:14}}>
                             {item.texto}
                           </Text>
                         </View>
-                        <View style={{paddingLeft:20, marginLeft:90}}>
+
+
+                        <View style={{paddingLeft:10, justifyContent:'center', alignItems:'center'}}>
                           <TouchableOpacity  onPress={() => excluirPrevencao(item.idPrevencao)}>
                             <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
                           </TouchableOpacity>
                         </View>
-                        <View style={{paddingLeft:20}}>
+                        <View style={{paddingLeft:15, justifyContent:'center', alignItems:'center',marginRight:13}}>
                           <TouchableOpacity  onPress={() => excluirPrevencao(item.idPrevencao)}>
                             <FontAwesome5 name="trash" size={24} style={{color: 'red'}} />
                           </TouchableOpacity>
                         </View>
                       </View>
                     </View>
+                    
                   )}
                 /> 
               </View>      
@@ -98,5 +115,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  divisao:{
+    fontSize:17,
+    fontWeight: 'bold',    
+    paddingVertical:6.5
+  },
+  divisaoItem:{
+    width: 500,
+    height:35,
+    
+  },
+  itemDivisao:{
+    padding: 4,
+    marginBottom:7,
+    borderRadius: 5, 
   },
 });

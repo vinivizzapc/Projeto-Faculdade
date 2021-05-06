@@ -48,7 +48,7 @@ function InserirUsuario({ navigation }){
       <View style={styles.container}>
         <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
           <View style={styles.header}>
-            <View style={{paddingBottom: 20}}>
+            <View style={{paddingBottom: 210}}>
               <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
             </View>
             <Text style={styles.text_header}>Cadastrar Usuario</Text>
@@ -72,7 +72,7 @@ function InserirUsuario({ navigation }){
                 paddingLeft={15}
               />
               <TextInput placeholder="Seu Name" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
-              <Text style={[styles.text_footer,{marginTop:15}]}>Email</Text>
+              <Text style={[styles.text_footer,{marginTop:10}]}>Email</Text>
               <View style={styles.action}>
                 <Feather 
                   name="mail"
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#008B8B'
   },
   header: {
-      flex: 1,
+      flex: 3,
       justifyContent: 'flex-end',
       paddingHorizontal: 20,
       paddingBottom: 10,

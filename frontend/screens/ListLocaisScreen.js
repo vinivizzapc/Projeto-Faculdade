@@ -47,7 +47,9 @@ function ListLocaisScreen({ navigation }){
           <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirLocais')}/>
         </View>
       </View> 
-        <View style={{flex: 1}}>
+
+
+        <View style={{flex:1}}>
         <SafeAreaView>
             <ScrollView>
               <View>

@@ -3,9 +3,9 @@ const connection = require('../connection');
 module.exports = {
     async Selecionar(req, res, next) {
         const { tipo } = req.query;
-        let sql = `SELECT * FROM prevencao`;
+        let sql = `SELECT * FROM prevencao, usuario WHERE prevencao.idUsuario = usuario.idusuario GROUP BY tipo`;
         if(tipo != null){
-            sql += ` WHERE tipo = '${tipo}'`;
+            sql += ` AND tipo = '${tipo}'`;
         }
 
         await connection.query(sql, (err, rows) => {

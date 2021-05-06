@@ -23,7 +23,10 @@ function PrevencoesScreen({ navigation }){
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
       </View> 
+
+
       <View style={styles.header}>
+        
         <SafeAreaView>
           <ScrollView>
             <View>
@@ -31,22 +34,27 @@ function PrevencoesScreen({ navigation }){
                 data={prevencoes}
                 keyExtractor={item => item.idPrevencao.toString()}
                 renderItem={({ item }) => (
+
+                  
                   <View style={styles.item} >
                     <Separator style={styles.itemDivisao}>
                       <View style={styles.divisaoItem}>
                             <Text style={styles.divisao}>{item.tipo}</Text>
                       </View>
                     </Separator>
+
                     <View style={styles.prevencao}>
-                      <View style={{justifyContent:'center'}}>
-                        <Image style={{height:85, width:85, borderWidth: 2, borderRadius: 15, borderColor:'#e53935'}} source={require('../assets/img/logo.png')}/>
+                      
+                      <View style={{margin:11}}>
+                        <Image style={{width:80,height:80, borderWidth: 2, borderRadius: 15, borderColor:'#e53935'}} source={require('../assets/img/logo.png')}/>
                       </View>
-                      <View style={{ backgroundColor:'#4fc3f7', marginLeft:10, height:100, width:280, borderRadius: 10, borderWidth: 1, borderColor:'#fff', alignItems:'center', paddingTop:35  }}>
-                        <Text style={{color:'#004d40'}}>
+
+                      <View style={{  flex:1,justifyContent:'center',  backgroundColor:'#80cbc4', borderRadius: 10, borderBottomColor:'#e0e0e0', borderRightColor:'#e0e0e0', borderRightWidth:3, borderBottomWidth:3, }}>
+                        <Text style={{color:'#004d40', margin:20, fontSize:15}}>
                           {item.texto}
                         </Text>
-                        <Text style={{fontSize:12, paddingLeft:220, paddingTop:20, color:'#004d40'}}>
-                          Pedro
+                        <Text style={{fontSize:13, paddingLeft:220, margin:10, color:'#004d40'}}>
+                          {item.nome}
                         </Text>
                       </View>
                     </View>
@@ -96,17 +104,12 @@ const styles = StyleSheet.create({
   },
   header:{
     flex:1, 
-    alignItems:'center', 
-    justifyContent:'center'
+
   },
   prevencao:{
-    flex:1, 
-    flexDirection:'row', 
-    backgroundColor:'#fff', 
-    borderRadius: 10, 
-    borderWidth: 1, 
-    borderColor: '#fff',  
-    height:100, 
-    alignItems:'center'
+    flex: 1,
+    flexDirection: 'row',
+     
+ 
   }  
 });
