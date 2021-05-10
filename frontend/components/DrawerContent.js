@@ -113,6 +113,7 @@ const inserirAgendas = ({navigation}) => {
 };
 
 function DrawerContent() {
+  const [idusuario, setIdUsuario] = useState(0);
   const [status , setStatus] = useState(0);
 
   useEffect(() => {
@@ -120,6 +121,8 @@ function DrawerContent() {
       const usuario = await AsyncStorage.getItem('user');
       const jsonValue = JSON.parse(usuario);
       setStatus(jsonValue.status);
+      setIdUsuario(jsonValue.idusuario);
+      console.log(idusuario)
     }
 
     CheckUser();

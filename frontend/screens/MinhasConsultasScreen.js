@@ -4,28 +4,29 @@ import { Icon, Footer, Separator } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 
 function MinhasConsultasScreen ({ navigation }){
   const [consultas, setConsultas] = useState([]);
-  const [usuario, setUsuario] = useState({});
+  const [idusuario, setIdUsuario] = useState(0);
 
   useEffect(() => {
     async function getUser(){
       const user = await AsyncStorage.getItem('user');
       const jsonValue = JSON.parse(user);
-      setUsuario(jsonValue);
+      setIdUsuario(jsonValue.idusuario);
     }
     getUser();
-  }, [usuario]);
+  }, [idusuario]);
 
   useEffect(() => {
+    setTimeout(
     async function listagem(){
-      const response = await api.get(`/usu/consultas/${usuario.idusuario}`)
+      const response = await api.get(`/usu/consultas/${idusuario}`)
       setConsultas(response.data)
-    }
-    listagem()
+    })
   }, [consultas]);
+  
 
   return (
     <View style={styles.container}>
@@ -62,7 +63,7 @@ function MinhasConsultasScreen ({ navigation }){
 
                         <View style={{flex:1,justifyContent:'center'}}>
                           <Text style={{color: 'black', fontSize:18}}>
-                          {item.idconsultas}
+                            {item.idconsultas}
                           </Text>
                           <Text style={{color: 'grey', fontSize:14}}>
                             {item.data}
