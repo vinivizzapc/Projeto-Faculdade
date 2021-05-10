@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList, ScrollView, TouchableOpacity, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { Icon, Footer, Separator } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 function MinhasConsultasScreen ({ navigation }){
   const [consultas, setConsultas] = useState([]);
   const [idusuario, setIdUsuario] = useState(0);
 
   useEffect(() => {
+
     async function getUser(){
       const user = await AsyncStorage.getItem('user');
       const jsonValue = JSON.parse(user);
