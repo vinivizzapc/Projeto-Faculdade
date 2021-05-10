@@ -11,8 +11,16 @@ function InserirUsuario({ navigation }){
   
   const [nome, setNome] = useState('');
   const [cep, setCep] = useState('');
-  const [tipo, setTipo] = useState('');
+  const [tipo, setTipo] = useState('Hospital');
   const [descricao, setDescricao] = useState('');
+
+  function cancelar(){
+    setNome('');
+    setCep('');
+    setTipo('Hospital');
+    setDescricao('');
+    navigation.navigate('Locais')
+  }
 
   async function cadastro() {
     if(nome != '' && cep != '' && tipo != ''  && descricao != '' ){
@@ -21,16 +29,24 @@ function InserirUsuario({ navigation }){
         cep:cep,
         tipo:tipo,
         descricao:descricao
-      }
+  }
 
       const response = await api.post('/locais', locais)
-
+      
       if(response.data != null){
-        setNome('');
-        setCep('');
-        setTipo('');
-        setDescricao('');
-        navigation.navigate('Locais');
+        if(response.data.msg != null){
+          Alert.alert('OOPS!', 'CEP inválido!', [
+            {text: 'Entendido'}
+          ]);
+            setCep('');
+            setTipo('Hospital');;
+        }else{
+          setNome('');
+          setCep('');
+          setTipo('Hospital');
+          setDescricao('');
+          navigation.navigate('Locais');
+          }   
       }else{
         Alert.alert('OOPS!', 'Erro ao Cadastrar o Local', [
           {text: 'Entendido'}
@@ -108,7 +124,7 @@ function InserirUsuario({ navigation }){
                     <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar</Text>
                   </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity  onPress={() => navigation.navigate('Locais')} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
+                <TouchableOpacity  onPress={() => cancelar()} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
                   <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
                 </TouchableOpacity>
               </View>

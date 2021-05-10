@@ -28,7 +28,6 @@ function PrevencoesScreen({ navigation }){
       <View style={styles.header}>
         
         <SafeAreaView>
-          <ScrollView>
             <View>
               <FlatList 
                 data={prevencoes}
@@ -62,7 +61,6 @@ function PrevencoesScreen({ navigation }){
                 )}
               /> 
               </View>      
-            </ScrollView>
           </SafeAreaView>
         </View>
         <Footer style={{backgroundColor:"#0097a7"}}/>

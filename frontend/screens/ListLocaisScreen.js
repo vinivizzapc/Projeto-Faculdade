@@ -51,7 +51,6 @@ function ListLocaisScreen({ navigation }){
 
         <View style={{flex:1}}>
         <SafeAreaView>
-            <ScrollView>
               <View>
                 <FlatList 
                   nEndReachedThreshold={0.1}
@@ -86,7 +85,6 @@ function ListLocaisScreen({ navigation }){
                   )}
                 /> 
               </View>      
-            </ScrollView>
           </SafeAreaView>
         </View>
         <Footer style={{backgroundColor:"#008B8B"}}/>

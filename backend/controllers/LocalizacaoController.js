@@ -15,12 +15,16 @@ module.exports = {
     },
 
     async Inserir(req, res, next) {
-        const { nome, cep, tipo, descricao } = req.body;
+        const { nome, cep, tipo, descricao} = req.body;
 
-        const info = await CepCoords.getByCep(cep);
-        let endereco = info.logradouro;
-        let latitude = info.lat;
-        let longitude = info.lon;
+        try{
+            const info = await CepCoords.getByCep(cep);
+            let endereco = info.logradouro;
+            let latitude = info.lat;
+            let longitude = info.lon;
+        }catch(err)
+            {return res.json({msg:'CEP inválido'});
+        }
 
         let sql = `INSERT INTO locais(idLocais, nome, cep, endereco, latitude, longitude, tipo, descricao) 
             VALUES(null, '${nome}', '${cep}', '${endereco}', ${latitude}, ${longitude}, '${tipo}', '${descricao}')`;

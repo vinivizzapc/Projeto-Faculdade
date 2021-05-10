@@ -49,7 +49,6 @@ function ListAgendasScreen({ navigation }){
       </View> 
         <View style={{flex: 1}}>
           <SafeAreaView>
-            <ScrollView>
               <View>
                 <FlatList 
                   nEndReachedThreshold={0.1}
@@ -86,7 +85,6 @@ function ListAgendasScreen({ navigation }){
                   )}
                 /> 
               </View>      
-            </ScrollView>
           </SafeAreaView>
           
           

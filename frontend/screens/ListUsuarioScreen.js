@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Alert, FlatList, ScrollView, SafeAreaView, Image } from 'react-native';
-import { Icon, Footer, Separator, Right, ListItem } from 'native-base';
-import {Avatar} from 'react-native-paper';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Alert, FlatList, SafeAreaView, Image } from 'react-native';
+import { Icon, Footer} from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
-import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5} from '@expo/vector-icons';
 
 function ListUsuarioScreen({ navigation }){
 
@@ -50,7 +49,6 @@ function ListUsuarioScreen({ navigation }){
 
       <View style={{flex:1}} >
           <SafeAreaView>
-            <ScrollView>
               <View>  
                 <FlatList 
                     nEndReachedThreshold={0.1}
@@ -89,7 +87,6 @@ function ListUsuarioScreen({ navigation }){
                       </View>
                     )}/>
               </View>      
-            </ScrollView>
           </SafeAreaView>
         </View>
         <Footer style={{backgroundColor:'#008B8B'}}/>

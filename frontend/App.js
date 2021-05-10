@@ -1,5 +1,8 @@
 import React from 'react';
 import Routes from './routes';
+import { LogBox } from 'react-native';
+
+
 
 export default function App() {
 
@@ -8,4 +11,4 @@ export default function App() {
   );
 }
 
-console.disableYellowBox = true;
+LogBox.ignoreAllLogs()
