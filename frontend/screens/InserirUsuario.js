@@ -1,18 +1,52 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
-import { Icon, Footer, Picker } from 'native-base';
-import css from '../style/css';
+import { Icon, Picker } from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 
-function InserirUsuario({ navigation }){
+function InserirUsuario({ route, navigation }){
   
-  const [nome, setNome] = useState('');
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
-  const [status, setStatus] = useState(0);
+  const { user } = route.params;
+
+  const [nome, setNome] = useState(user.nome);
+  const [email, setEmail] = useState(user.email);
+  const [senha, setSenha] = useState(user.senha);
+  const [status, setStatus] = useState(user.status);
+
+  useEffect(() => {
+
+  }, [nome, email, senha, status]);
+
+  async function Update(){
+    if(nome != '' && email != '' && senha != ''){
+      const usuario = {
+        nome:nome,
+        email:email,
+        senha:senha,
+        status:status
+      }
+
+      const response = await api.put(`/usuarios/${user.idusuario}`, usuario)
+
+      if(response.data != null){
+        setNome('');
+        setSenha('');
+        setEmail('');
+        setStatus(0);
+        navigation.navigate('Usuarios');
+      }else{
+        Alert.alert('OOPS!', 'Erro ao Editar o Usuário', [
+          {text: 'Entendido'}
+        ]);
+      }
+    }else{
+      Alert.alert('OOPS!', 'Preencha todos os campos!', [
+        {text: 'Entendido'}
+      ]);
+    }
+  }
 
   async function cadastro() {
     if(nome != '' && email != '' && senha != ''){
@@ -95,11 +129,21 @@ function InserirUsuario({ navigation }){
               </View>
              
               <View style={styles.button}>
-                <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
-                  <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
-                    <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                {
+                  user.edit == false ? (
+                    <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
+                      <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
+                        <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  )
+                  :
+                    <TouchableOpacity style={styles.signIn} onPress={() => Update()}>
+                      <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
+                        <Text style={[styles.textSign, {color:'#fff'}]}>Editar</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                }
                 <TouchableOpacity  onPress={() => navigation.navigate('Usuarios')} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
                   <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
                 </TouchableOpacity>

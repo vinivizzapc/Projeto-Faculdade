@@ -6,7 +6,7 @@ import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-function MinhasConsultasScreen ({ navigation }){
+function FavoritosScreen ({ navigation }){
   const [favoritos, setFavoritos] = useState([]);
   const [idusuario, setIdUsuario] = useState(0);
 
@@ -27,7 +27,6 @@ function MinhasConsultasScreen ({ navigation }){
     })
   }, [favoritos]);
   
-
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#008B8B"/>
@@ -95,7 +94,7 @@ function MinhasConsultasScreen ({ navigation }){
   );
 }
 
-export default MinhasConsultasScreen;
+export default FavoritosScreen;
 
 const styles = StyleSheet.create({
   container: {

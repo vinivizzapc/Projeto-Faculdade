@@ -6,10 +6,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function InserirPrevencoes({ navigation }){
-  
-  const [tipo, setTipo] = useState('higiene');
-  const [texto, setTexto] = useState('');
+function InserirPrevencoes({ route, navigation }){
+
+  const { prevencao } = route.params;
+
+  const [tipo, setTipo] = useState(prevencao.tipo);
+  const [texto, setTexto] = useState(prevencao.texto);
   const [usuario, setUsuario] = useState({});
 
   useEffect(() => {
@@ -21,9 +23,34 @@ function InserirPrevencoes({ navigation }){
     getUser();
   }, [usuario]);
 
-  async function cadastro() {
-    
+  async function update() {
+    if(tipo != '' && texto != ''){
+      const prevencao = {
+        tipo:tipo,
+        texto:texto,
+        idUsuario:usuario.idusuario
+      }
 
+      const response = await api.put(`/prevencoes/${prevencao.idPrevencao}`, prevencao)
+
+      if(response.data != null){
+        setTipo('Higiene');
+        setTexto('');
+        setUsuario({});
+        navigation.navigate('Prevencoes');
+      }else{
+        Alert.alert('OOPS!', 'Erro ao Cadastrar a Prevenção', [
+          {text: 'Entendido'}
+        ]);
+      }
+    }else{
+      Alert.alert('OOPS!', 'Preencha todos os campos!', [
+        {text: 'Entendido'}
+      ]);
+    }
+  }
+
+  async function cadastro() {
     if(tipo != '' && texto != ''){
       const prevencao = {
         tipo:tipo,
@@ -34,7 +61,7 @@ function InserirPrevencoes({ navigation }){
       const response = await api.post('/prevencoes', prevencao)
 
       if(response.data != null){
-        setTipo('higiene');
+        setTipo('Higiene');
         setTexto('');
         setUsuario({});
         navigation.navigate('Prevencoes');
@@ -67,10 +94,10 @@ function InserirPrevencoes({ navigation }){
                 style={{ height: 50, width: '100%', marginBottom: 5, color:'black'}}
                 onValueChange={itemValue => setTipo(itemValue)}
               > 
-                <Picker.Item label="Higiene" value="higiene" />
-                <Picker.Item label="Mental" value="mental" />
-                <Picker.Item label="Fisica" value="fisica" />
-                <Picker.Item label="Alimentação" value="alimentação" />
+                <Picker.Item label="Higiene" value="Higiene" />
+                <Picker.Item label="Mental" value="Mental" />
+                <Picker.Item label="Fisica" value="Fisica" />
+                <Picker.Item label="Alimentação" value="Alimentação" />
               </Picker>
             <Text style={styles.text_footer}>Texto descrição</Text>
             <View style={styles.action}>
@@ -83,11 +110,22 @@ function InserirPrevencoes({ navigation }){
                 <TextInput placeholder="Inclua um texto" style={styles.TextInput} value={texto} onChangeText={setTexto} autoCapitalize="none"/>
               </View>             
               <View style={styles.button}>
-                <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
-                  <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
-                    <Text style={[styles.textSign, {color:'#fff'}]}>Incluir</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
+                {
+                  prevencao.edit == false ? (
+                    <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
+                      <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
+                        <Text style={[styles.textSign, {color:'#fff'}]}>Incluir</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  )
+                  :
+                    <TouchableOpacity style={styles.signIn} onPress={() => update()}>
+                      <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
+                        <Text style={[styles.textSign, {color:'#fff'}]}>Editar</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                }
+                
                 <TouchableOpacity  onPress={() => navigation.navigate('Prevencoes')} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
                   <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
                 </TouchableOpacity>

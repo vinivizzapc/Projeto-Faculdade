@@ -18,6 +18,24 @@ function ListPrevencoesScreen({ navigation }){
     listagem();
   }, [prevencoes]);
 
+  function editarPrevencao(prevencao) {
+    prevencao.edit = true;
+    navigation.navigate('InserirPrevencoes', {
+      screen: 'InserirPrevencoes',
+      params: { prevencao: prevencao }
+    });
+  }
+
+  function criarPrevencao(){
+    var prevencao = new Object();
+    prevencao.edit = false;
+    prevencao.tipo = "higiene";
+    navigation.navigate('InserirPrevencoes', {
+      screen: 'InserirPrevencoes',
+      params: { prevencao: prevencao }
+    });
+  }
+
   async function excluir(id) {
     await api.delete(`/prevencoes/${id}`);
   }
@@ -44,7 +62,7 @@ function ListPrevencoesScreen({ navigation }){
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
         <View style={{marginRight:10}}>
-          <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirPrevencoes')}/>
+          <Ionicons name="add-sharp" size={30} color="black" onPress={() => criarPrevencao()}/>
         </View>
       </View> 
 
@@ -85,7 +103,7 @@ function ListPrevencoesScreen({ navigation }){
 
 
                         <View style={{paddingLeft:10, justifyContent:'center', alignItems:'center'}}>
-                          <TouchableOpacity  onPress={() => excluirPrevencao(item.idPrevencao)}>
+                          <TouchableOpacity  onPress={() => editarPrevencao(item)}>
                             <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
                           </TouchableOpacity>
                         </View>
