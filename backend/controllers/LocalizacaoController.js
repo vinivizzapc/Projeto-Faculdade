@@ -3,7 +3,6 @@ const CepCoords = require("coordenadas-do-cep");
 
 module.exports = {
     async Selecionar(req, res, next) {
-        //desenvolver select com as localizações proximas
         var sql = `SELECT * FROM locais`
         await connection.query(sql, (err, rows) => {
             if (err) {
@@ -17,13 +16,17 @@ module.exports = {
     async Inserir(req, res, next) {
         const { nome, cep, tipo, descricao} = req.body;
 
+        let endereco = "";
+        let latitude = "";
+        let longitude = "";
+
         try{
             const info = await CepCoords.getByCep(cep);
-            let endereco = info.logradouro;
-            let latitude = info.lat;
-            let longitude = info.lon;
-        }catch(err)
-            {return res.json({msg:'CEP inválido'});
+            endereco = info.logradouro;
+            latitude = info.lat;
+            longitude = info.lon;
+        }catch(err){
+            return res.json({ msg:'CEP inválido' });
         }
 
         let sql = `INSERT INTO locais(idLocais, nome, cep, endereco, latitude, longitude, tipo, descricao) 
