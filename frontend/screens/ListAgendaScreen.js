@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Alert, FlatList, ScrollView, SafeAreaView } from 'react-native';
-import { Icon, Footer, Separator, Right, ListItem } from 'native-base';
-import {Avatar} from 'react-native-paper';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Alert, FlatList, SafeAreaView } from 'react-native';
+import { Icon, Footer } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
-import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 function ListAgendasScreen({ navigation }){
 
@@ -47,6 +46,7 @@ function ListAgendasScreen({ navigation }){
           <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirAgendas')}/>
         </View>
       </View> 
+        
         <View style={{flex: 1}}>
           <SafeAreaView>
               <View>
@@ -55,33 +55,34 @@ function ListAgendasScreen({ navigation }){
                   data={agendas}
                   keyExtractor={item => item.idagenda.toString()}
                   renderItem={({ item }) => (
-                    <View style={styles.item} >
-                      <View style={{ flex:1, justifyContent:'space-between', flexDirection:'row', backgroundColor:'white', borderWidth: 0.2, borderColor: 'grey',  height:85, alignItems:'center'}}>
-                        <View style={{paddingLeft:20}}>
+                    
+                    <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3, height:70,}}>
+                        
+                        <View style={{flex:1,justifyContent:'center', marginLeft:20}}>
                         {
                           agendas.status == 0 ? (
-                            <Text>
+                            <Text style={{color: 'red', fontSize:18,fontWeight:'bold'}}>
                               Encerrado
                             </Text>
                           ) 
                           :
-                            <Text>
+                            <Text style={{color: 'black', fontSize:18, fontWeight:'bold'}}>
                               Em aberto
                             </Text>
                         }
                         </View>
-                        <View style={{paddingLeft:20, marginLeft:90}}>
+                        <View style={{paddingLeft:10, justifyContent:'center', alignItems:'center' }}>
                           <TouchableOpacity  onPress={() => excluirUsuario(item.idagenda)}>
-                            <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
+                            <FontAwesome5 name="edit" size={25} style={{color: 'orange'}} />
                           </TouchableOpacity>
                         </View>
-                        <View style={{paddingLeft:20}}>
-                          <TouchableOpacity  onPress={() => excluirUsuario(item.idagenda)}>
-                            <FontAwesome5 name="trash" size={24} style={{color: 'red'}} />
+                        <View style={{paddingLeft:15, justifyContent:'center', alignItems:'center',marginRight:13}}>
+                          <TouchableOpacity  onPress={() => excluirAgenda(item.idagenda)}>
+                            <FontAwesome5 name="trash" size={25} style={{color: 'red'}} />
                           </TouchableOpacity>
                         </View>
                       </View>
-                    </View>
+                    
                   )}
                 /> 
               </View>      
