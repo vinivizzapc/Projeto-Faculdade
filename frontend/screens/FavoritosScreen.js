@@ -10,6 +10,7 @@ function FavoritosScreen ({ navigation }){
   const [favoritos, setFavoritos] = useState([]);
   const [idusuario, setIdUsuario] = useState(0);
 
+
   useEffect(() => {
     async function getUser(){
       const user = await AsyncStorage.getItem('user');
@@ -49,34 +50,33 @@ function FavoritosScreen ({ navigation }){
 
                         <Separator style={styles.itemDivisao}>
                           <View style={styles.divisaoItem}>
-                                <Text style={styles.divisao}>{item.status}</Text>
                           </View>
                         </Separator>
 
                       <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>
                         
 
-                        <View style={{margin:11}}>
+                        <View style={{margin:5}}>
                           <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={require('../assets/img/logo.png')}/>
                         </View>
 
                         <View style={{flex:1,justifyContent:'center'}}>
                           <Text style={{color: 'black', fontSize:18}}>
-                            {item.idusuario}
+                            {item.nome}
                           </Text>
                           <Text style={{color: 'grey', fontSize:14}}>
-                            {item.idusuario}
+                            {item.cep}
                           </Text>
                         </View>
 
 
                         <View style={{paddingLeft:10, justifyContent:'center', alignItems:'center'}}>
-                          <TouchableOpacity  onPress={() => excluirPrevencao(item.idconsultas)}>
+                          <TouchableOpacity  onPress={() => excluirPrevencao(item.idfavoritos)}>
                             <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
                           </TouchableOpacity>
                         </View>
                         <View style={{paddingLeft:15, justifyContent:'center', alignItems:'center',marginRight:13}}>
-                          <TouchableOpacity  onPress={() => excluirPrevencao(item.idconsultas)}>
+                          <TouchableOpacity  onPress={() => excluirPrevencao(item.idfavoritos)}>
                             <FontAwesome5 name="trash" size={24} style={{color: 'red'}} />
                           </TouchableOpacity>
                         </View>

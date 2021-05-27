@@ -6,7 +6,7 @@ import api from '../services/api';
 import { Ionicons, FontAwesome5} from '@expo/vector-icons';
 
 function ListUsuarioScreen({ navigation }){
-
+  
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {

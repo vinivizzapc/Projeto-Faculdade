@@ -16,8 +16,15 @@ function InserirUsuario({ route, navigation }){
   const [status, setStatus] = useState(user.status);
 
   useEffect(() => {
+    function AtualizarDados(){
+      setStatus(user.status);
+      setNome(user.nome);
+      setSenha(user.senha);
+      setEmail(user.email);
+    }
+  AtualizarDados();
 
-  }, [nome, email, senha, status]);
+  }, [user]);
 
   async function Update(){
     if(nome != '' && email != '' && senha != ''){
@@ -47,6 +54,15 @@ function InserirUsuario({ route, navigation }){
       ]);
     }
   }
+
+  function cancelar(){
+    setStatus('');
+    setNome('');
+    setSenha('');
+    setEmail('');
+    navigation.navigate('Usuarios')
+  }
+  
 
   async function cadastro() {
     if(nome != '' && email != '' && senha != ''){
@@ -144,7 +160,7 @@ function InserirUsuario({ route, navigation }){
                       </LinearGradient>
                     </TouchableOpacity>
                 }
-                <TouchableOpacity  onPress={() => navigation.navigate('Usuarios')} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
+                <TouchableOpacity  onPress={() => cancelar()} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
                   <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
                 </TouchableOpacity>
               </View>
@@ -168,7 +184,7 @@ const styles = StyleSheet.create({
       paddingBottom: 10,
   },
   footer: {
-      flex: 5,
+      flex: 10,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
@@ -208,7 +224,7 @@ const styles = StyleSheet.create({
   },
   button: {
       alignItems: 'center',
-      marginTop: 40,
+      marginTop: 20,
   },
   signIn: {
       width: '100%',
