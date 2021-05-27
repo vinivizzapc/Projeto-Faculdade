@@ -6,15 +6,24 @@ import css from '../style/css';
 import api from '../services/api';
 
 function PrevencoesScreen({ navigation }){
-  const [prevencoes, setPrevencoes] = useState([]);
+  const [prevencoesHigiene, setPrevencoesHigiene] = useState([]);
+  const [prevencoesMental, setPrevencoesMental] = useState([]);
+  const [prevencoesFisica, setPrevencoesFisica] = useState([]);
+  const [prevencoesAlimentacao, setPrevencoesAlimentacao] = useState([]);
 
   useEffect(() => {
     async function listagem(){
-      const response = await api.get('/prevencoes')
-      setPrevencoes(response.data)
+      const responseHigiene = await api.get('/prevencoesHigiene')
+      setPrevencoesHigiene(responseHigiene.data)
+      const responseMental= await api.get('/prevencoesMental')
+      setPrevencoesMental(responseMental.data)
+      const responseFisica = await api.get('/prevencoesFisica')
+      setPrevencoesFisica(responseFisica.data)
+      const responseAlimentacao = await api.get('/prevencoesAlimentacao')
+      setPrevencoesAlimentacao(responseAlimentacao.data)
     }
     listagem()
-  }, [prevencoes]);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -28,28 +37,24 @@ function PrevencoesScreen({ navigation }){
 
       <View style={styles.header}>
         
-        <SafeAreaView>
-            <View>
+        <ScrollView>
+
+            <View style={{marginTop:10}}>
+              <Separator style={styles.itemDivisao}>
+                <View style={styles.divisaoItem}>
+                  <Text style={styles.divisao}>Higiene</Text>
+                </View>
+              </Separator>
               <FlatList 
-                data={prevencoes}
+                data={prevencoesHigiene}
                 keyExtractor={item => item.idPrevencao.toString()}
                 renderItem={({ item }) => (
-
-                  
                   <View style={styles.item} >
-                    <Separator style={styles.itemDivisao}>
-                      <View style={styles.divisaoItem}>
-                            <Text style={styles.divisao}>{item.tipo}</Text>
-                      </View>
-                    </Separator>
-
                     <View style={styles.prevencao}>
                     <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>
-                      
                       <View style={{alignItems:'center',margin:10}}>
                         <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
                       </View>
-                        
                         <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
                           {item.texto}
                         </Text>
@@ -63,8 +68,103 @@ function PrevencoesScreen({ navigation }){
                   </View>
                 )}
               /> 
-              </View>      
-          </SafeAreaView>
+              </View> 
+
+             
+              <View>
+                <Separator style={styles.itemDivisao}>
+                  <View style={styles.divisaoItem}>
+                    <Text style={styles.divisao}>Mental</Text>
+                  </View>
+                </Separator>
+              <FlatList 
+                data={prevencoesMental}
+                keyExtractor={item => item.idPrevencao.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.item} >
+                    <View style={styles.prevencao}>
+                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>       
+                      <View style={{alignItems:'center',margin:10}}>
+                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
+                      </View>
+                        <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
+                          {item.texto}
+                        </Text>
+                        <View style={{flex:1,alignItems:'flex-end', justifyContent:'flex-end', margin:12}}>
+                          <Text style={{fontSize:13, color:'black', fontWeight:'bold' }}>
+                            {item.nome}
+                          </Text>
+                        </View>
+                      </LinearGradient>
+                    </View>
+                  </View>
+                )}
+              /> 
+              </View>  
+
+              <View>
+                <Separator style={styles.itemDivisao}>
+                  <View style={styles.divisaoItem}>
+                    <Text style={styles.divisao}>Fisica</Text>
+                  </View>
+                </Separator>
+                <FlatList 
+                data={prevencoesFisica}
+                keyExtractor={item => item.idPrevencao.toString()}
+                renderItem={({ item }) => (  
+                  <View style={styles.item} >
+                    <View style={styles.prevencao}>
+                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>
+                      <View style={{alignItems:'center',margin:10}}>
+                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
+                      </View>
+                        <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
+                          {item.texto}
+                        </Text>
+                        <View style={{flex:1,alignItems:'flex-end', justifyContent:'flex-end', margin:12}}>
+                          <Text style={{fontSize:13, color:'black', fontWeight:'bold' }}>
+                            {item.nome}
+                          </Text>
+                        </View>
+                      </LinearGradient>
+                    </View>
+                  </View>
+                )}
+              /> 
+              </View> 
+
+
+              <View>
+                <Separator style={styles.itemDivisao}>
+                  <View style={styles.divisaoItem}>
+                    <Text style={styles.divisao}>Alimentação</Text>
+                  </View>
+                </Separator>
+              <FlatList 
+                data={prevencoesAlimentacao}
+                keyExtractor={item => item.idPrevencao.toString()}
+                renderItem={({ item }) => (
+                  <View style={styles.item} >
+                    <View style={styles.prevencao}>
+                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>
+                      <View style={{alignItems:'center',margin:10}}>
+                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
+                      </View>
+                        <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
+                          {item.texto}
+                        </Text>
+                        <View style={{flex:1,alignItems:'flex-end', justifyContent:'flex-end', margin:12}}>
+                          <Text style={{fontSize:13, color:'black', fontWeight:'bold' }}>
+                            {item.nome}
+                          </Text>
+                        </View>
+                      </LinearGradient>
+                    </View>
+                  </View>
+                )}
+              /> 
+              </View>       
+          </ScrollView>
         </View>
         <Footer style={{backgroundColor:"#0097a7"}}/>
     </View>

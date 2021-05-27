@@ -22,6 +22,10 @@ const routes = Router();
 
 routes.get('/prevencoes/:id', PrevencaoController.SelecionarPreven);
 routes.get('/prevencoes', PrevencaoController.Selecionar);
+routes.get('/prevencoesHigiene', PrevencaoController.SelecionarHigiene);
+routes.get('/prevencoesMental', PrevencaoController.SelecionarMental);
+routes.get('/prevencoesFisica', PrevencaoController.SelecionarFisica);
+routes.get('/prevencoesAlimentacao', PrevencaoController.SelecionarAlimentacao);
 routes.post('/prevencoes', PrevencaoController.Inserir);
 routes.put('/prevencoes/:id', PrevencaoController.Update);
 routes.delete('/prevencoes/:id', PrevencaoController.Delete);
