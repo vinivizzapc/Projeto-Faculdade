@@ -49,16 +49,10 @@ function MinhasConsultasScreen ({ navigation }){
                     
                     <View style={{padding:5}}>
 
-                        <Separator style={styles.itemDivisao}>
-                          <View style={styles.divisaoItem}>
-                                <Text style={styles.divisao}>{item.status}</Text>
-                          </View>
-                        </Separator>
-
                       <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>
                         
 
-                        <View style={{margin:11}}>
+                        <View style={{margin:20}}>
                           <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={require('../assets/img/logo.png')}/>
                         </View>
 

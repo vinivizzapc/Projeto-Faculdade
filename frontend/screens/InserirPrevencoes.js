@@ -15,13 +15,29 @@ function InserirPrevencoes({ route, navigation }){
   const [usuario, setUsuario] = useState({});
 
   useEffect(() => {
+    function AtualizarDados(){
+      setTipo(prevencao.tipo);
+      setTexto(prevencao.texto);
+      setUsuario({})
+    }
+    AtualizarDados();
+
     async function getUser(){
       const user = await AsyncStorage.getItem('user');
       const jsonValue = JSON.parse(user);
       setUsuario(jsonValue);
     }
     getUser();
-  }, [usuario]);
+  }, [prevencao]);
+
+
+  function cancelar(){
+    setTipo('')
+    setTexto('');
+    setUsuario('');
+    navigation.navigate('Prevencoes')
+  }
+  
 
   async function update() {
     if(tipo != '' && texto != ''){
@@ -126,7 +142,7 @@ function InserirPrevencoes({ route, navigation }){
                     </TouchableOpacity>
                 }
                 
-                <TouchableOpacity  onPress={() => navigation.navigate('Prevencoes')} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
+                <TouchableOpacity onPress={() => cancelar()} style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
                   <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
                 </TouchableOpacity>
               </View>

@@ -4,7 +4,7 @@ module.exports = {
     async Selecionar(req, res, next){
         const { id } = req.params;
 
-        var sql = `select * from consultas, locais where consultas.idconsultas = locais.idlocais and consultas.idusuario = ${id}`;
+        var sql = `select * from consultas, locais where consultas.idLocais = locais.idlocais and consultas.idusuario = ${id}`;
         
         await connection.query(sql, (err, rows) => {
             if (err) {
