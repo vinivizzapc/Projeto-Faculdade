@@ -1,5 +1,16 @@
 const { Router } = require('express');
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, res, cb) {
+        cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
+
 const PrevencaoController = require('./controllers/PrevencaoController');
 const UsuarioController = require('./controllers/UsuarioController');
 const LocalizacaoController = require('./controllers/LocalizacaoController');
@@ -17,7 +28,7 @@ routes.delete('/prevencoes/:id', PrevencaoController.Delete);
 
 routes.post('/usuario', UsuarioController.Login);
 routes.get('/usuarios', UsuarioController.Selecionar);
-routes.post('/usuarios', UsuarioController.Inserir);
+routes.post('/usuarios', upload.single('usuario_imagem'),UsuarioController.Inserir);
 routes.put('/usuarios/:id', UsuarioController.Update);
 routes.delete('/usuarios/:id', UsuarioController.Delete);
 
