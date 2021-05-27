@@ -32,6 +32,7 @@ function PrevencoesScreen({ navigation }){
         <View style={css.IconPosicao}>
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
+        
       </View> 
 
 
@@ -146,7 +147,7 @@ function PrevencoesScreen({ navigation }){
                 renderItem={({ item }) => (
                   <View style={styles.item} >
                     <View style={styles.prevencao}>
-                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>
+                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, height:350}}>
                       <View style={{alignItems:'center',margin:10}}>
                         <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
                       </View>
@@ -203,7 +204,9 @@ const styles = StyleSheet.create({
     borderBottomWidth:3,
     marginBottom:7,
     borderRadius: 5, 
-    backgroundColor:'black'
+    backgroundColor:'black',
+    margin:10,
+    width:400
   },
   header:{
     flex:1, 
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
   prevencao:{
     flex: 1,
     height:'100%',
-     margin:7
+    margin:7
  
   }  
 });

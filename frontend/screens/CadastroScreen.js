@@ -72,21 +72,26 @@ export default function CadastroScreen ({navigation}){
     <KeyboardAvoidingView style={styles.container}>
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text_header}>Register Now!</Text>
+        <Text style={styles.text_header}>Cadastre-se Agora!</Text>
       </View>
-      <View style={styles.imagem}>
-        <Image 
-          source={{ uri: image ? image : 'https://www.ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png' }} 
-          style={styles.avatar} 
-        />
-        <TouchableOpacity style={styles.botaoImagem} onPress={pickImage}>
-          <Text>Escolher imagem</Text>
-        </TouchableOpacity>
-      </View>
+      
       
       <View style={styles.footer}>
 
-      <Text style={styles.text_footer}>Name</Text>
+      <View style={{ flexDirection:'row', justifyContent:'flex-start', paddingVertical:15, paddingBottom:17,  }}>
+            <Image 
+              source={{ uri: image ? image : 'https://www.ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png' }} 
+              style={styles.avatar} 
+            />
+            <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.botaoImagem} >
+              <TouchableOpacity  onPress={pickImage}>
+                <Text style={{fontSize:16,color:'white',fontWeight:'bold', textAlign:'center'}}>Escolher imagem</Text>
+              </TouchableOpacity>
+            </LinearGradient>
+        </View>
+        
+
+      <Text style={styles.text_footer}>Nome</Text>
           <View style={styles.action}>
           <FontAwesome 
             name="user-o"
@@ -95,9 +100,9 @@ export default function CadastroScreen ({navigation}){
             paddingLeft={15}
           />
           
-        <TextInput placeholder="Your Name" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
+        <TextInput placeholder="Seu Nome" style={styles.TextInput} value={nome} onChangeText={setNome} autoCapitalize="none"/></View>
 
-        <Text style={[styles.text_footer,{marginTop:25}]}>Email</Text>
+        <Text style={[styles.text_footer,{marginTop:25}]}>E-mail</Text>
           <View style={styles.action}>
             <Feather 
               name="mail"
@@ -105,11 +110,11 @@ export default function CadastroScreen ({navigation}){
               size={20}
               paddingLeft={15}
             />
-              <TextInput placeholder="Your Email" style={styles.TextInput} value={email} onChangeText={setEmail} autoCapitalize="none"/>
+              <TextInput placeholder="Seu E-mail" style={styles.TextInput} value={email} onChangeText={setEmail} autoCapitalize="none"/>
           </View>
 
 
-        <Text style={[styles.text_footer,{marginTop:25}]}>Password</Text>
+        <Text style={[styles.text_footer,{marginTop:25}]}>Senha</Text>
           <View style={styles.action}>  
               <FontAwesome 
                 name="lock"
@@ -117,16 +122,19 @@ export default function CadastroScreen ({navigation}){
                 size={20}
                 paddingLeft={15}
               />
-          <TextInput placeholder="Your Password" style={styles.TextInput} value={senha} secureTextEntry={true} onChangeText={setSenha} autoCapitalize="none"/>
+          <TextInput placeholder="Sua Senha" style={styles.TextInput} value={senha} secureTextEntry={true} onChangeText={setSenha} autoCapitalize="none"/>
           </View>
+
+        
+
             <View style={styles.button}>
               <TouchableOpacity style={styles.signIn} onPress={() => cadastro()}>
                 <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
-                  <Text style={[styles.textSign, {color:'#fff'}]}>Sign Up</Text>
+                  <Text style={[styles.textSign, {color:'#fff'}]}>Cadastrar-se</Text>
                   </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity  onPress={() => navigation.navigate('Login')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 15 }]} >
-                <Text style={[styles.textSign, { color: '#009387'}]}>Sign In</Text>
+              <TouchableOpacity  onPress={() => navigation.navigate('Login')} style={[styles.signIn, { borderColor: '#009387', borderWidth: 1, marginTop: 10 }]} >
+                <Text style={[styles.textSign, { color: '#009387'}]}>Login</Text>
               </TouchableOpacity>
 
           </View>
@@ -150,25 +158,28 @@ const styles = StyleSheet.create({
       paddingBottom: 50
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    marginRight:30,
+    
   },
   botaoImagem: {
-    width: 150,
-    height: 50,
-    borderRadius: 3,
-    backgroundColor: '#7159c1',
+    width: 120,
+    height: 40,
+    borderRadius: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop:10,
+    
   },
   footer: {
-      flex: 3,
+      flex: 3.5,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,
-      paddingVertical: 30
+      paddingVertical: 20
   },
   text_header: {
       color: '#fff',
@@ -178,6 +189,7 @@ const styles = StyleSheet.create({
   text_footer: {
       color: '#05375a',
       fontSize: 18,
+      
   },
   action: {
       flexDirection: 'row',
@@ -196,6 +208,7 @@ const styles = StyleSheet.create({
   TextInput: {
       flex: 1,
       marginLeft: 10,
+      
   },
   errorMsg: {
       color: '#FF0000',
@@ -203,11 +216,11 @@ const styles = StyleSheet.create({
   },
   button: {
       alignItems: 'center',
-      marginTop: 35,
+      marginTop: 20,
   },
   signIn: {
       width: '100%',
-      height: 50,
+      height: 45,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 10
