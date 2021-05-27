@@ -15,8 +15,7 @@ module.exports = {
     },
 
     async Inserir(req, res, next){
-        const { nome, email, senha, status } = req.body;
-        const imagem = req.file.path;
+        const { nome, email, senha, status, imagem } = req.body;
         let sql = `INSERT INTO Usuario(idusuario, nome, email, senha, status, imagem) VALUES(null, '${nome}', '${email}', '${senha}', ${status}, '${imagem}')`;
         await connection.query(sql, (error, result) => {
             if (error) {
@@ -27,7 +26,8 @@ module.exports = {
                 nome: nome,
                 email: email, 
                 senha: senha, 
-                status: status
+                status: status,
+                imagem: imagem
             }
 
             return res.status(201).json(usuario);

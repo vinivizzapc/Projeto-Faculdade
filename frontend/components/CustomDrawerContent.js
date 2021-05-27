@@ -37,7 +37,7 @@ function DrawerContent(props) {
           <View style={styles.drawerContent}>
             <View style={styles.userInfoSection}>
               <View style={{flexDirection:'row', marginTop: 15}}>
-                  <Avatar.Image source={{uri:'https://scontent.fgru11-1.fna.fbcdn.net/v/t1.18169-9/11836710_850418251732564_7796996506950551796_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_eui2=AeEsBkz-SClh2Kjij7DVAZLAJXHUwEx1UvwlcdTATHVS_HYIuXcjm1dNLt3czmXoGq0I48f09zJPjJtDIZRtdjUk&_nc_ohc=msbZ8AdLzPgAX-Vw7qr&_nc_ht=scontent.fgru11-1.fna&oh=780c602955408093d5146d06061d1db6&oe=60AC17BD'}} size={50}/>
+                  <Avatar.Image source={{uri: user.imagem }} size={50}/>
                   <View style={{marginLeft:15, flexDirection:'column'}}>
                       <Title style={styles.title}>{user.nome}</Title>
                       <Caption style={styles.caption}>{user.email}</Caption>
