@@ -3,7 +3,71 @@ const connection = require('../connection');
 module.exports = {
     async Selecionar(req, res, next) {
         const { tipo } = req.query;
-        let sql = `SELECT * FROM prevencao, usuario WHERE prevencao.idUsuario = usuario.idusuario GROUP BY tipo`;
+        let sql = `SELECT * FROM prevencao, usuario WHERE prevencao.idUsuario = usuario.idusuario`;
+        if(tipo != null){
+            sql += ` AND tipo = '${tipo}'`;
+        }
+
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
+    async SelecionarHigiene(req, res, next) {
+        const { tipo } = req.query;
+        let sql = `SELECT * FROM prevencao, usuario WHERE prevencao.idUsuario = usuario.idusuario and tipo = "Higiene"`;
+        if(tipo != null){
+            sql += ` AND tipo = '${tipo}'`;
+        }
+
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
+    async SelecionarMental(req, res, next) {
+        const { tipo } = req.query;
+        let sql = `SELECT * FROM prevencao, usuario WHERE prevencao.idUsuario = usuario.idusuario and tipo = "Mental"`;
+        if(tipo != null){
+            sql += ` AND tipo = '${tipo}'`;
+        }
+
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
+    async SelecionarFisica(req, res, next) {
+        const { tipo } = req.query;
+        let sql = `SELECT * FROM prevencao, usuario WHERE prevencao.idUsuario = usuario.idusuario and tipo = "Fisica"`;
+        if(tipo != null){
+            sql += ` AND tipo = '${tipo}'`;
+        }
+
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
+    async SelecionarAlimentacao(req, res, next) {
+        const { tipo } = req.query;
+        let sql = `SELECT * FROM prevencao, usuario WHERE prevencao.idUsuario = usuario.idusuario and tipo = "Alimentação"`;
         if(tipo != null){
             sql += ` AND tipo = '${tipo}'`;
         }
