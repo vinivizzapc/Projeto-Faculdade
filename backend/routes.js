@@ -48,9 +48,11 @@ routes.post('/loc/agenda', AgendaController.Inserir);
 routes.put('/loc/agenda/:id', AgendaController.Update);
 routes.delete('/loc/agenda/:id', AgendaController.Delete);
 
+routes.get('/consultas', ConsultaController.SelecionarAdm);
 routes.get('/usu/consultas/:id', ConsultaController.Selecionar);
 routes.post('/usu/consultas', ConsultaController.Inserir);
 routes.put('/usu/consultas/:id', ConsultaController.Update);
+routes.delete('/consultas/:id', ConsultaController.Delete);
 
 routes.get('/favoritos/:id', FavoritosController.Selecionar);
 routes.post('/favoritos', FavoritosController.Inserir);

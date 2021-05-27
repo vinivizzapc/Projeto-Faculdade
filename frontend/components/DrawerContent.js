@@ -9,6 +9,7 @@ import AgendaConsultaScreen from '../screens/AgendaConsultaScreen';
 import FavoritosScreen from '../screens/FavoritosScreen';
 import ListUsuarioScreen from '../screens/ListUsuarioScreen';
 import ListLocais from '../screens/ListLocaisScreen';
+import ListConsultasScreen from '../screens/ListaConsultasScreen';
 import ListPrevencoes from '../screens/ListPrevencoesScreen';
 import ListAgendas from '../screens/ListAgendaScreen';
 import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
@@ -85,6 +86,17 @@ const inserirPrevencoes = ({navigation}) => {
       <Stack.Screen
         name="InserirPrevencoes"
         component={InserirPrevencoes}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const Consultas = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="Consultas"
+        component={ListConsultasScreen}
       />
     </Stack.Navigator>
   );
@@ -181,6 +193,11 @@ function DrawerContent() {
       name="Prevencoes"
       options={{drawerLabel: 'Prevenções'}}
       component={Prevencoes}
+    />
+    <Drawer.Screen
+      name="consultas"
+      options={{drawerLabel: 'Consultas'}}
+      component={Consultas}
     />
     <Drawer.Screen
       name="agendas"

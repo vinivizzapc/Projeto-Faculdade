@@ -1,6 +1,21 @@
 const connection = require('../connection');
 
 module.exports = {
+    async SelecionarAdm(req, res, next){
+        const { id } = req.params;
+
+        var sql = `select * from consultas, locais where consultas.idLocais = locais.idlocais`;
+        
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            
+            return res.json(rows);
+            
+        });
+    },
+
     async Selecionar(req, res, next){
         const { id } = req.params;
 
@@ -39,7 +54,7 @@ module.exports = {
     async Update(req, res, next){
         const idconsulta = req.params.id;
         const {status} = req.body;
-        let sql = `UPDATE consulta SET status = ${status} WHERE idconsultas = ${idconsulta}`;
+        let sql = `UPDATE consultas SET status = ${status} WHERE idconsultas = ${idconsulta}`;
 
         await connection.query(sql, (err, rows) => {
             if (err) {
@@ -54,4 +69,18 @@ module.exports = {
         });
 
     }, 
+
+    async Delete(req, res, next) {
+        const id = req.params.id;
+        let sql = `DELETE FROM consultas WHERE idconsultas = ${id}`;
+        
+        await connection.query(sql, (err, result) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.status(200).end();
+        });
+    },
+
 };
