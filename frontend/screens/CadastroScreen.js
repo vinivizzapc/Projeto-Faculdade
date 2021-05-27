@@ -1,20 +1,44 @@
-import React, {Component, useState} from 'react';
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert} from 'react-native';
-import css from '../style/css';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, TouchableOpacity, Alert, Image } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import {AuthContext} from '../components/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function CadastroScreen ({navigation}){
-  
+  const [image, setImage] = useState(null);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
   const {signUp} = React.useContext(AuthContext); 
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   async function cadastro() {
     if(nome != '' && email != '' && senha != ''){
@@ -22,7 +46,8 @@ export default function CadastroScreen ({navigation}){
         nome:nome,
         email:email,
         senha:senha,
-        status:0
+        status:0,
+        imagem: image
       }
       const response = await api.post('/usuarios', usuario)
 
@@ -34,32 +59,31 @@ export default function CadastroScreen ({navigation}){
         Alert.alert('OOPS!', 'Erro ao Cadastrar o Usuário', [
           {text: 'Entendido'}
         ]);
-      //Fazer chamada no back-end para cadastro. 
       }
 
     }else{
       Alert.alert('OOPS!', 'Preencha todos os campos!', [
         {text: 'Entendido'}
       ]);
+    }
   }
-}
 
   return (
     <KeyboardAvoidingView style={styles.container}>
     <View style={styles.container}>
-      {/* <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
-        <View style={css.containerHeader}>
-        <View style={css.IconPosicao}>
-          <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
-        </View>
-        </View> 
-      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-        <Text>MapsScreens</Text>
-      </View>
-      <Footer style={{backgroundColor:"#008B8B"}}/> */}
       <View style={styles.header}>
         <Text style={styles.text_header}>Register Now!</Text>
       </View>
+      <View style={styles.imagem}>
+        <Image 
+          source={{ uri: image ? image : 'https://www.ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png' }} 
+          style={styles.avatar} 
+        />
+        <TouchableOpacity style={styles.botaoImagem} onPress={pickImage}>
+          <Text>Escolher imagem</Text>
+        </TouchableOpacity>
+      </View>
+      
       <View style={styles.footer}>
 
       <Text style={styles.text_footer}>Name</Text>
@@ -124,6 +148,19 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       paddingHorizontal: 20,
       paddingBottom: 50
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50
+  },
+  botaoImagem: {
+    width: 150,
+    height: 50,
+    borderRadius: 3,
+    backgroundColor: '#7159c1',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   footer: {
       flex: 3,
