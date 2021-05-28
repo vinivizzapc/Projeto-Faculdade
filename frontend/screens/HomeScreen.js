@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, StatusBar, Text, ActivityIndicator, Alert } from 'react-native';
-import { Icon, Footer, List, Title, Content } from 'native-base';
+import { Icon, Footer, List, Title, Content, Left } from 'native-base';
 import css from '../style/css';
 import getArticles from '../services/NewsApi';
 import DataItem from '../components/dataItem';
@@ -43,6 +43,11 @@ export default class HomeScreen extends Component {
     )
   }
    render() {
+    if (this.state.loading) {
+      return (
+        <View></View>
+      );
+    }
 
      let view = this.state.isLoading ? (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -63,15 +68,12 @@ export default class HomeScreen extends Component {
     return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#008B8B"/>
-        <View style={css.containerHeader}>
-        <View style={css.IconPosicao}>
-          <Icon name="menu" onPress={() => navigation.openDrawer()}/>
-        </View>
-        </View> 
-      <View style={{flex:1, alignItems:'center', justifyContent:'center', padding:20}}>
-        <Content> 
-          <Title style={{color:'black'}}>Noticias</Title>
-          {view}
+      <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+      <Title style={{color:'black', margin: 10}}>Noticias</Title>
+        <Content > 
+          <Text style={{color:'black', margin: 0, fontSize:10}}> 
+            {view}
+          </Text>
         </Content>
       </View>
       <Footer style={css.containerFooter}/>
@@ -86,6 +88,7 @@ export default class HomeScreen extends Component {
   
  const styles = StyleSheet.create({
   container: {
+
     flex: 1
   },
 });
