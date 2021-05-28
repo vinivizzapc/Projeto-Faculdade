@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
-import { Icon, Footer, Separator } from 'native-base';
+import { Icon, Footer } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 
 function FavoritosScreen ({ navigation }){
   const [favoritos, setFavoritos] = useState([]);
@@ -28,6 +29,8 @@ function FavoritosScreen ({ navigation }){
     })
   }, [favoritos]);
   
+  const colunas = 2;
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#008B8B"/>
@@ -37,52 +40,36 @@ function FavoritosScreen ({ navigation }){
         </View>
         </View> 
         <View style={{flex:1}}>
-          <SafeAreaView>
+        <SafeAreaView>
               <View>
                 <FlatList 
                   nEndReachedThreshold={0.1}
                   data={favoritos}
                   keyExtractor={item => item.idfavoritos.toString()}
+                  numColumns={colunas}
                   renderItem={({ item }) => (
-
-                    
-                    <View style={{padding:5}}>
-
-                        <Separator style={styles.itemDivisao}>
-                          <View style={styles.divisaoItem}>
+                    <View style={{flex:1 ,padding:10}}>
+                      <View style={{alignItems:'center'}}>
+                        <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:13,}}>
+                          <View style={{height: 160, width:160, margin:10}}>
+                            <View style={{ width: 155, height: 100, borderBottomWidth: 1, borderBottomColor: '#000' }}>
+                              <Text style={{color: 'black', fontSize: 14, margin:1}}>
+                                {item.tipo}
+                              </Text>
+                              <Image source={{ uri: 'https://setorsaude.com.br/wp-content/uploads/2018/08/Os-melhores-hospitais-dos-EUA.jpg' }} style={{ width: 155, height: 70 }} />
+                            </View>
+                            <View style={{ width:100, height:100, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                              <Text style={{color: 'black', fontSize:14, margin:1}} >
+                                {item.nome}
+                              </Text>
+                              <TouchableOpacity>
+                                <Ionicons name="star" size={30} color="gold" />
+                              </TouchableOpacity>
+                            </View>
                           </View>
-                        </Separator>
-
-                      <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>
-                        
-
-                        <View style={{margin:5}}>
-                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={require('../assets/img/logo.png')}/>
-                        </View>
-
-                        <View style={{flex:1,justifyContent:'center'}}>
-                          <Text style={{color: 'black', fontSize:18}}>
-                            {item.nome}
-                          </Text>
-                          <Text style={{color: 'grey', fontSize:14}}>
-                            {item.cep}
-                          </Text>
-                        </View>
-
-
-                        <View style={{paddingLeft:10, justifyContent:'center', alignItems:'center'}}>
-                          <TouchableOpacity  onPress={() => excluirPrevencao(item.idfavoritos)}>
-                            <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
-                          </TouchableOpacity>
-                        </View>
-                        <View style={{paddingLeft:15, justifyContent:'center', alignItems:'center',marginRight:13}}>
-                          <TouchableOpacity  onPress={() => excluirPrevencao(item.idfavoritos)}>
-                            <FontAwesome5 name="trash" size={24} style={{color: 'red'}} />
-                          </TouchableOpacity>
-                        </View>
+                        </LinearGradient>
                       </View>
                     </View>
-                    
                   )}
                 /> 
               </View>      
@@ -90,7 +77,6 @@ function FavoritosScreen ({ navigation }){
         </View>
       <Footer style={{backgroundColor:"#008B8B"}}/>
     </View>
-    
   );
 }
 
@@ -98,6 +84,6 @@ export default FavoritosScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
 });
