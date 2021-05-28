@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, StatusBar, Text, ActivityIndicator, Alert } from 'react-native';
-import { Icon, Footer, List, Title, Content, Left } from 'native-base';
+
+import { Icon, Footer, List, Title, Content } from 'native-base';
 import css from '../style/css';
 import getArticles from '../services/NewsApi';
-import DataItem from '../components/dataItem';
+import DataItem from '../components/DataItem';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-
+import { NavigationContainer } from '@react-navigation/native';
 
 export default class HomeScreen extends Component {
 
@@ -76,7 +77,7 @@ export default class HomeScreen extends Component {
           </Text>
         </Content>
       </View>
-      <Footer style={css.containerFooter}/>
+      <Footer style={{backgroundColor:"#008B8B"}}/>
     </View>
     );
   }
@@ -92,4 +93,5 @@ export default class HomeScreen extends Component {
     flex: 1
   },
 });
+
 

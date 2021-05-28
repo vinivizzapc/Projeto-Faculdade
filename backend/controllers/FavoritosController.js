@@ -3,7 +3,7 @@ const connection = require('../connection');
 module.exports = {
     async Selecionar(req, res, next){
         const {id} = req.params;
-        var sql = `SELECT * FROM favoritos WHERE idusuario = ${id}`;
+        var sql = `SELECT * FROM favoritos, locais WHERE idusuario = ${id} and favoritos.idlocal = locais.idlocais`;
         await connection.query(sql, (err, rows) => {
             if (err) {
                 throw err;

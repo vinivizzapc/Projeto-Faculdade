@@ -6,7 +6,7 @@ import api from '../services/api';
 import { Ionicons, FontAwesome5} from '@expo/vector-icons';
 
 function ListUsuarioScreen({ navigation }){
-
+  
   const [usuarios, setUsuarios] = useState([]);
 
   useEffect(() => {
@@ -16,6 +16,23 @@ function ListUsuarioScreen({ navigation }){
     }
     listagem();
   }, [usuarios]);
+
+  function editarUsuario(usuario) {
+    usuario.edit = true;
+    navigation.navigate('InserirUsuario', {
+      screen: 'InserirUsuario',
+      params: { user: usuario }
+    });
+  }
+
+  function criarUsuario(){
+    var usuario = new Object();
+    usuario.edit = false;
+    navigation.navigate('InserirUsuario', {
+      screen: 'InserirUsuario',
+      params: { user: usuario }
+    });
+  }
 
   async function excluir(id) {
     await api.delete(`/usuarios/${id}`);
@@ -43,7 +60,7 @@ function ListUsuarioScreen({ navigation }){
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
         <View style={{marginRight:10}}>
-          <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirUsuario')}/>
+          <Ionicons name="add-sharp" size={30} color="black" onPress={() => criarUsuario()}/>
         </View>
       </View> 
 
@@ -75,7 +92,7 @@ function ListUsuarioScreen({ navigation }){
 
 
                           <View style={{paddingLeft:10, justifyContent:'center', alignItems:'center' }}>
-                            <TouchableOpacity  onPress={() => excluirUsuario(item.idusuario)}>
+                            <TouchableOpacity  onPress={() => editarUsuario(item)}>
                               <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
                             </TouchableOpacity>
                           </View>

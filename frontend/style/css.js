@@ -6,7 +6,7 @@ const css = StyleSheet.create({
 },
 containerHeader: {
     backgroundColor: '#008B8B',
-    height: 45,
+    height: 50,
     flexDirection: 'row',
     justifyContent:'space-between'
   },

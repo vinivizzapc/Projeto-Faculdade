@@ -1,9 +1,8 @@
 const connection = require('../connection');
 
 module.exports = {
-    
     async Login(req, res, next){
-        const {email, senha} = req.body;
+        const { email, senha } = req.body;
         var sql = `SELECT * FROM usuario WHERE email = '${email}' AND senha = '${senha}'`;
         await connection.query(sql, (err, rows) => {
             if (err) {
@@ -16,8 +15,8 @@ module.exports = {
     },
 
     async Inserir(req, res, next){
-        const {nome, email, senha, status} = req.body; 
-        let sql = `INSERT INTO Usuario(idusuario, nome, email, senha, status) VALUES(null, '${nome}', '${email}', '${senha}', ${status})`;
+        const { nome, email, senha, status, imagem } = req.body;
+        let sql = `INSERT INTO Usuario(idusuario, nome, email, senha, status, imagem) VALUES(null, '${nome}', '${email}', '${senha}', ${status}, '${imagem}')`;
         await connection.query(sql, (error, result) => {
             if (error) {
                 throw error;
@@ -27,7 +26,8 @@ module.exports = {
                 nome: nome,
                 email: email, 
                 senha: senha, 
-                status: status
+                status: status,
+                imagem: imagem
             }
 
             return res.status(201).json(usuario);
@@ -36,7 +36,7 @@ module.exports = {
 
     async Update(req, res, next){
         const idUsuario= req.params.id;
-        const {nome, email, senha} = req.body;
+        const { nome, email, senha } = req.body;
         let sql = `UPDATE usuario SET nome = '${nome}', email = '${email}', senha = '${senha}' WHERE idusuario = ${idUsuario}`;
 
         await connection.query(sql, (err, rows) => {

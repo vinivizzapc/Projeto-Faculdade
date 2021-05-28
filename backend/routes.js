@@ -1,5 +1,16 @@
 const { Router } = require('express');
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, res, cb) {
+        cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
+
 const PrevencaoController = require('./controllers/PrevencaoController');
 const UsuarioController = require('./controllers/UsuarioController');
 const LocalizacaoController = require('./controllers/LocalizacaoController');
@@ -11,6 +22,10 @@ const routes = Router();
 
 routes.get('/prevencoes/:id', PrevencaoController.SelecionarPreven);
 routes.get('/prevencoes', PrevencaoController.Selecionar);
+routes.get('/prevencoesHigiene', PrevencaoController.SelecionarHigiene);
+routes.get('/prevencoesMental', PrevencaoController.SelecionarMental);
+routes.get('/prevencoesFisica', PrevencaoController.SelecionarFisica);
+routes.get('/prevencoesAlimentacao', PrevencaoController.SelecionarAlimentacao);
 routes.post('/prevencoes', PrevencaoController.Inserir);
 routes.put('/prevencoes/:id', PrevencaoController.Update);
 routes.delete('/prevencoes/:id', PrevencaoController.Delete);
@@ -33,9 +48,11 @@ routes.post('/loc/agenda', AgendaController.Inserir);
 routes.put('/loc/agenda/:id', AgendaController.Update);
 routes.delete('/loc/agenda/:id', AgendaController.Delete);
 
+routes.get('/consultas', ConsultaController.SelecionarAdm);
 routes.get('/usu/consultas/:id', ConsultaController.Selecionar);
 routes.post('/usu/consultas', ConsultaController.Inserir);
 routes.put('/usu/consultas/:id', ConsultaController.Update);
+routes.delete('/consultas/:id', ConsultaController.Delete);
 
 routes.get('/favoritos/:id', FavoritosController.Selecionar);
 routes.post('/favoritos', FavoritosController.Inserir);
