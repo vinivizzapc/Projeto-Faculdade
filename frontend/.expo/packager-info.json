@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://kj-hc6.anonymous.frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.kj-hc6.anonymous.frontend.exp.direct",
+  "ngrokPid": 1220,
   "webpackServerPort": null
 }
