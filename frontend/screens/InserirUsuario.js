@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert, Image } from 'react-native';
 import { Icon, Picker } from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
@@ -98,21 +98,36 @@ function InserirUsuario({ route, navigation }){
       <View style={styles.container}>
         <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
           <View style={styles.header}>
-            <View style={{paddingBottom: 210}}>
+            <View style={{paddingTop:7, marginRight:35}}>
               <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
             </View>
             <Text style={styles.text_header}>Cadastrar Usuario</Text>
           </View>
+          
           <View style={styles.footer}>
-          <Text style={[styles.text_footer,{marginTop:15}]}>Tipo de usuário</Text>
-              <Picker
-                selectedValue={status}
-                style={{ height: 50, width: '100%', marginBottom: 10, color:'black'}}
-                onValueChange={itemValue => setStatus(itemValue)}
-              > 
-                <Picker.Item label="Comum" value="0" />
-                <Picker.Item label="Administrador" value="1" />
-              </Picker>
+          
+          <View style={{ flexDirection:'row', justifyContent:'flex-start', paddingVertical:15, paddingBottom:11,  }}>
+            <Image 
+              source={require('../assets/img/Hospital.jpg')}
+              style={styles.avatar} 
+            />
+            <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.botaoImagem} >
+              <TouchableOpacity  >
+                <Text style={{fontSize:16,color:'white',fontWeight:'bold', textAlign:'center', }}>Escolher imagem</Text>
+              </TouchableOpacity>
+            </LinearGradient>
+          </View>
+          <View style={{marginTop:20, marginBottom:5}}>
+          <Text style={[styles.text_footer,{marginTop:15}]}>Tipo de usuário</Text> 
+            <Picker
+              selectedValue={status}
+              style={{ height: 50, width: '100%', marginBottom: 10, color:'black'}}
+              onValueChange={itemValue => setStatus(itemValue)}
+            > 
+              <Picker.Item label="Comum" value="0" />
+              <Picker.Item label="Administrador" value="1" />
+            </Picker>
+          </View>
             <Text style={styles.text_footer}>Nome</Text>
             <View style={styles.action}>
               <FontAwesome 
@@ -178,18 +193,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#008B8B'
   },
   header: {
-      flex: 3,
-      justifyContent: 'flex-end',
-      paddingHorizontal: 20,
-      paddingBottom: 10,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+    flexDirection:'row',
+    alignItems:'flex-start',
+    marginRight:70
   },
   footer: {
-      flex: 10,
+      flex: 11,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,
-      paddingVertical: 30
+      paddingVertical: 20
   },
   text_header: {
       color: '#fff',
@@ -236,5 +254,21 @@ const styles = StyleSheet.create({
   textSign: {
       fontSize: 18,
       fontWeight: 'bold'
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    marginRight:30,
+    
+  },
+  botaoImagem: {
+    width: 120,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:10,
+    
   },
 });

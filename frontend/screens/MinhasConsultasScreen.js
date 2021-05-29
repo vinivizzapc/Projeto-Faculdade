@@ -1,18 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import { Icon, Footer, Separator } from 'native-base';
+import { Modalize } from 'react-native-modalize';
 import css from '../style/css';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import { FontAwesome5, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+
 
 function MinhasConsultasScreen ({ navigation }){
   const [consultas, setConsultas] = useState([]);
   const [idusuario, setIdUsuario] = useState(0);
+  const modalizeRef = useRef(null);
+
+  function onOpen(){
+    modalizeRef.current?.open();
+  }
+
+  function onClose(){
+    modalizeRef.current?.close();
+  }
 
   useEffect(() => {
-
     async function getUser(){
       const user = await AsyncStorage.getItem('user');
       const jsonValue = JSON.parse(user);
@@ -23,13 +32,13 @@ function MinhasConsultasScreen ({ navigation }){
 
   useEffect(() => {
     setTimeout(
-    async function listagem(){
-      const response = await api.get(`/usu/consultas/${idusuario}`)
-      setConsultas(response.data)
+      async function listagem(){
+        const response = await api.get(`/usu/consultas/${idusuario}`)
+        setConsultas(response.data)
     })
   }, [consultas]);
   
-  const column = 2;
+  
 
   return (
     <View style={styles.container}>
@@ -47,48 +56,67 @@ function MinhasConsultasScreen ({ navigation }){
                   nEndReachedThreshold={0.1}
                   data={consultas}
                   keyExtractor={item => item.idconsultas.toString()}
-                  numColumns={column}
                   renderItem={({ item }) => (
-
+                  
                     
                     <View style={{flex:1 ,padding:10}}>
                       <View style={{alignItems:'center'}}>
-                        <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:13,}}>
-                          <View style={{height:160, width:160, margin:10}}>
-                            <View style={{ width:100, height:100,}}>
-                              <Text style={{color: 'black', fontSize:14, margin:1}}>
+                        <View  style={{flex:1,  backgroundColor:'#cfd8dc', borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>
+                          <View style={{height:350, width:300, margin:10}}>
+                            <View style={{ justifyContent:'center', alignItems:'center'}}>
+                            <View style={{alignItems:'center',margin:0.5}}>
+                              <Image style={{width:300,height:100, borderWidth: 1.5, borderRadius: 10,}} source={require('../assets/img/Hospital.jpg')}/>
+                            </View>
+                              <Text style={{color: 'black', fontSize:17, margin:1, fontWeight:'bold'}}>
+                                {item.tipoConsulta}
+                              </Text>
+                              <Text style={{color: 'black', fontSize:13, margin:1, fontWeight:'bold'}}>
+                                {item.tipo}
+                              </Text>
+                              <Text style={{color: 'grey', fontSize:17, margin:1, fontWeight:'bold'}}>
                                 {item.nome}
                               </Text>
-                              <Text style={{color: 'grey', fontSize:15, margin:5}}>
+                              <Text style={{color: 'grey', fontSize:16, margin:3, fontWeight:'bold'}}>
                                 {item.data}
                               </Text>
-                              {item.status==='Em Aberto'?(
-                              <TouchableOpacity style={{backgroundColor:'green', borderRadius:13, flexDirection:'row', height:25, width:107 }}>
-                                <FontAwesome5 name="check" size={11} style={{color: '#fff',margin:4, marginLeft:8, marginTop:7}} />
-                                <Text style={{color: '#fff',fontWeight:'bold',fontSize:14, textAlign:'center', marginLeft:5, marginTop:2 }}>
-                                  {item.status}
-                                </Text>
-                              </TouchableOpacity>
-                              )
-                              :item.status==='Cancelado'?
-                              <TouchableOpacity style={{backgroundColor:'red', borderRadius:13, flexDirection:'row', height:25, width:107 }}>
-                              <Text style={{color: '#fff',fontWeight:'bold',fontSize:14, textAlign:'center', marginTop:2, marginLeft:20 }}>
-                                  {item.status}
-                                </Text>
-                              </TouchableOpacity>
-                              :
-                              <TouchableOpacity style={{backgroundColor:'blue', borderRadius:13, flexDirection:'row', height:25, width:107 }}>
-                              <Text style={{color: '#fff',fontWeight:'bold',fontSize:14, textAlign:'center', marginTop:2, marginLeft:20 }}>
-                                  {item.status}
-                                </Text>
-                              </TouchableOpacity>
-                              }
+                              <Text style={{color: 'grey', fontSize:16, margin:3, fontWeight:'bold'}}>
+                                {item.endereco}
+                              </Text>
 
+                              {item.status==='Agendado'?(
+                                <TouchableOpacity style={{backgroundColor:'green', borderRadius:9, flexDirection:'row', height:27, width:150, textAlign:'center', alignItems:'center' }}>
+                                  <FontAwesome name="clock-o" size={11} style={{color: '#fff',margin:4, marginLeft:8, marginTop:7}} />
+                                  <Text style={{color: '#fff',fontWeight:'bold',fontSize:14, marginLeft:5 }}>
+                                    Status: {item.status}
+                                  </Text>
+                                </TouchableOpacity>
+                                )
+                                :item.status==='Cancelado'?
+                                <TouchableOpacity style={{backgroundColor:'red', borderRadius:9, flexDirection:'row', height:27, width:150, textAlign:'center', alignItems:'center' }}>
+                                  <MaterialIcons name="cancel" size={11} style={{color: '#fff',margin:4, marginLeft:8, marginTop:7}} />
+                                  <Text style={{color: '#fff',fontWeight:'bold',fontSize:14}}>
+                                    Status: {item.status}
+                                  </Text>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity style={{backgroundColor:'blue', alignItems:'center', textAlign:'center', borderRadius:9, flexDirection:'row', height:27, width:150 }}>
+                                  <FontAwesome5 name="check" size={11} style={{color: '#fff',margin:4, marginLeft:8, marginTop:7}} />
+                                  <Text style={{color: '#fff',fontWeight:'bold', marginLeft:5 ,fontSize:14}}>
+                                    Status: {item.status}
+                                  </Text>
+                                </TouchableOpacity>
+                                  }
+                                  <Text style={{color: 'black',fontWeight:'bold',fontSize:10.9, textAlign:'center', marginTop:6, marginBottom:8 }}>
+                                    "(Se não puder comparecer Clique no Botão Abaixo)"
+                                  </Text>
+                                <TouchableOpacity onPress={onOpen} style={{backgroundColor:'#008B8B',  flexDirection:'row', height:50, width:200, marginTop:10, alignItems:'center'}}>
+                                  <Text style={{flex: 1,color: '#fff',fontWeight:'bold',fontSize:18, textAlign:'center', alignItems:'center'}}>
+                                    DETALHES
+                                  </Text>
+                                </TouchableOpacity>
                             </View>
-                            
-                            
                           </View>
-                        </LinearGradient>
+                        </View>
                       </View>
                     </View>
                     
@@ -98,9 +126,10 @@ function MinhasConsultasScreen ({ navigation }){
               </View>      
           </SafeAreaView>
         </View>
-      <Footer style={{backgroundColor:"#008B8B"}}/>
-    </View>
-    
+        <Modalize ref={modalizeRef} snapPoint={450} modalHeight={470}>
+          </Modalize>
+        <Footer style={{backgroundColor:"#008B8B"}}/>
+    </View>   
   );
 }
 
@@ -113,6 +142,7 @@ const styles = StyleSheet.create({
 });
 
 
- 
 
-                       
+
+
+

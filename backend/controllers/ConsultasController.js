@@ -34,7 +34,7 @@ module.exports = {
 
     async Inserir(req, res, next){
         const {data, idusuario, idlocais} = req.body; 
-            let sql = `INSERT INTO consultas(null, data, idusuario, idlocais) VALUES(null, '${data}', ${idusuario}, ${idlocais})`;
+            let sql = `INSERT INTO consultas(null, data, idusuario, idlocais, tipoConsulta) VALUES(null, '${data}', ${idusuario}, ${idlocais}, ${tipoConsulta})`;
             await connection.query(sql, (error, result) => {
             if (error) {
                 throw error;
@@ -54,7 +54,7 @@ module.exports = {
     async Update(req, res, next){
         const idconsulta = req.params.id;
         const {status} = req.body;
-        let sql = `UPDATE consultas SET status = ${status} WHERE idconsultas = ${idconsulta}`;
+        let sql = `UPDATE consultas SET status = ${status}, tipo = ${tipo} WHERE idconsultas = ${idconsulta}`;
 
         await connection.query(sql, (err, rows) => {
             if (err) {
@@ -62,7 +62,8 @@ module.exports = {
             }
             const consulta = {
                 idconsultas: idconsultas,
-                status: status 
+                status: status,
+                tipoConsulta: tipoConsulta
             }
 
             return res.status(200).json(consulta);
