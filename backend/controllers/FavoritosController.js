@@ -27,8 +27,8 @@ module.exports = {
     },
 
     async Delete(req, res, next) {
-        const { idUsuario, idLocal } = req.body;
-        let sql = `DELETE FROM favoritos WHERE idlocal = ${idLocal} AND idusuario = ${idUsuario}`;
+        const { id } = req.params;
+        let sql = `DELETE FROM favoritos WHERE idfavoritos = ${id}`;
         
         await connection.query(sql, (err, result) => {
             if (err) {

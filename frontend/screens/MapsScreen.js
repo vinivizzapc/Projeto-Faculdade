@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, SafeAreaViewBase, FlatList, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, View, StatusBar, Dimensions, Image, Text } from 'react-native';
 import { Icon } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 
-export default function MapsScreen({navigation}) {
+export default function MapsScreen({ navigation }) {
   const [locais, setLocais] = useState([]);
   const [currentRegion, setCurrentRegion] = useState({});
 
@@ -64,18 +64,77 @@ export default function MapsScreen({navigation}) {
           initialRegion={currentRegion}
         >
           {locais.map(local => (
-            <Marker
-              key={local.idlocais} 
-              coordinate={{
-                latitude: local.latitude,
-                longitude: local.longitude,
-              }}
-              title={local.tipo}
-              description={local.nome}
-              icon={{ 
-                uri: "https://img.icons8.com/plasticine/1x/hospital.png" 
-              }}
-            />
+            local.tipo === 'Hospital' ? (
+              <Marker
+                key={local.idlocais} 
+                coordinate={{
+                  latitude: local.latitude,
+                  longitude: local.longitude,
+                }}
+                icon={{ 
+                  uri: "https://img.icons8.com/plasticine/1x/hospital.png" 
+                }}
+              >
+                <Callout onPress={() => {
+                  navigation.navigate('DetalhesMapa');
+                }}>
+                  <View style={styles.callout}>
+                    <Image style={styles.avatar} source={{ uri: local.imagem }} />
+                    <Text style={styles.tipo}>{local.tipo}</Text>
+                    <Text style={styles.nome}>{local.nome}</Text>
+                  </View>
+                </Callout>
+              </Marker>
+            )
+            :local.tipo === 'Posto de vacinação' ? (
+              <Marker
+                key={local.idlocais} 
+                coordinate={{
+                  latitude: local.latitude,
+                  longitude: local.longitude,
+                }}
+                icon={{ 
+                  uri: "https://image.flaticon.com/icons/png/512/963/963471.png",
+                  width: 25,
+                  height: 25
+                }}
+              >
+              <Callout onPress={() => {
+                navigation.navigate('DetalhesMapa');
+              }}>
+                <View style={styles.callout}>
+                  <Image style={styles.avatar} source={{ uri: local.imagem }} />
+                  <Text style={styles.tipo}>{local.tipo}</Text>
+                  <Text style={styles.nome}>{local.nome}</Text>
+                </View>
+              </Callout>
+            </Marker>
+            )
+            :
+            (
+              <Marker
+                key={local.idlocais} 
+                coordinate={{
+                  latitude: local.latitude,
+                  longitude: local.longitude,
+                }}
+                icon={{ 
+                  uri: "https://image.flaticon.com/icons/png/512/1754/1754622.png",
+                  width: 25,
+                  height: 25
+                }}
+              >
+                <Callout onPress={() => {
+                  navigation.navigate('DetalhesMapa');
+                }}>
+                <View style={styles.callout}>
+                  <Image style={styles.avatar} source={{ uri: local.imagem }} />
+                  <Text style={styles.tipo}>{local.tipo}</Text>
+                  <Text style={styles.nome}>{local.nome}</Text>
+                </View>
+              </Callout>
+            </Marker>
+            )
           ))}
         </MapView>
       </View>
@@ -90,5 +149,23 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: '100%'
-  }
+  },
+  avatar: {
+    width: 65,
+    height: 65,
+    borderRadius: 4,
+    borderWidth: 4,
+    borderColor: '#FFF'
+  },
+  callout: {
+    width: 260,
+  },
+  tipo: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  nome: {
+    color: '#666',
+    marginTop: 5
+  },
 });
