@@ -77,13 +77,7 @@ function ListPrevencoesScreen({ navigation }){
                   renderItem={({ item }) => (
 
                     
-                    <View style={{padding:10}}>
-
-                        <Separator style={styles.itemDivisao}>
-                          <View style={styles.divisaoItem}>
-                                <Text style={styles.divisao}>{item.tipo}</Text>
-                          </View>
-                        </Separator>
+                    <View style={{padding:5}}>
 
                       <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>
                         
@@ -94,10 +88,10 @@ function ListPrevencoesScreen({ navigation }){
 
                         <View style={{flex:1,justifyContent:'center'}}>
                           <Text style={{color: 'black', fontSize:18}}>
-                            pedro
+                            {item.texto}
                           </Text>
                           <Text style={{color: 'grey', fontSize:14}}>
-                            {item.texto}
+                            {item.tipo}
                           </Text>
                         </View>
 
@@ -145,6 +139,11 @@ const styles = StyleSheet.create({
   itemDivisao:{
     padding: 4,
     marginBottom:7,
-    borderRadius: 5, 
+    borderRadius: 5,
+    borderWidth:3,
+    borderBottomColor:'#cfd8dc',
+    borderRightColor:'#cfd8dc',
+    borderTopColor: 'white',
+    borderLeftColor: 'white',
   },
 });

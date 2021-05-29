@@ -40,7 +40,7 @@ function ListaConsultasScreen({ navigation }){
     <View style={styles.container}>
       <StatusBar backgroundColor="#008B8B"/>
       <View style={css.containerHeader}>
-        <View style={{marginLeft:10}}>
+        <View style={{marginLeft:10, marginTop:5}}>
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
       </View> 
@@ -58,7 +58,7 @@ function ListaConsultasScreen({ navigation }){
                     
                     <View style={{padding:10}}>
 
-                      <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>
+                      <View style={{ flex: 1, flexDirection: 'row',backgroundColor:'#80cbc4', margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>
                         
 
                         <View style={{margin:11}}>

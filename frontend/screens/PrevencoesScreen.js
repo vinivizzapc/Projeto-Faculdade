@@ -42,9 +42,7 @@ function PrevencoesScreen({ navigation }){
 
             <View style={{marginTop:10}}>
               <Separator style={styles.itemDivisao}>
-                <View style={styles.divisaoItem}>
                   <Text style={styles.divisao}>Higiene</Text>
-                </View>
               </Separator>
               <FlatList 
                 data={prevencoesHigiene}
@@ -52,7 +50,7 @@ function PrevencoesScreen({ navigation }){
                 renderItem={({ item }) => (
                   <View style={styles.item} >
                     <View style={styles.prevencao}>
-                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>
+                    <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>
                       <View style={{alignItems:'center',margin:10}}>
                         <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
                       </View>
@@ -64,7 +62,7 @@ function PrevencoesScreen({ navigation }){
                             {item.nome}
                           </Text>
                         </View>
-                      </LinearGradient>
+                      </View>
                     </View>
                   </View>
                 )}
@@ -84,7 +82,7 @@ function PrevencoesScreen({ navigation }){
                 renderItem={({ item }) => (
                   <View style={styles.item} >
                     <View style={styles.prevencao}>
-                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>       
+                    <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>       
                       <View style={{alignItems:'center',margin:10}}>
                         <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
                       </View>
@@ -96,7 +94,7 @@ function PrevencoesScreen({ navigation }){
                             {item.nome}
                           </Text>
                         </View>
-                      </LinearGradient>
+                      </View>
                     </View>
                   </View>
                 )}
@@ -115,7 +113,7 @@ function PrevencoesScreen({ navigation }){
                 renderItem={({ item }) => (  
                   <View style={styles.item} >
                     <View style={styles.prevencao}>
-                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:5, height:350}}>
+                    <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>
                       <View style={{alignItems:'center',margin:10}}>
                         <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
                       </View>
@@ -127,7 +125,7 @@ function PrevencoesScreen({ navigation }){
                             {item.nome}
                           </Text>
                         </View>
-                      </LinearGradient>
+                      </View>
                     </View>
                   </View>
                 )}
@@ -147,7 +145,7 @@ function PrevencoesScreen({ navigation }){
                 renderItem={({ item }) => (
                   <View style={styles.item} >
                     <View style={styles.prevencao}>
-                    <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, height:350}}>
+                    <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>
                       <View style={{alignItems:'center',margin:10}}>
                         <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
                       </View>
@@ -159,7 +157,7 @@ function PrevencoesScreen({ navigation }){
                             {item.nome}
                           </Text>
                         </View>
-                      </LinearGradient>
+                      </View>
                     </View>
                   </View>
                 )}
@@ -204,9 +202,10 @@ const styles = StyleSheet.create({
     borderBottomWidth:3,
     marginBottom:7,
     borderRadius: 5, 
-    backgroundColor:'black',
-    margin:10,
-    width:400
+    backgroundColor:'#616161',
+    marginLeft:10,
+    marginRight:10,
+    width: 390
   },
   header:{
     flex:1, 

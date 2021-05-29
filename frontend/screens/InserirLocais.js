@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert, Image } from 'react-native';
 import { Icon, Footer, Picker } from 'native-base';
 import css from '../style/css';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -7,7 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 
-function InserirUsuario({ navigation }){
+function InserirLocais({ navigation }){
   
   const [nome, setNome] = useState('');
   const [cep, setCep] = useState('');
@@ -64,13 +64,28 @@ function InserirUsuario({ navigation }){
       <View style={styles.container}>
         <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
           <View style={styles.header}>
-            <View style={{paddingBottom: 20}}>
+            <View style={{paddingTop:7, marginRight:35}}>
               <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
             </View>
-            <Text style={styles.text_header}>Cadastro de Local</Text>
+            <View style={{justifyContent:'center'}}>
+              <Text style={styles.text_header}>Cadastro de Local</Text>
+            </View>
           </View>
+          
           <View style={styles.footer}>
-         
+          
+          <View style={{ flexDirection:'row', justifyContent:'flex-start', marginBottom:5, paddingBottom:15,  }}>
+            <Image 
+              source={require('../assets/img/Hospital.jpg')}
+              style={styles.avatar} 
+            />
+            <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.botaoImagem} >
+              <TouchableOpacity  >
+                <Text style={{fontSize:16,color:'white',fontWeight:'bold', textAlign:'center', }}>Escolher imagem</Text>
+              </TouchableOpacity>
+            </LinearGradient>
+          </View>
+
             <Text style={styles.text_footer}>Nome do local</Text>
             <View style={styles.action}>
               <FontAwesome 
@@ -106,16 +121,17 @@ function InserirUsuario({ navigation }){
 
 
               <Text style={[styles.text_footer,{marginTop:15}]}>Tipo de local</Text>
-              <Picker
-                selectedValue={tipo}
-                style={{ height: 50, width: '100%', marginBottom: 10, color:'black'}}
-                onValueChange={itemValue => setTipo(itemValue)}
-              > 
-                <Picker.Item label="Hospital" value="Hospital" />
-                <Picker.Item label="Posto de vacinação" value="Posto de vacinação" />
-                <Picker.Item label="Local para exame" value="Local para exame" />
-              </Picker>
-
+              <View>
+                <Picker
+                  selectedValue={tipo}
+                  style={{ height: 50, width: '100%', marginBottom: 10, color:'black'}}
+                  onValueChange={itemValue => setTipo(itemValue)}
+                > 
+                  <Picker.Item label="Hospital" value="Hospital" />
+                  <Picker.Item label="Posto de vacinação" value="Posto de vacinação" />
+                  <Picker.Item label="Local para exame" value="Local para exame" />
+                </Picker>
+              </View>
 
              
               <View style={styles.button}>
@@ -134,7 +150,7 @@ function InserirUsuario({ navigation }){
   );
 }
 
-export default InserirUsuario;
+export default InserirLocais;
 
 const styles = StyleSheet.create({
   container: {
@@ -143,12 +159,15 @@ const styles = StyleSheet.create({
   },
   header: {
       flex: 1,
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
       paddingHorizontal: 20,
       paddingBottom: 10,
+      flexDirection:'row',
+      alignItems:'flex-start',
+      marginRight:90
   },
   footer: {
-      flex: 5,
+      flex: 10,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
@@ -188,7 +207,7 @@ const styles = StyleSheet.create({
   },
   button: {
       alignItems: 'center',
-      marginTop: 40,
+      marginTop: 30,
   },
   signIn: {
       width: '100%',
@@ -200,5 +219,21 @@ const styles = StyleSheet.create({
   textSign: {
       fontSize: 18,
       fontWeight: 'bold'
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    marginRight:30,
+    
+  },
+  botaoImagem: {
+    width: 120,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:10,
+    
   },
 });

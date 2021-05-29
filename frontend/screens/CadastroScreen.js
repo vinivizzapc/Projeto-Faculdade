@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
   TextInput: {
       flex: 1,
       marginLeft: 10,
+      marginRight: 15,
       
   },
   errorMsg: {

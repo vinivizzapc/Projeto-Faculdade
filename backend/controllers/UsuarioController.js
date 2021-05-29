@@ -78,5 +78,29 @@ module.exports = {
 
             return res.json(rows);
         });
+    },
+
+    async SelecionarAdm(req, res, next) {
+        let sql = `SELECT * FROM usuario where status = 1`;
+
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+    async SelecionarUsu(req, res, next) {
+        let sql = `SELECT * FROM usuario where status = 0`;
+
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
     }
+
 };

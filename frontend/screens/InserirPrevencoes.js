@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert, Image } from 'react-native';
 import { Icon, Picker } from 'native-base';
 import { AntDesign } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -98,13 +98,17 @@ function InserirPrevencoes({ route, navigation }){
       <View style={styles.container}>
         <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
           <View style={styles.header}>
-            <View style={{paddingBottom: 20}}>
+            <View style={{paddingTop:7, marginRight:20, }}>
               <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
             </View>
             <Text style={styles.text_header}>Cadastrar Prevenção</Text>
           </View>
           <View style={styles.footer}>
-          <Text style={[styles.text_footer,{marginTop:1}]}>Tipo de prevenção</Text>
+
+         
+
+          <Text style={[styles.text_footer]}>Tipo de prevenção</Text>
+          <View>
               <Picker
                 selectedValue={tipo}
                 style={{ height: 50, width: '100%', marginBottom: 5, color:'black'}}
@@ -115,6 +119,7 @@ function InserirPrevencoes({ route, navigation }){
                 <Picker.Item label="Fisica" value="Fisica" />
                 <Picker.Item label="Alimentação" value="Alimentação" />
               </Picker>
+            </View>
             <Text style={styles.text_footer}>Texto descrição</Text>
             <View style={styles.action}>
               <AntDesign 
@@ -124,7 +129,20 @@ function InserirPrevencoes({ route, navigation }){
                 paddingLeft={15}
               />
                 <TextInput placeholder="Inclua um texto" style={styles.TextInput} value={texto} onChangeText={setTexto} autoCapitalize="none"/>
-              </View>             
+              </View> 
+              <Text style={styles.text_footer}>Texto descrição</Text>   
+              <View style={{ flexDirection:'row', justifyContent:'flex-start', paddingVertical:5, paddingBottom:20, paddingTop:30  }}>
+                <Image 
+                  source={require('../assets/img/Hospital.jpg')}
+                  style={styles.avatar} 
+                />
+                <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.botaoImagem} >
+                  <TouchableOpacity  >
+                    <Text style={{fontSize:16,color:'white',fontWeight:'bold', textAlign:'center', }}>Escolher imagem</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              </View>
+
               <View style={styles.button}>
                 {
                   prevencao.edit == false ? (
@@ -160,27 +178,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#008B8B'
   },
   header: {
-      flex: 1,
-      justifyContent: 'flex-end',
-      paddingHorizontal: 20,
-      paddingBottom: 10,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingLeft:30,
+    flexDirection:'row',
+    alignItems:'flex-start',
+    marginRight:70,
+    
   },
   footer: {
-      flex: 5,
+      flex: 8,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
       paddingHorizontal: 20,
-      paddingVertical: 10
+      paddingVertical: 30
   },
   text_header: {
       color: '#fff',
       fontWeight: 'bold',
-      fontSize: 30
+      fontSize: 30,
+      
   },
   text_footer: {
       color: '#05375a',
       fontSize: 18,
+      marginTop: 15,
   },
   action: {
       flexDirection: 'row',
@@ -198,7 +222,7 @@ const styles = StyleSheet.create({
   },
   TextInput: {
       flex: 1,
-      marginLeft: 10,
+      marginLeft: 15,
   },
   errorMsg: {
       color: '#FF0000',
@@ -218,5 +242,21 @@ const styles = StyleSheet.create({
   textSign: {
       fontSize: 18,
       fontWeight: 'bold'
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 20,
+    marginRight:30,
+    
+  },
+  botaoImagem: {
+    width: 120,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:10,
+    
   },
 });

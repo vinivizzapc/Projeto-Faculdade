@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import { Icon, Picker } from 'native-base';
 import { AntDesign } from '@expo/vector-icons'; 
+import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -53,12 +54,43 @@ function InserirAgendas({ navigation }){
       <View style={styles.container}>
         <StatusBar style={{borderRadius:7}} backgroundColor="#008B8B"/>
         <View style={styles.header}>
-            <View style={{paddingBottom: 20}}>
+            <View style={{paddingTop:7, marginRight:20,}}>
                 <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
             </View>
             <Text style={styles.text_header}>Cadastrar Horario</Text>
         </View>
         <View style={styles.footer}>
+        <Text style={styles.text_footer}>Horario</Text>
+        <Picker
+                selectedValue={tipo}
+                style={{ height: 50, width: '100%',  color:'black'}}
+                onValueChange={itemValue => setTipo(itemValue)}
+              > 
+                <Picker.Item label="9:00" value="9:00" />
+                <Picker.Item label="9:30" value="9:30" />
+                <Picker.Item label="10:00" value="10:00" />
+                <Picker.Item label="10:30" value="10:30" />
+                <Picker.Item label="11:00" value="11:00" />
+                <Picker.Item label="11:30" value="11:30" />
+                <Picker.Item label="12:00" value="12:00" />
+              </Picker>
+
+              <View style={styles.button}>
+                
+                  
+                    <TouchableOpacity style={styles.signIn} >
+                      <LinearGradient colors={['#008B8B', '#008B8B']} style={styles.signIn}>
+                        <Text style={[styles.textSign, {color:'#fff'}]}>Incluir</Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  
+                    
+                
+                
+                <TouchableOpacity onPress={() => cancelar()}  style={[styles.signIn, { borderColor: '#008B8B', borderWidth: 1, marginTop: 15 }]} >
+                  <Text style={[styles.textSign, { color: '#008B8B'}]}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -73,13 +105,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#008B8B'
   },
   header: {
-      flex: 1,
-      justifyContent: 'flex-end',
-      paddingHorizontal: 20,
-      paddingBottom: 10,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingLeft:30,
+    flexDirection:'row',
+    alignItems:'flex-start',
+    marginRight:90,
   },
   footer: {
-      flex: 5,
+      flex: 3,
       backgroundColor: '#fff',
       borderTopLeftRadius: 30,
       borderTopRightRadius: 30,
@@ -90,6 +125,7 @@ const styles = StyleSheet.create({
       color: '#fff',
       fontWeight: 'bold',
       fontSize: 30
+      
   },
   text_footer: {
       color: '#05375a',

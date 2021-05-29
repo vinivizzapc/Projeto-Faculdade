@@ -5,7 +5,7 @@ import { Modalize } from 'react-native-modalize';
 import { LinearGradient } from 'expo-linear-gradient';
 import css from '../style/css';
 import api from '../services/api';
-import { Ionicons, Feather, FontAwesome5, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 
 function ListLocaisScreen({ navigation }){
 
@@ -53,10 +53,10 @@ function ListLocaisScreen({ navigation }){
     <View style={styles.container}>
       <StatusBar backgroundColor="#008B8B"/>
       <View style={css.containerHeader}>
-        <View style={{marginLeft:10}}>
+        <View style={{marginLeft:10, marginTop: 8}}>
           <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
         </View>
-        <View style={{marginRight:10}}>
+        <View style={{marginRight:10,  marginTop: 8}}>
           <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirLocais')}/>
         </View>
       </View> 
@@ -137,12 +137,12 @@ function ListLocaisScreen({ navigation }){
                   
                   <View style={{flex:1, height:180, flexDirection:'row', justifyContent:'space-around', alignItems:'center'}}>
                       <TouchableOpacity onPress={() => excluirLocais(item.idlocais)} style={[styles.botao]}>
-                      <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
+                      <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.colorGrad}>
                         <Text style={[styles.textSign, {color:'#fff'}]}>Editar</Text>
                       </LinearGradient>
                       </TouchableOpacity>
                       <TouchableOpacity onPress={() => excluirLocais(item.idlocais)} style={[styles.botao]}>
-                        <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
+                        <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.colorGrad}>
                           <Text style={[styles.textSign, {color:'#fff'}]}>Excluir</Text>
                         </LinearGradient>
                       </TouchableOpacity>
@@ -167,7 +167,8 @@ const styles = StyleSheet.create({
   divisao:{
     fontSize:17,
     fontWeight: 'bold',    
-    paddingVertical:6.5
+    paddingVertical: 5,
+    color:'white'
   },
   divisaoItem:{
     width: 500,
@@ -175,20 +176,23 @@ const styles = StyleSheet.create({
     
   },
   itemDivisao:{
-    padding: 4,
-    marginBottom:7,
-    borderRadius: 5,
-    borderBottomColor:'#e0e0e0',
-    borderRightColor:'#e0e0e0',
-    borderRightWidth:2 ,
-    borderBottomWidth:2 
+    padding: 2,
+    borderBottomColor:'#616161',
+    borderRightColor:'#616161',
+    borderRightWidth:3,
+    borderBottomWidth:3,
+    marginBottom: 5,
+    borderRadius: 5, 
+    backgroundColor:'#616161',
+    margin:5,
+    width:380,
   },
   botao:{
     alignItems:'center',
     justifyContent:'center',
     padding:15,
   },
-  signIn: {
+  colorGrad: {
     width: 100,
     height: 50,
     justifyContent: 'center',
