@@ -5,10 +5,12 @@ import css from '../style/css';
 import api from '../services/api';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MapsScreen({ navigation }) {
   const [locais, setLocais] = useState([]);
   const [currentRegion, setCurrentRegion] = useState({});
+  const [usuario, setUsuario] = useState({});
 
   useEffect(() => {
     async function loadInitalPosition() {
@@ -47,7 +49,15 @@ export default function MapsScreen({ navigation }) {
       setLocais(response.data);
     }
     listagem();
-  }, [locais]);
+
+    async function getUser(){
+      const user = await AsyncStorage.getItem('user');
+      const jsonValue = JSON.parse(user);
+      setUsuario(jsonValue);
+    }
+    
+    getUser();
+  }, [locais, usuario]);
 
   return (
     <View style={styles.container}>
@@ -64,77 +74,21 @@ export default function MapsScreen({ navigation }) {
           initialRegion={currentRegion}
         >
           {locais.map(local => (
-            local.tipo === 'Hospital' ? (
-              <Marker
-                key={local.idlocais} 
-                coordinate={{
-                  latitude: local.latitude,
-                  longitude: local.longitude,
-                }}
-                icon={{ 
-                  uri: "https://img.icons8.com/plasticine/1x/hospital.png" 
-                }}
-              >
-                <Callout onPress={() => {
-                  navigation.navigate('DetalhesMapa');
-                }}>
-                  <View style={styles.callout}>
-                    <Image style={styles.avatar} source={{ uri: local.imagem }} />
-                    <Text style={styles.tipo}>{local.tipo}</Text>
-                    <Text style={styles.nome}>{local.nome}</Text>
-                  </View>
-                </Callout>
-              </Marker>
-            )
-            :local.tipo === 'Posto de vacinação' ? (
-              <Marker
-                key={local.idlocais} 
-                coordinate={{
-                  latitude: local.latitude,
-                  longitude: local.longitude,
-                }}
-                icon={{ 
-                  uri: "https://image.flaticon.com/icons/png/512/963/963471.png",
-                  width: 25,
-                  height: 25
-                }}
-              >
-              <Callout onPress={() => {
-                navigation.navigate('DetalhesMapa');
-              }}>
+            <Marker
+              key={local.idlocais} 
+              coordinate={{
+                latitude: local.latitude,
+                longitude: local.longitude,
+              }}
+            >
+              <Image style={styles.avatar} source={{ uri: local.imagem }} />
+              <Callout onPress={() => { navigation.navigate('DetalhesMapa', { screen: 'DetalhesMapa', params: { localSelecionado: local, user: usuario } }) }}>
                 <View style={styles.callout}>
-                  <Image style={styles.avatar} source={{ uri: local.imagem }} />
                   <Text style={styles.tipo}>{local.tipo}</Text>
                   <Text style={styles.nome}>{local.nome}</Text>
                 </View>
               </Callout>
             </Marker>
-            )
-            :
-            (
-              <Marker
-                key={local.idlocais} 
-                coordinate={{
-                  latitude: local.latitude,
-                  longitude: local.longitude,
-                }}
-                icon={{ 
-                  uri: "https://image.flaticon.com/icons/png/512/1754/1754622.png",
-                  width: 25,
-                  height: 25
-                }}
-              >
-                <Callout onPress={() => {
-                  navigation.navigate('DetalhesMapa');
-                }}>
-                <View style={styles.callout}>
-                  <Image style={styles.avatar} source={{ uri: local.imagem }} />
-                  <Text style={styles.tipo}>{local.tipo}</Text>
-                  <Text style={styles.nome}>{local.nome}</Text>
-                </View>
-              </Callout>
-            </Marker>
-            )
           ))}
         </MapView>
       </View>
@@ -151,21 +105,24 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   avatar: {
-    width: 65,
-    height: 65,
-    borderRadius: 4,
+    width: 54,
+    height: 54,
+    borderRadius: 27,
     borderWidth: 4,
     borderColor: '#FFF'
   },
+
   callout: {
-    width: 260,
+    width: 160
   },
+
   tipo: {
     fontWeight: 'bold',
     fontSize: 16
   },
+
   nome: {
     color: '#666',
     marginTop: 5
-  },
+  }
 });

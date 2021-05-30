@@ -57,7 +57,9 @@ routes.put('/usu/consultas/:id', ConsultaController.Update);
 routes.delete('/consultas/:id', ConsultaController.Delete);
 
 routes.get('/favoritos/:id', FavoritosController.Selecionar);
+routes.get('/favorito/:idUsuario/:idLocal', FavoritosController.SelecionarFavorito);
 routes.post('/favoritos', FavoritosController.Inserir);
 routes.delete('/favoritos/:id', FavoritosController.Delete);
+routes.delete('/favoritos', FavoritosController.DeleteFavorito);
 
 module.exports = routes;
