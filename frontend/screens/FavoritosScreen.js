@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, FlatList, TouchableOpacity, SafeAreaView, Image, Alert } from 'react-native';
 import { Icon, Footer } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
@@ -11,6 +11,19 @@ function FavoritosScreen ({ navigation }){
   const [favoritos, setFavoritos] = useState([]);
   const [idusuario, setIdUsuario] = useState(0);
 
+  function desfavoritar(id) {
+    Alert.alert('Favorito', 'Deseja excluir o favorito?', [
+      {
+        text: 'Sim',
+        async onPress() {
+          await api.delete(`/favoritos/${id}`);
+        }
+      },
+      {
+        text: 'Não'
+      }
+    ])
+  }
 
   useEffect(() => {
     async function getUser(){
@@ -22,11 +35,11 @@ function FavoritosScreen ({ navigation }){
   }, [idusuario]);
 
   useEffect(() => {
-    setTimeout(
     async function listagem(){
       const response = await api.get(`/favoritos/${idusuario}`)
-      setFavoritos(response.data)
-    })
+      setFavoritos(response.data);
+    }
+    listagem();
   }, [favoritos]);
   
   const colunas = 2;
@@ -48,23 +61,30 @@ function FavoritosScreen ({ navigation }){
                   keyExtractor={item => item.idfavoritos.toString()}
                   numColumns={colunas}
                   renderItem={({ item }) => (
-                    <View style={{flex:1 ,padding:10}}>
-                      <View style={{alignItems:'center'}}>
-                        <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{flex:1, borderRadius:13,}}>
-                          <View style={{height: 160, width:160, margin:10}}>
-                            <View style={{ width: 155, height: 100, borderBottomWidth: 1, borderBottomColor: '#000' }}>
-                              <Text style={{color: 'black', fontSize: 14, margin:1}}>
-                                {item.tipo}
-                              </Text>
-                              <Image source={{ uri: 'https://setorsaude.com.br/wp-content/uploads/2018/08/Os-melhores-hospitais-dos-EUA.jpg' }} style={{ width: 155, height: 70 }} />
+                    <View style={{flex:1 ,padding:15}}>
+                      <View style={{alignItems:'center' }}>
+                        <LinearGradient colors={['#696969', '#808080']} style={{flex:1, borderRadius: 13 }}>
+                          <View style={{height: 170, width:160, margin:10 }}>
+                            <View style={{ width: 155, height: 120, borderBottomWidth: 1, borderBottomColor: 'white' }}>
+                              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{color: 'white', fontSize: 14, margin:1, fontWeight: 'bold' }}>
+                                  {item.tipo}
+                                </Text>
+                                <TouchableOpacity onPress={() => desfavoritar(item.idfavoritos)} style={{ marginLeft: 10 }}>
+                                  <Ionicons name="star" size={24} color="gold" />
+                                </TouchableOpacity>
+                              </View>
+                              <View style={{ paddingBottom: 5 }}>
+                                <Image source={{ uri: item.imagem }} style={{ width: 155, height: 82 }} />
+                              </View>
                             </View>
-                            <View style={{ width:100, height:100, flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                              <Text style={{color: 'black', fontSize:14, margin:1}} >
+                            <View style={{ width:100, height:100 }}>
+                              <Text style={{color: 'white', fontSize:14, margin:1, fontWeight: 'bold' }} >
                                 {item.nome}
                               </Text>
-                              <TouchableOpacity>
-                                <Ionicons name="star" size={30} color="gold" />
-                              </TouchableOpacity>
+                              <Text style={{color: 'white', fontSize:12, margin:1}} >
+                                {item.descricao}
+                              </Text>
                             </View>
                           </View>
                         </LinearGradient>

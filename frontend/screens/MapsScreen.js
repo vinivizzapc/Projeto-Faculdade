@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, SafeAreaViewBase, FlatList, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, View, StatusBar, Dimensions, Image, Text } from 'react-native';
 import { Icon } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Callout } from 'react-native-maps';
 import { requestForegroundPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function MapsScreen({navigation}) {
+export default function MapsScreen({ navigation }) {
   const [locais, setLocais] = useState([]);
   const [currentRegion, setCurrentRegion] = useState({});
+  const [usuario, setUsuario] = useState({});
 
   useEffect(() => {
     async function loadInitalPosition() {
@@ -47,7 +49,15 @@ export default function MapsScreen({navigation}) {
       setLocais(response.data);
     }
     listagem();
-  }, [locais]);
+
+    async function getUser(){
+      const user = await AsyncStorage.getItem('user');
+      const jsonValue = JSON.parse(user);
+      setUsuario(jsonValue);
+    }
+    
+    getUser();
+  }, [locais, usuario]);
 
   return (
     <View style={styles.container}>
@@ -70,12 +80,15 @@ export default function MapsScreen({navigation}) {
                 latitude: local.latitude,
                 longitude: local.longitude,
               }}
-              title={local.tipo}
-              description={local.nome}
-              icon={{ 
-                uri: "https://img.icons8.com/plasticine/1x/hospital.png" 
-              }}
-            />
+            >
+              <Image style={styles.avatar} source={{ uri: local.imagem }} />
+              <Callout onPress={() => { navigation.navigate('DetalhesMapa', { screen: 'DetalhesMapa', params: { localSelecionado: local, user: usuario } }) }}>
+                <View style={styles.callout}>
+                  <Text style={styles.tipo}>{local.tipo}</Text>
+                  <Text style={styles.nome}>{local.nome}</Text>
+                </View>
+              </Callout>
+            </Marker>
           ))}
         </MapView>
       </View>
@@ -90,5 +103,26 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: '100%'
+  },
+  avatar: {
+    width: 54,
+    height: 54,
+    borderRadius: 27,
+    borderWidth: 4,
+    borderColor: '#FFF'
+  },
+
+  callout: {
+    width: 160
+  },
+
+  tipo: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+
+  nome: {
+    color: '#666',
+    marginTop: 5
   }
 });
