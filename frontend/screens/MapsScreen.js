@@ -48,16 +48,16 @@ export default function MapsScreen({ navigation }) {
       const response = await api.get('/locais');
       setLocais(response.data);
     }
-    listagem();
 
     async function getUser(){
       const user = await AsyncStorage.getItem('user');
       const jsonValue = JSON.parse(user);
       setUsuario(jsonValue);
     }
-    
+
     getUser();
-  }, [locais, usuario]);
+    listagem();
+  }, [locais]);
 
   return (
     <View style={styles.container}>
@@ -82,7 +82,7 @@ export default function MapsScreen({ navigation }) {
               }}
             >
               <Image style={styles.avatar} source={{ uri: local.imagem }} />
-              <Callout onPress={() => { navigation.navigate('DetalhesMapa', { screen: 'DetalhesMapa', params: { localSelecionado: local, user: usuario } }) }}>
+              <Callout onPress={() => { navigation.navigate('DetalhesMapa', { screen: 'DetalhesMapa', params: { localSelecionado: local, user: usuario.idusuario } }) }}>
                 <View style={styles.callout}>
                   <Text style={styles.tipo}>{local.tipo}</Text>
                   <Text style={styles.nome}>{local.nome}</Text>

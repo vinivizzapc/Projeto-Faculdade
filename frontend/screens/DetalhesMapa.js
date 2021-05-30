@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, StatusBar, Dimensions, Image, Text, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, View, StatusBar, Image, Text, TouchableOpacity, Alert } from 'react-native';
 import { Icon, Footer } from 'native-base';
 import css from '../style/css';
 import api from '../services/api';
@@ -10,12 +10,14 @@ export default function DetalhesMapa({ route, navigation }) {
   const [favoritado, setFavoritado] = useState('');
   
   useEffect(() => {
-    async function verificarFavorito() {
-      const idLocal = localSelecionado.idlocais;
-      const response = await api.get(`/favorito/${user.idusuario}/${idLocal}`);
-      setFavoritado(response.data);
-    }
-    verificarFavorito();
+    setInterval(
+      async function verificarFavorito() {
+        const idLocal = localSelecionado.idlocais;
+        const response = await api.get(`/favorito/${user}/${idLocal}`);
+        setFavoritado(response.data.msg);
+      }, 2000
+    )
+    
   }, [favoritado]);
   
   async function favoritar(local, usuario) {
@@ -39,7 +41,7 @@ export default function DetalhesMapa({ route, navigation }) {
       idLocal: local
     }
 
-    const response = await api.delete('/favoritos', favorito)
+    const response = await api.post('/favoritoDelete', favorito)
 
     if (response.data != null) {
       Alert.alert('Favoritos', 'Local desfavoritado com sucesso!', [
@@ -65,13 +67,13 @@ export default function DetalhesMapa({ route, navigation }) {
         <Image style={styles.imagem} source={{ uri: localSelecionado.imagem }} />
         {
           favoritado == 'Não é favorito' ? (
-            <TouchableOpacity onPress={() => favoritar(localSelecionado.idlocais, usuario.idusuario)} style={{ marginLeft: 10 }}>
+            <TouchableOpacity onPress={() => favoritar(localSelecionado.idlocais, user)} style={{ marginLeft: 10 }}>
               <Text>Favoritar</Text>
             </TouchableOpacity>
           ) 
           : 
           (
-            <TouchableOpacity onPress={() => desfavoritar(localSelecionado.idlocais, usuario.idusuario)} style={{ marginLeft: 10 }}>
+            <TouchableOpacity onPress={() => desfavoritar(localSelecionado.idlocais, user)} style={{ marginLeft: 10 }}>
               <Text>Desfavoritar</Text>
             </TouchableOpacity>
           )
