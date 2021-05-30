@@ -6,6 +6,7 @@ import PrevencoesScreen from '../screens/PrevencoesScreen';
 import MapsScreen from '../screens/MapsScreen';
 import MinhasConsultasScreen from '../screens/MinhasConsultasScreen';
 import AgendaConsultaScreen from '../screens/AgendaConsultaScreen';
+import CadConsultaScreen from '../screens/CadConsultaScreen';
 import FavoritosScreen from '../screens/FavoritosScreen';
 import ListUsuarioScreen from '../screens/ListUsuarioScreen';
 import ListLocais from '../screens/ListLocaisScreen';
@@ -32,6 +33,17 @@ const detalhesMapa = ({navigation}) => {
       <Stack.Screen
         name="DetalhesMapa"
         component={DetalhesMapa}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const cadConsultaScreen = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="CadConsultaScreen"
+        component={CadConsultaScreen}
       />
     </Stack.Navigator>
   );
@@ -162,11 +174,13 @@ function DrawerContent() {
             routeNames: props.state.routeNames.filter(
               (routeName) => {
                 routeName !== 'DetalhesMapa'
+                && routeName !== 'CadConsultaScreen'
               },
             ),
             routes: props.state.routes.filter(
               (route) =>
                 route.name !== 'DetalhesMapa'
+                && route.name !== 'CadConsultaScreen'
             ),
           },
         };
@@ -184,6 +198,11 @@ function DrawerContent() {
           name="DetalhesMapa"
           options={{drawerLabel: 'DetalhesMapa'}}
           component={detalhesMapa}
+        />
+        <Drawer.Screen
+          name="CadConsultaScreen"
+          options={{drawerLabel: 'CadConsultaScreen'}}
+          component={cadConsultaScreen}
         />
       </Drawer.Navigator>
     )
