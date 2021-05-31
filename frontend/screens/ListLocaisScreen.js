@@ -20,15 +20,22 @@ function ListLocaisScreen({ navigation }){
   }
 
 
-  const [locais, setLocais] = useState([]);
+  const [locaisConsulta, setLocaisConsulta] = useState([]);
+  const [locaisVacinacao, setLocaisVacinacao] = useState([]);
+  const [locaisExame, setLocaisExame] = useState([]);
+
 
   useEffect(() => {
     async function listagem(){
-      const response = await api.get('/locais');
-      setLocais(response.data);
+      const responseConsulta = await api.get('/locaisConsulta');
+      setLocaisConsulta(responseConsulta.data);
+      const responseVacinacao = await api.get('/locaisVacinacao');
+      setLocaisVacinacao(responseVacinacao.data);
+      const responseExame = await api.get('/locaisExame');
+      setLocaisExame(responseExame.data);
     }
     listagem();
-  }, [locais]);
+  }, [locaisConsulta]);
 
   async function excluir(id) {
     await api.delete(`/locais/${id}`);
@@ -60,57 +67,114 @@ function ListLocaisScreen({ navigation }){
           <Ionicons name="add-sharp" size={30} color="black" onPress={() => navigation.navigate('InserirLocais')}/>
         </View>
       </View> 
-
-
         <View style={{flex:1}}>
-        <SafeAreaView>
-              <View>
-                <FlatList 
-                  nEndReachedThreshold={0.1}
-                  data={locais}
-                  keyExtractor={item => item.idlocais.toString()}
-                  renderItem={({ item }) => (
-                    
-                    
-                    <View style={{padding:10}}>
+        <ScrollView>
+          <View> 
+            <View style={{alignItems:'center'}}>
+              <Separator style={styles.itemDivisao}>
+                <View style={styles.divisaoItem}>
+                  <Text style={styles.divisao}>Hospitais</Text>
+                </View>
+              </Separator>
+            </View>
+            <FlatList 
+              nEndReachedThreshold={0.1}
+              data={locaisConsulta}
+              keyExtractor={item => item.idlocais.toString()}
+              renderItem={({ item }) => (          
+                <View style={{padding:10}}>
+                    <View style={{flex:1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:2 ,borderBottomWidth:2, }}>
+                    <View style={{margin:10}}>
+                      <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={{ uri: item.imagem }}/>
+                    </View>
+                      <View style={{flex:1,justifyContent:'center'}}>
+                        <Text style={{color: '#424242', fontSize:18}}>
+                          {item.nome}
+                        </Text>      
+                      </View>
+                    <View style={{margin:20}}>
+                      <TouchableOpacity  onPress={onOpen}>
+                        <FontAwesome5 name="info" size={24} style={{color: 'red'}} />
+                      </TouchableOpacity>
+                    </View>   
+                  </View>
+                </View>
+              )}
+            /> 
+          </View>  
 
-                        <Separator style={styles.itemDivisao}>
-                          <View style={styles.divisaoItem}>
-                                <Text style={styles.divisao}>{item.tipo}</Text>
-                          </View>
-                        </Separator>
-
-
-                        <View style={{flex:1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:2 ,borderBottomWidth:2, }}>
-
-                        <View style={{margin:10}}>
-                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={{ uri: item.imagem }}/>
-                        </View>
-
+            <View> 
+              <View style={{alignItems:'center'}}>
+                <Separator style={styles.itemDivisao}>
+                  <View style={styles.divisaoItem}>
+                    <Text style={styles.divisao}>Postos de vacinação</Text>
+                  </View>
+                </Separator>
+              </View>
+              <FlatList 
+                nEndReachedThreshold={0.1}
+                data={locaisVacinacao}
+                keyExtractor={item => item.idlocais.toString()}
+                renderItem={({ item }) => (          
+                  <View style={{padding:10}}>
+                      <View style={{flex:1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:2 ,borderBottomWidth:2, }}>
+                      <View style={{margin:10}}>
+                        <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={{ uri: item.imagem }}/>
+                      </View>
                         <View style={{flex:1,justifyContent:'center'}}>
                           <Text style={{color: '#424242', fontSize:18}}>
                             {item.nome}
-                          </Text>
-                          
+                          </Text>      
                         </View>
-                            
+                      <View style={{margin:20}}>
+                        <TouchableOpacity  onPress={onOpen}>
+                          <FontAwesome5 name="info" size={24} style={{color: 'red'}} />
+                        </TouchableOpacity>
+                      </View>   
+                    </View>
+                  </View>
+                )}
+              /> 
+            </View> 
+            <View> 
+              <View style={{alignItems:'center'}}>
+                <Separator style={styles.itemDivisao}>
+                  <View style={styles.divisaoItem}>
+                    <Text style={styles.divisao}>Locais para exame</Text>
+                  </View>
+                </Separator>
+              </View>
+                <FlatList 
+                  nEndReachedThreshold={0.1}
+                  data={locaisExame}
+                  keyExtractor={item => item.idlocais.toString()}
+                  renderItem={({ item }) => (          
+                    <View style={{padding:10}}>
+                        <View style={{flex:1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:2 ,borderBottomWidth:2, }}>
+                        <View style={{margin:10}}>
+                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={{ uri: item.imagem }}/>
+                        </View>
+                          <View style={{flex:1,justifyContent:'center'}}>
+                            <Text style={{color: '#424242', fontSize:18}}>
+                              {item.nome}
+                            </Text>      
+                          </View>
                         <View style={{margin:20}}>
                           <TouchableOpacity  onPress={onOpen}>
                             <FontAwesome5 name="info" size={24} style={{color: 'red'}} />
                           </TouchableOpacity>
-                        </View>
-                        
+                        </View>   
                       </View>
                     </View>
                   )}
                 /> 
               </View> 
-          </SafeAreaView>
+          </ScrollView>
         </View>
             <Modalize ref={modalizeRef} snapPoint={450} modalHeight={470}>
               <FlatList 
                     nEndReachedThreshold={0.1}
-                    data={locais}
+                    data={locaisConsulta}
                     keyExtractor={item => item.idlocais.toString()}
                     renderItem={({ item }) => (
                 <View style={{backgroundColor:'#e0e0e0'}}>
@@ -171,7 +235,7 @@ const styles = StyleSheet.create({
     color:'white'
   },
   divisaoItem:{
-    width: 500,
+    width: 600,
     height:35,
     
   },
@@ -185,7 +249,7 @@ const styles = StyleSheet.create({
     borderRadius: 5, 
     backgroundColor:'#616161',
     margin:5,
-    width:380,
+    width:'98%',
   },
   botao:{
     alignItems:'center',
