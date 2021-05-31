@@ -14,7 +14,7 @@ module.exports = {
     },
 
     async Inserir(req, res, next) {
-        const { nome, cep, tipo, descricao} = req.body;
+        const { nome, cep, tipo, descricao, imagem } = req.body;
 
         let endereco = "";
         let latitude = "";
@@ -29,8 +29,8 @@ module.exports = {
             return res.json({ msg:'CEP inválido' });
         }
 
-        let sql = `INSERT INTO locais(idLocais, nome, cep, endereco, latitude, longitude, tipo, descricao) 
-            VALUES(null, '${nome}', '${cep}', '${endereco}', ${latitude}, ${longitude}, '${tipo}', '${descricao}')`;
+        let sql = `INSERT INTO locais(idLocais, nome, cep, endereco, latitude, longitude, tipo, descricao, imagem) 
+            VALUES(null, '${nome}', '${cep}', '${endereco}', ${latitude}, ${longitude}, '${tipo}', '${descricao}', '${imagem}')`;
         
         await connection.query(sql, (err, result) => {
             if (err) {
@@ -46,6 +46,7 @@ module.exports = {
                 longitude: longitude,
                 tipo: tipo,
                 descricao: descricao,
+                imagem: imagem
             }
 
             return res.status(201).json(local);

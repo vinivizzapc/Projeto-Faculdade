@@ -84,7 +84,7 @@ function ListLocaisScreen({ navigation }){
                         <View style={{flex:1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:2 ,borderBottomWidth:2, }}>
 
                         <View style={{margin:10}}>
-                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={require('../assets/img/logo.png')}/>
+                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={{ uri: item.imagem }}/>
                         </View>
 
                         <View style={{flex:1,justifyContent:'center'}}>

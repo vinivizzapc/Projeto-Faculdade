@@ -37,7 +37,7 @@ function DrawerAdm(filteredProps) {
           <View style={styles.drawerContent}>
             <View style={styles.userInfoSection}>
               <View style={{flexDirection:'row', marginTop: 15}}>
-                  <Avatar.Image source={{uri: user.imagem}} size={50}/>
+                  <Avatar.Image style={{backgroundColor: 'white'}} source={{uri: user.imagem}} size={50}/>
                   <View style={{marginLeft:15, flexDirection:'column'}}>
                       <Title style={styles.title}>{user.nome}</Title>
                       <Caption style={styles.caption}>{user.email}</Caption>

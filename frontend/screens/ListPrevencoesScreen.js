@@ -83,7 +83,7 @@ function ListPrevencoesScreen({ navigation }){
                         
 
                         <View style={{margin:11}}>
-                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={require('../assets/img/logo.png')}/>
+                          <Image style={{width:50,height:50, borderWidth:1, borderRadius:3}} source={{ uri: item.imagem }}/>
                         </View>
 
                         <View style={{flex:1,justifyContent:'center'}}>

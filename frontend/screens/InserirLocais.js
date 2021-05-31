@@ -1,18 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, StatusBar, TouchableOpacity, Alert, Image } from 'react-native';
-import { Icon, Footer, Picker } from 'native-base';
-import css from '../style/css';
+import { Icon, Picker } from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
+import * as ImagePicker from 'expo-image-picker';
 
 function InserirLocais({ navigation }){
   
+  const [image, setImage] = useState('https://portal.globehealer.com/assets/placeholder_hospital-fb4c56a14e7b2fbb1ce1eb713b15b9f38243c1fb93742710da14ac22719efab7.png');
   const [nome, setNome] = useState('');
   const [cep, setCep] = useState('');
   const [tipo, setTipo] = useState('Hospital');
   const [descricao, setDescricao] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   function cancelar(){
     setNome('');
@@ -28,9 +53,10 @@ function InserirLocais({ navigation }){
         nome:nome,
         cep:cep,
         tipo:tipo,
-        descricao:descricao
-  }
-
+        descricao:descricao,
+        imagem: image
+      }
+    
       const response = await api.post('/locais', locais)
       
       if(response.data != null){
@@ -76,11 +102,11 @@ function InserirLocais({ navigation }){
           
           <View style={{ flexDirection:'row', justifyContent:'flex-start', marginBottom:5, paddingBottom:15,  }}>
             <Image 
-              source={require('../assets/img/Hospital.jpg')}
+              source={{ uri: image ? image : 'https://portal.globehealer.com/assets/placeholder_hospital-fb4c56a14e7b2fbb1ce1eb713b15b9f38243c1fb93742710da14ac22719efab7.png' }} 
               style={styles.avatar} 
             />
             <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.botaoImagem} >
-              <TouchableOpacity  >
+              <TouchableOpacity onPress={pickImage}>
                 <Text style={{fontSize:16,color:'white',fontWeight:'bold', textAlign:'center', }}>Escolher imagem</Text>
               </TouchableOpacity>
             </LinearGradient>
