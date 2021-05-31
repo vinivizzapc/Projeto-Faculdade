@@ -7,9 +7,9 @@ import { Feather } from '@expo/vector-icons';
 import DataPicker from 'react-native-datepicker';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import api from '../services/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function CadConsulta ({ route, navigation }){
-
+export default function CadTesteScreen ({ route, navigation }){
 
   const { user } = route.params;
   const today = new Date();
@@ -19,13 +19,11 @@ export default function CadConsulta ({ route, navigation }){
   const [dataFormatada, setDataFormatada] = useState('');
   const [horaFormatada, setHoraFormatada] = useState('');
   const [locais, setLocais] = useState([]);
-  const [especialidade, setEspecialidade] = useState('Dermatologia');
   const [localSelecionado, setLocalSelecionado] = useState('');
-
 
   useEffect(() => {
     async function listagem(){
-      const response = await api.get('/locaisConsulta');
+      const response = await api.get('/locaisVacinacao');
       setLocais(response.data);
     }
     listagem();
@@ -38,18 +36,17 @@ export default function CadConsulta ({ route, navigation }){
       formattedDate = (currentDate.getDate() + "-" + currentDate.getMonth() + "-" + currentDate.getFullYear())    
       setHoraFormatada(currentDate.getHours() + "h:" + currentDate.getMinutes()+ "m")
       setDataFormatada(formattedDate);
-      setEspecialidade(especialidade);
       setLocalSelecionado(localSelecionado);
   };
 
   async function cadastro() {
-    if(dataFormatada != '' && horaFormatada  != '' && especialidade  != ''){
+    if(dataFormatada != '' && horaFormatada  != ''){
       const consultaExame = {
         data:dataFormatada,
         horario:horaFormatada,
         status:'Agendado',
-        tipoConsulta:'Consulta',
-        especialidade: especialidade,
+        tipoConsulta:'Vacinação',
+        especialidade: '',
         idusuario: user,
         idlocais: localSelecionado
       }
@@ -57,12 +54,11 @@ export default function CadConsulta ({ route, navigation }){
       const response = await api.post('/usu/consultas', consultaExame)
 
       if(response.data != null){
-        setEspecialidade('Dermatologia');
         setDataFormatada('');
         setHoraFormatada('');
         navigation.navigate('Minhas Consultas');
       }else{
-        Alert.alert('OOPS!', 'Erro ao Agendar Consulta', [
+        Alert.alert('OOPS!', 'Erro ao Agendar Vacinação', [
           {text: 'Entendido'}
         ]);
       }
@@ -72,6 +68,7 @@ export default function CadConsulta ({ route, navigation }){
       ]);
     }
   }
+
 
   const showMode = (currentMode) => {
     setShow(true);
@@ -100,19 +97,9 @@ export default function CadConsulta ({ route, navigation }){
         </View>  
         <View style={{flex:1,}}>
           <View style={{paddingLeft:10, alignItems:'center', margin:10}}>
-            <Text style={{fontSize:23, color: '#05375a',fontWeight:'bold',}}>Agendar Consulta</Text>
+            <Text style={{fontSize:23, color: '#05375a',fontWeight:'bold',}}>Agendar vacinação</Text>
           </View>
             <View>
-            <Text style={[styles.text_footer,{marginTop:40, marginLeft:10}]}>Especialidade</Text>
-              <Picker onChange={onChange}  selectedValue={especialidade} onValueChange={itemValue => setEspecialidade(itemValue)} style={{ height: 50, width: '100%', marginBottom: 10, marginLeft:5, color:'black'}}> 
-                <Picker.Item label="Dermatologia" value="Dermatologia" />
-                <Picker.Item label="Ortopedia" value="Ortopedia" />
-                <Picker.Item label="Cardiologia" value="Cardiologia" />
-                <Picker.Item label="Ginecologia e Obstetrícia" value="Ginecologia e Obstetrícia" />
-                <Picker.Item label="Neurologia" value="Neurologia" />
-                <Picker.Item label="Endocrinologia" value="Endocrinologia" />
-                <Picker.Item label="Urologia" value="Urologia" />
-              </Picker>
             <Text style={[styles.text_footer,{marginTop:15, marginLeft:10}]}>Local</Text>
               <Picker onChange={onChange}  selectedValue={localSelecionado} onValueChange={itemValue => setLocalSelecionado(itemValue)} style={{ height: 50, width: '100%', marginBottom: 10, marginLeft:5, color:'black'}}> 
                 {
@@ -160,7 +147,7 @@ export default function CadConsulta ({ route, navigation }){
             </View>
             
             <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-              <TouchableOpacity   style={[styles.signIn, {borderColor: '#009387', borderWidth: 1,width:200 , height:50  }]} onPress={() => cadastro()}>
+              <TouchableOpacity   style={[styles.signIn, {borderColor: '#009387', borderWidth: 1,width:200 , height:50  }]} onPress={() => cadastro()} >
                 <Text style={[styles.textSign, { color: '#009387'}]}>Agendar</Text>
               </TouchableOpacity>
               </View>

@@ -13,6 +13,39 @@ module.exports = {
         });
     },
 
+    async SelecionarLocConsulta(req, res, next) {
+        var sql = `SELECT * FROM locais WHERE tipo='Hospital'`
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
+    async SelecionarLocVacinacao(req, res, next) {
+        var sql = `SELECT * FROM locais WHERE tipo='Posto de vacinação'`
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
+    async SelecionarLocExame(req, res, next) {
+        var sql = `SELECT * FROM locais WHERE tipo='Local para exame'`
+        await connection.query(sql, (err, rows) => {
+            if (err) {
+                throw err;
+            }
+
+            return res.json(rows);
+        });
+    },
+
     async Inserir(req, res, next) {
         const { nome, cep, tipo, descricao} = req.body;
 

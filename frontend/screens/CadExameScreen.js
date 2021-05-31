@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { StyleSheet, Text, View, Button, StatusBar, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, StatusBar, Alert, TouchableOpacity } from 'react-native';
 import { Icon, Footer, Picker } from 'native-base';
 import css from '../style/css';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,8 +8,8 @@ import DataPicker from 'react-native-datepicker';
 import DateTimePicker from "@react-native-community/datetimepicker";
 import api from '../services/api';
 
-export default function CadConsulta ({ route, navigation }){
 
+export default function CadExameScreen ({ route, navigation }){
 
   const { user } = route.params;
   const today = new Date();
@@ -19,13 +19,12 @@ export default function CadConsulta ({ route, navigation }){
   const [dataFormatada, setDataFormatada] = useState('');
   const [horaFormatada, setHoraFormatada] = useState('');
   const [locais, setLocais] = useState([]);
-  const [especialidade, setEspecialidade] = useState('Dermatologia');
+  const [especialidade, setEspecialidade] = useState('PCR');
   const [localSelecionado, setLocalSelecionado] = useState('');
-
 
   useEffect(() => {
     async function listagem(){
-      const response = await api.get('/locaisConsulta');
+      const response = await api.get('/locaisExame');
       setLocais(response.data);
     }
     listagem();
@@ -48,7 +47,7 @@ export default function CadConsulta ({ route, navigation }){
         data:dataFormatada,
         horario:horaFormatada,
         status:'Agendado',
-        tipoConsulta:'Consulta',
+        tipoConsulta:'Exame',
         especialidade: especialidade,
         idusuario: user,
         idlocais: localSelecionado
@@ -57,12 +56,12 @@ export default function CadConsulta ({ route, navigation }){
       const response = await api.post('/usu/consultas', consultaExame)
 
       if(response.data != null){
-        setEspecialidade('Dermatologia');
+        setEspecialidade('PCR');
         setDataFormatada('');
         setHoraFormatada('');
         navigation.navigate('Minhas Consultas');
       }else{
-        Alert.alert('OOPS!', 'Erro ao Agendar Consulta', [
+        Alert.alert('OOPS!', 'Erro ao Agendar Exame', [
           {text: 'Entendido'}
         ]);
       }
@@ -90,6 +89,7 @@ export default function CadConsulta ({ route, navigation }){
       setShow (true);
     }
 
+
   return (
     <View style={styles.container}>         
       <StatusBar backgroundColor="#008B8B"/>
@@ -100,21 +100,17 @@ export default function CadConsulta ({ route, navigation }){
         </View>  
         <View style={{flex:1,}}>
           <View style={{paddingLeft:10, alignItems:'center', margin:10}}>
-            <Text style={{fontSize:23, color: '#05375a',fontWeight:'bold',}}>Agendar Consulta</Text>
+            <Text style={{fontSize:23, color: '#05375a',fontWeight:'bold',}}>Agendar Exame</Text>
           </View>
             <View>
-            <Text style={[styles.text_footer,{marginTop:40, marginLeft:10}]}>Especialidade</Text>
+            <Text style={[styles.text_footer,{marginTop:40, marginLeft:10}]}>Tipo de Exame</Text>
               <Picker onChange={onChange}  selectedValue={especialidade} onValueChange={itemValue => setEspecialidade(itemValue)} style={{ height: 50, width: '100%', marginBottom: 10, marginLeft:5, color:'black'}}> 
-                <Picker.Item label="Dermatologia" value="Dermatologia" />
-                <Picker.Item label="Ortopedia" value="Ortopedia" />
-                <Picker.Item label="Cardiologia" value="Cardiologia" />
-                <Picker.Item label="Ginecologia e Obstetrícia" value="Ginecologia e Obstetrícia" />
-                <Picker.Item label="Neurologia" value="Neurologia" />
-                <Picker.Item label="Endocrinologia" value="Endocrinologia" />
-                <Picker.Item label="Urologia" value="Urologia" />
+                <Picker.Item label="PCR" value="PCR" />
+                <Picker.Item label="Antígeno" value="Antígeno" />
+                <Picker.Item label="IgM/IgC" value="IgM/IgC" />
               </Picker>
             <Text style={[styles.text_footer,{marginTop:15, marginLeft:10}]}>Local</Text>
-              <Picker onChange={onChange}  selectedValue={localSelecionado} onValueChange={itemValue => setLocalSelecionado(itemValue)} style={{ height: 50, width: '100%', marginBottom: 10, marginLeft:5, color:'black'}}> 
+              <Picker  onChange={onChange}  selectedValue={localSelecionado} onValueChange={itemValue => setLocalSelecionado(itemValue)} style={{ height: 50, width: '100%', marginBottom: 10, marginLeft:5, color:'black'}}> 
                 {
                   locais.map(local=>(
                     <Picker.Item key={local.idlocais} label={local.nome} value={local.idlocais} />
@@ -140,7 +136,7 @@ export default function CadConsulta ({ route, navigation }){
                       locale = "pt-BR"
                       is24Hour = { true }
                       mode={mode}
-                      display="spinner"onChange={onChange}
+                      display="spinner" onChange={onChange}
                       minimumDate = { new  Date ( ) } 
                       maximumDate = { new  Date ( 2021 ,  10 ,  30 ) }
                       style={{backgroundColor: "green"}}
@@ -160,7 +156,7 @@ export default function CadConsulta ({ route, navigation }){
             </View>
             
             <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-              <TouchableOpacity   style={[styles.signIn, {borderColor: '#009387', borderWidth: 1,width:200 , height:50  }]} onPress={() => cadastro()}>
+              <TouchableOpacity style={[styles.signIn, {borderColor: '#009387', borderWidth: 1,width:200 , height:50  }]} onPress={() => cadastro()}>
                 <Text style={[styles.textSign, { color: '#009387'}]}>Agendar</Text>
               </TouchableOpacity>
               </View>
