@@ -39,6 +39,9 @@ routes.put('/usuarios/:id', UsuarioController.Update);
 routes.delete('/usuarios/:id', UsuarioController.Delete);
 
 routes.get('/locais', LocalizacaoController.Selecionar);
+routes.get('/locaisConsulta', LocalizacaoController.SelecionarLocConsulta);
+routes.get('/locaisVacinacao', LocalizacaoController.SelecionarLocVacinacao);
+routes.get('/locaisExame', LocalizacaoController.SelecionarLocExame);
 routes.post('/locais', LocalizacaoController.Inserir);
 routes.put('/locais/:id', LocalizacaoController.Update);
 routes.delete('/locais/:id', LocalizacaoController.Delete);

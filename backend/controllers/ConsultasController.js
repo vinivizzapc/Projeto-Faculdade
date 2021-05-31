@@ -33,8 +33,8 @@ module.exports = {
 
 
     async Inserir(req, res, next){
-        const {data, idusuario, idlocais} = req.body; 
-            let sql = `INSERT INTO consultas(null, data, idusuario, idlocais, tipoConsulta) VALUES(null, '${data}', ${idusuario}, ${idlocais}, ${tipoConsulta})`;
+        const {data, idusuario, idlocais, status, tipoConsulta, horario, especialidade} = req.body; 
+            let sql = `INSERT INTO consultas(idconsultas, data, idusuario, idlocais, status, tipoConsulta, horario, especialidade) VALUES(null, '${data}', ${idusuario}, ${idlocais}, '${status}', '${tipoConsulta}', '${horario}', '${especialidade}')`;
             await connection.query(sql, (error, result) => {
             if (error) {
                 throw error;

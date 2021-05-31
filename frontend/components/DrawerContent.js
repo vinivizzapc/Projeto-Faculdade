@@ -7,6 +7,8 @@ import MapsScreen from '../screens/MapsScreen';
 import MinhasConsultasScreen from '../screens/MinhasConsultasScreen';
 import AgendaConsultaScreen from '../screens/AgendaConsultaScreen';
 import CadConsultaScreen from '../screens/CadConsultaScreen';
+import CadExameScreen from '../screens/CadExameScreen';
+import CadVacinacaoScreen from '../screens/CadVacinacaoScreen';
 import FavoritosScreen from '../screens/FavoritosScreen';
 import ListUsuarioScreen from '../screens/ListUsuarioScreen';
 import ListLocais from '../screens/ListLocaisScreen';
@@ -44,6 +46,28 @@ const cadConsultaScreen = ({navigation}) => {
       <Stack.Screen
         name="CadConsultaScreen"
         component={CadConsultaScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const cadExameScreen = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="CadExameScreen"
+        component={CadExameScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const cadVacinacaoScreen = ({navigation}) => {
+  return (
+    <Stack.Navigator headerMode='none'>
+      <Stack.Screen
+        name="CadVacinacaoScreen"
+        component={CadVacinacaoScreen}
       />
     </Stack.Navigator>
   );
@@ -175,12 +199,16 @@ function DrawerContent() {
               (routeName) => {
                 routeName !== 'DetalhesMapa'
                 && routeName !== 'CadConsultaScreen'
+                && routeName !== 'CadExameScreen'
+                && routeName !== 'CadVacinacaoScreen'
               },
             ),
             routes: props.state.routes.filter(
               (route) =>
                 route.name !== 'DetalhesMapa'
                 && route.name !== 'CadConsultaScreen'
+                && route.name !== 'CadExameScreen'
+                && route.name !== 'CadVacinacaoScreen'
             ),
           },
         };
@@ -203,6 +231,16 @@ function DrawerContent() {
           name="CadConsultaScreen"
           options={{drawerLabel: 'CadConsultaScreen'}}
           component={cadConsultaScreen}
+        />
+        <Drawer.Screen
+          name="CadExameScreen"
+          options={{drawerLabel: 'CadExameScreen'}}
+          component={cadExameScreen}
+        />
+        <Drawer.Screen
+          name="CadVacinacaoScreen"
+          options={{drawerLabel: 'CadVacinacaoScreen'}}
+          component={cadVacinacaoScreen}
         />
       </Drawer.Navigator>
     )
