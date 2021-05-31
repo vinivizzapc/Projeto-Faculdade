@@ -83,7 +83,7 @@ function ListUsuarioScreen({ navigation }){
 
                       <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>           
                           <View style={{margin:11}}>
-                            <Image style={{width:50,height:50}} source={require('../assets/img/logo.png')}/>
+                            <Image style={{width:50,height:50}} source={{ uri: item.imagem }}/>
                           </View>
                             <View style={{flex:1,justifyContent:'center'}}>
                               <Text style={{color: 'black', fontSize:16,}}>
@@ -99,7 +99,7 @@ function ListUsuarioScreen({ navigation }){
                               <FontAwesome5 name="edit" size={24} style={{color: 'orange'}} />
                             </TouchableOpacity>
                           </View>
-                          <View style={{paddingLeft:15, justifyContent:'center', alignItems:'center',marginRight:13}}>
+                          <View style={{paddingLeft:15, justifyContent:'center', alignItems:'center', marginRight:13}}>
                             <TouchableOpacity  onPress={() => excluirUsuario(item.idusuario)}>
                               <FontAwesome5 name="trash" size={24} style={{color: 'red'}} />
                             </TouchableOpacity>
@@ -121,7 +121,7 @@ function ListUsuarioScreen({ navigation }){
 
                       <View style={{ flex: 1,flexDirection: 'row',backgroundColor:'#80cbc4',margin:10, borderRadius: 10,  borderBottomColor:'#e0e0e0',borderRightColor:'#e0e0e0',borderRightWidth:3,borderBottomWidth:3,}}>           
                           <View style={{margin:11}}>
-                            <Image style={{width:50,height:50}} source={require('../assets/img/logo.png')}/>
+                            <Image style={{width:50,height:50}} source={{ uri: item.imagem }}/>
                           </View>
                             <View style={{flex:1,justifyContent:'center'}}>
                               <Text style={{color: 'black', fontSize:16,}}>

@@ -52,7 +52,7 @@ function PrevencoesScreen({ navigation }){
                     <View style={styles.prevencao}>
                     <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>
                       <View style={{alignItems:'center',margin:10}}>
-                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
+                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={{ uri: item.imagem }}/>
                       </View>
                         <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
                           {item.texto}
@@ -84,7 +84,7 @@ function PrevencoesScreen({ navigation }){
                     <View style={styles.prevencao}>
                     <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>       
                       <View style={{alignItems:'center',margin:10}}>
-                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
+                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={{ uri: item.imagem }}/>
                       </View>
                         <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
                           {item.texto}
@@ -115,7 +115,7 @@ function PrevencoesScreen({ navigation }){
                     <View style={styles.prevencao}>
                     <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>
                       <View style={{alignItems:'center',margin:10}}>
-                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
+                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={{ uri: item.imagem }} />
                       </View>
                         <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
                           {item.texto}
@@ -147,7 +147,7 @@ function PrevencoesScreen({ navigation }){
                     <View style={styles.prevencao}>
                     <View style={{flex:1, borderRadius:5, height:350, borderBottomWidth:2, borderLeftWidth:2, borderRightWidth:2, borderTopWidth:2, borderColor:'#008B8B'}}>
                       <View style={{alignItems:'center',margin:10}}>
-                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={require('../assets/icon.png')}/>
+                        <Image style={{width:360,height:150, borderWidth: 1.5, borderRadius: 10,  marginBottom:20}} source={{ uri: item.imagem }}/>
                       </View>
                         <Text style={{color:'black', fontSize:15, textAlign:'justify', margin:10}}>
                           {item.texto}

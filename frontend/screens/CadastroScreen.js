@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function CadastroScreen ({navigation}){
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('https://www.ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -50,7 +50,12 @@ export default function CadastroScreen ({navigation}){
         imagem: image
       }
       const response = await api.post('/usuarios', usuario)
-
+      if(response.data.msg != null){
+        Alert.alert('OOPS!', response.data.msg, [
+          {text: 'Entendido'}
+        ]);
+        return;
+      }
       if(response.data != null){
         const jsonValue = JSON.stringify(response.data)
         await AsyncStorage.setItem('user', jsonValue)

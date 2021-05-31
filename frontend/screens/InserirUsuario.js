@@ -5,15 +5,41 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Feather } from '@expo/vector-icons'; 
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
+import * as ImagePicker from 'expo-image-picker';
 
 function InserirUsuario({ route, navigation }){
   
   const { user } = route.params;
 
+  const [image, setImage] = useState('https://www.ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png');
   const [nome, setNome] = useState(user.nome);
   const [email, setEmail] = useState(user.email);
   const [senha, setSenha] = useState(user.senha);
   const [status, setStatus] = useState(user.status);
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   useEffect(() => {
     function AtualizarDados(){
@@ -36,7 +62,12 @@ function InserirUsuario({ route, navigation }){
       }
 
       const response = await api.put(`/usuarios/${user.idusuario}`, usuario)
-
+      if(response.data.msg != null){
+        Alert.alert('OOPS!', response.data.msg, [
+          {text: 'Entendido'}
+        ]);
+        return;
+      }
       if(response.data != null){
         setNome('');
         setSenha('');
@@ -70,11 +101,17 @@ function InserirUsuario({ route, navigation }){
         nome:nome,
         email:email,
         senha:senha,
-        status:status
+        status:status,
+        imagem: image
       }
 
       const response = await api.post('/usuarios', usuario)
-
+      if(response.data.msg != null){
+        Alert.alert('OOPS!', response.data.msg, [
+          {text: 'Entendido'}
+        ]);
+        return;
+      }
       if(response.data != null){
         setNome('');
         setSenha('');
@@ -108,11 +145,11 @@ function InserirUsuario({ route, navigation }){
           
           <View style={{ flexDirection:'row', justifyContent:'flex-start', paddingVertical:15, paddingBottom:11,  }}>
             <Image 
-              source={require('../assets/img/Hospital.jpg')}
+              source={{ uri: image ? image : 'https://www.ctvalleybrewing.com/wp-content/uploads/2017/04/avatar-placeholder.png' }} 
               style={styles.avatar} 
             />
             <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.botaoImagem} >
-              <TouchableOpacity  >
+              <TouchableOpacity onPress={pickImage}>
                 <Text style={{fontSize:16,color:'white',fontWeight:'bold', textAlign:'center', }}>Escolher imagem</Text>
               </TouchableOpacity>
             </LinearGradient>

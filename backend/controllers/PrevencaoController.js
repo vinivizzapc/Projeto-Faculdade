@@ -82,8 +82,8 @@ module.exports = {
     },
 
     async Inserir(req, res, next) {
-        const { tipo, texto, idUsuario } = req.body;
-        let sql = `INSERT INTO prevencao(idPrevencao, tipo, texto, idUsuario) VALUES(null, '${tipo}', '${texto}', ${idUsuario})`;
+        const { tipo, texto, idUsuario, imagem } = req.body;
+        let sql = `INSERT INTO prevencao(idPrevencao, tipo, texto, idUsuario, imagem) VALUES(null, '${tipo}', '${texto}', ${idUsuario}, '${imagem}')`;
         
         await connection.query(sql, (err, result) => {
             if (err) {
@@ -94,7 +94,8 @@ module.exports = {
                 id: result.insertId,
                 tipo: tipo,
                 texto: texto,
-                idUsuario: idUsuario
+                idUsuario: idUsuario,
+                imagem: imagem
             }
 
             return res.status(201).json(prevencao);

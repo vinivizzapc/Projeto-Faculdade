@@ -65,7 +65,7 @@ function MinhasConsultasScreen ({ navigation }){
                           <View style={{height:350, width:300, margin:10}}>
                             <View style={{ justifyContent:'center', alignItems:'center'}}>
                             <View style={{alignItems:'center',margin:0.5}}>
-                              <Image style={{width:300,height:100, borderWidth: 1.5, borderRadius: 10,}} source={require('../assets/img/Hospital.jpg')}/>
+                              <Image style={{width:300,height:100, borderWidth: 1.5, borderRadius: 10,}} source={{ uri: item.imagem }}/>
                             </View>
                               <Text style={{color: 'black', fontSize:17, margin:1, fontWeight:'bold'}}>
                                 {item.tipoConsulta}

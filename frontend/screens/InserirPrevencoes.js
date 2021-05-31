@@ -5,14 +5,40 @@ import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import api from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker';
 
 function InserirPrevencoes({ route, navigation }){
 
   const { prevencao } = route.params;
 
+  const [image, setImage] = useState('https://media.istockphoto.com/vectors/stop-coronavirus-icon-sign-of-forbidden-virus-black-viral-microbe-in-vector-id1214370284');
   const [tipo, setTipo] = useState(prevencao.tipo);
   const [texto, setTexto] = useState(prevencao.texto);
   const [usuario, setUsuario] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== 'web') {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   useEffect(() => {
     function AtualizarDados(){
@@ -37,7 +63,6 @@ function InserirPrevencoes({ route, navigation }){
     setUsuario('');
     navigation.navigate('Prevencoes')
   }
-  
 
   async function update() {
     if(tipo != '' && texto != ''){
@@ -71,7 +96,8 @@ function InserirPrevencoes({ route, navigation }){
       const prevencao = {
         tipo:tipo,
         texto:texto,
-        idUsuario:usuario.idusuario
+        idUsuario:usuario.idusuario,
+        imagem: image
       }
 
       const response = await api.post('/prevencoes', prevencao)
@@ -104,9 +130,6 @@ function InserirPrevencoes({ route, navigation }){
             <Text style={styles.text_header}>Cadastrar Prevenção</Text>
           </View>
           <View style={styles.footer}>
-
-         
-
           <Text style={[styles.text_footer]}>Tipo de prevenção</Text>
           <View>
               <Picker
@@ -133,11 +156,11 @@ function InserirPrevencoes({ route, navigation }){
               <Text style={styles.text_footer}>Texto descrição</Text>   
               <View style={{ flexDirection:'row', justifyContent:'flex-start', paddingVertical:5, paddingBottom:20, paddingTop:30  }}>
                 <Image 
-                  source={require('../assets/img/Hospital.jpg')}
+                  source={{ uri: image ? image : 'https://media.istockphoto.com/vectors/stop-coronavirus-icon-sign-of-forbidden-virus-black-viral-microbe-in-vector-id1214370284' }} 
                   style={styles.avatar} 
                 />
                 <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.botaoImagem} >
-                  <TouchableOpacity  >
+                  <TouchableOpacity onPress={pickImage}>
                     <Text style={{fontSize:16,color:'white',fontWeight:'bold', textAlign:'center', }}>Escolher imagem</Text>
                   </TouchableOpacity>
                 </LinearGradient>
