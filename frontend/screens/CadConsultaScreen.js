@@ -1,3 +1,4 @@
+ 
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, Button, StatusBar, TouchableOpacity } from 'react-native';
 import { Icon, Footer, Picker } from 'native-base';
@@ -121,13 +122,16 @@ export default function CadConsulta ({ route, navigation }){
                   ))
                 }
               </Picker>
-              <Text style={[styles.text_footer,{marginTop:15, marginLeft:10}]}>Data</Text>
-              <View style={{alignItems:'center',}}>
-              <View style={{backgroundColor:'#01ab9d', width: '60%', height:30, alignItems:'center', marginTop:30}}>
-                <TouchableOpacity onPress={showDatepicker}>
-                  <Text style={{fontSize: 18}}>SELECIONAR DATA</Text>
-                </TouchableOpacity>
+              <Text style={[styles.text_footer,{ marginLeft:10}]}>Data</Text>
+              <View style={{backgroundColor:'#cfd8dc', height:40, width:110, justifyContent:'center', alignItems:'center', borderRadius:8, borderColor:'black', borderWidth:2,marginLeft:10, marginTop:5  }}>
+                <Text style={{ fontSize:13, fontWeight:'bold'}}>{dataFormatada.toString()}</Text>
               </View>
+              <View style={{  justifyContent:'center',}}>
+                <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{ width: 113, height:30, alignItems:'center', borderRadius:10,  justifyContent:'center',  marginLeft:10, marginTop:5   }}>
+                  <TouchableOpacity onPress={showDatepicker}>
+                    <Text style={{fontSize: 12, fontWeight:'bold'}}>SELECIONAR DATA</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
             
                   {show && (
                     <DateTimePicker
@@ -147,23 +151,25 @@ export default function CadConsulta ({ route, navigation }){
                     />
                   )}
                 </View>
-                <Text>{dataFormatada.toString()}</Text>
-              <Text style={[styles.text_footer,{marginTop:15, marginLeft:10}]}>Horário</Text>
-              <View style={{alignItems:'center',}}>
-                <View style={{backgroundColor:'#01ab9d', width: '60%', height:30, alignItems:'center', marginTop:30}}>
+                
+              <Text style={[styles.text_footer,{marginTop:10, marginLeft:10}]}>Horário</Text>
+                <View style={{backgroundColor:'#cfd8dc', height:40, width:110, justifyContent:'center', alignItems:'center', borderRadius:8, borderColor:'black', borderWidth:2,marginLeft:10, marginTop:5 }}>
+                  <Text style={{margin:20, fontSize:14, fontWeight:'bold'}}>{horaFormatada.toString()}</Text>
+                </View> 
+              <View style={{  justifyContent:'center', }}>
+              <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{ width: 113, height:30, alignItems:'center', borderRadius:10,  justifyContent:'center',  marginLeft:10, marginTop:5 , marginBottom:5  }}>
                   <TouchableOpacity onPress={showTimepicker}>
-                    <Text style={{fontSize: 18}}>SELECIONAR HORÁRIO</Text>
+                    <Text style={{fontSize: 10, fontWeight:'bold'}}>SELECIONAR HORÁRIO</Text>
                   </TouchableOpacity>
-                </View>
-              </View>
-              <Text>{horaFormatada.toString()}</Text>
+                </LinearGradient>
+              </View>    
             </View>
             
             <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
               <TouchableOpacity   style={[styles.signIn, {borderColor: '#009387', borderWidth: 1,width:200 , height:50  }]} onPress={() => cadastro()}>
                 <Text style={[styles.textSign, { color: '#009387'}]}>Agendar</Text>
               </TouchableOpacity>
-              </View>
+            </View>
         </View>
       <Footer style={{backgroundColor:"#008B8B"}}/>
     </View>
