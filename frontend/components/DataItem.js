@@ -3,12 +3,17 @@ import { ListItem, Left, Right, Thumbnail, Body, Button } from 'native-base';
 import {Text, Dimensions} from 'react-native';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-
+import TimeAgo from './time'
 class DataItem extends Component {
 
     constructor(props) {
         super(props);
         this.data = props.data;
+    }
+
+    handlePress = () => {
+      const {url, title} = this.data;
+      this.props.onPress({url, title});
     }
 
     state = {
@@ -33,9 +38,10 @@ class DataItem extends Component {
               <Body>
                 <Text style={{fontWeight: 'bold'}}>{this.data.title}</Text>
                 <Text  note numberOfLines={2}>{this.data.description}</Text>
+                <TimeAgo time={this.data.publisedAt}/>
               </Body>
               <Right>
-                <Button transparent>
+                <Button transparent onPress={this.handlePress}>
                   <Text style={{marginLeft:30, marginRight:20}}>View</Text>
                 </Button>
               </Right>
