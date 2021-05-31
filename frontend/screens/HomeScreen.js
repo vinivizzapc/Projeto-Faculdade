@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { StyleSheet, View, StatusBar, Text, ActivityIndicator, Alert } from 'react-native';
-
 import { Icon, Footer, List, Title, Content } from 'native-base';
 import css from '../style/css';
 import getArticles from '../services/NewsApi';
@@ -8,6 +7,7 @@ import DataItem from '../components/DataItem';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
+import Modal from '../components/modalNews';
 
 export default class HomeScreen extends Component {
 
@@ -17,7 +17,23 @@ export default class HomeScreen extends Component {
     this.state = {
       isLoading: true,
       data: null,
+      setModalVisible: false,
+      modalArticleData:{}
     }
+  }
+
+  handleItemDataOnPress = (articleData) =>{
+    this.setState({
+      setModalVisible: true,
+      modalArticleData: articleData
+    });
+  }
+
+  handleModalClose = () => {
+    this.setState({
+      setModalVisible: false,
+      modalArticleData: {}
+    })
   }
 
   state = {
@@ -76,6 +92,11 @@ export default class HomeScreen extends Component {
             {view}
           </Text>
         </Content>
+        <Modal
+          showModal={this.state.setModalVisible}
+          articleData={this.state.modalArticleData}
+          onClose={this.handleModalClose}
+        />
       </View>
       <Footer style={{backgroundColor:"#008B8B"}}/>
     </View>
@@ -93,5 +114,4 @@ export default class HomeScreen extends Component {
     flex: 1
   },
 });
-
 
