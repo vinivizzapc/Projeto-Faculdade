@@ -62,7 +62,12 @@ function InserirUsuario({ route, navigation }){
       }
 
       const response = await api.put(`/usuarios/${user.idusuario}`, usuario)
-
+      if(response.data.msg != null){
+        Alert.alert('OOPS!', response.data.msg, [
+          {text: 'Entendido'}
+        ]);
+        return;
+      }
       if(response.data != null){
         setNome('');
         setSenha('');
@@ -101,7 +106,12 @@ function InserirUsuario({ route, navigation }){
       }
 
       const response = await api.post('/usuarios', usuario)
-
+      if(response.data.msg != null){
+        Alert.alert('OOPS!', response.data.msg, [
+          {text: 'Entendido'}
+        ]);
+        return;
+      }
       if(response.data != null){
         setNome('');
         setSenha('');

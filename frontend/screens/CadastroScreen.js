@@ -50,7 +50,12 @@ export default function CadastroScreen ({navigation}){
         imagem: image
       }
       const response = await api.post('/usuarios', usuario)
-
+      if(response.data.msg != null){
+        Alert.alert('OOPS!', response.data.msg, [
+          {text: 'Entendido'}
+        ]);
+        return;
+      }
       if(response.data != null){
         const jsonValue = JSON.stringify(response.data)
         await AsyncStorage.setItem('user', jsonValue)
