@@ -27,7 +27,7 @@ function AgendaConsultaScreen ({ navigation }){
             <Icon name="menu" onPress={()=>navigation.openDrawer()}/>
           </View>
           <View style={{flex:1,alignItems:'center', justifyContent:'center', paddingRight:20}}>
-            <Text style={{fontSize:24, color:'white'}}>AGENDAR CONSULTAS</Text>
+            <Text style={{fontSize:24, color:'white'}}>AGENDAR</Text>
           </View>
         </View> 
         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
