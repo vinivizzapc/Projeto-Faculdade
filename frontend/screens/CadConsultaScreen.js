@@ -14,7 +14,7 @@ export default function CadConsulta ({ route, navigation }){
 
   const { user } = route.params;
   const today = new Date();
-  const [date, setDate] = useState(new Date(today));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [dataFormatada, setDataFormatada] = useState('');
@@ -146,7 +146,7 @@ export default function CadConsulta ({ route, navigation }){
                       mode={mode}
                       display="spinner"onChange={onChange}
                       minimumDate = { new  Date ( ) } 
-                      maximumDate = { new  Date ( 2021 ,  10 ,  30 ) }
+                      maximumDate = { new  Date ( 2021 ,  12 ,  30 ) }
                       style={{backgroundColor: "green"}}
                     />
                   )}
