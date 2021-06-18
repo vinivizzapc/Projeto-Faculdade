@@ -127,11 +127,11 @@ export default function CadConsulta ({ route, navigation }){
                 <Text style={{ fontSize:13, fontWeight:'bold'}}>{dataFormatada.toString()}</Text>
               </View>
               <View style={{  justifyContent:'center',}}>
-                <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{ width: 113, height:30, alignItems:'center', borderRadius:10,  justifyContent:'center',  marginLeft:10, marginTop:5   }}>
+                <View style={{ width: 113, height:30, alignItems:'center', borderRadius:10,  justifyContent:'center',  marginLeft:10, marginTop:10, backgroundColor:'#01ab9d'}}>
                   <TouchableOpacity onPress={showDatepicker}>
-                    <Text style={{fontSize: 12, fontWeight:'bold'}}>SELECIONAR DATA</Text>
+                    <Text style={{fontSize: 14, fontWeight:'bold', color:'#ffff'}}>SELECIONAR</Text>
                   </TouchableOpacity>
-                </LinearGradient>
+                </View>
             
                   {show && (
                     <DateTimePicker
@@ -157,11 +157,11 @@ export default function CadConsulta ({ route, navigation }){
                   <Text style={{margin:20, fontSize:14, fontWeight:'bold'}}>{horaFormatada.toString()}</Text>
                 </View> 
               <View style={{  justifyContent:'center', }}>
-              <LinearGradient colors={['#08d4c4', '#01ab9d']} style={{ width: 113, height:30, alignItems:'center', borderRadius:10,  justifyContent:'center',  marginLeft:10, marginTop:5 , marginBottom:5  }}>
-                  <TouchableOpacity onPress={showTimepicker}>
-                    <Text style={{fontSize: 10, fontWeight:'bold'}}>SELECIONAR HORÁRIO</Text>
+              <View style={{ width: 113, height:30, alignItems:'center', borderRadius:10,  justifyContent:'center',  marginLeft:10, marginTop:10, backgroundColor:'#01ab9d'}}>
+                  <TouchableOpacity onPress={showDatepicker}>
+                    <Text style={{fontSize: 14, fontWeight:'bold', color:'#ffff'}}>SELECIONAR</Text>
                   </TouchableOpacity>
-                </LinearGradient>
+              </View>
               </View>    
             </View>
             

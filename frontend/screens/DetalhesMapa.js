@@ -73,7 +73,7 @@ export default function DetalhesMapa({ route, navigation }) {
               {
                 favoritado == 'Não é favorito' ? (
                   <View style={{margin:20}}>
-                    <TouchableOpacity onPress={() => favoritar(localSelecionado.idlocais, user)} style={styles.btnDesfavoritar}>
+                    <TouchableOpacity onPress={() => favoritar(localSelecionado.idlocais, user)} style={styles.btnFavoritar}>
                       <Text style={styles.txtBtn}>FAVORITAR</Text>
                     </TouchableOpacity>
                   </View>
@@ -112,6 +112,14 @@ const styles = StyleSheet.create({
   },
   btnDesfavoritar:{
     backgroundColor:'#e53935',
+    width:100,
+    height:35,
+    borderRadius:10,
+    alignItems:'center',
+    justifyContent:'center'
+  },
+  btnFavoritar:{
+    backgroundColor:'#00e676',
     width:100,
     height:35,
     borderRadius:10,
